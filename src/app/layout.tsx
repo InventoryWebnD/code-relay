@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { RegisterModalProvider } from "@/context/RegisterModalContext";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
+import Navbar from "@/components/shared/Navbar";
+import Footer from "@/components/shared/Footer";
+import CustomCursor from "@/components/shared/CustomCursor";
+import ScrollAnimationProvider from "@/components/shared/ScrollAnimationProvider";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -41,12 +42,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#F6F0E8] text-[#1E030A] selection:bg-[#991B3D] selection:text-white">
         <RegisterModalProvider>
-          <CustomCursor />
-          <Navbar />
-          <main className="flex-1 w-full">
-            {children}
-          </main>
-          <Footer />
+          <ScrollAnimationProvider>
+            <CustomCursor />
+            <Navbar />
+            <main className="flex-1 w-full">
+              {children}
+            </main>
+            <Footer />
+          </ScrollAnimationProvider>
         </RegisterModalProvider>
       </body>
     </html>

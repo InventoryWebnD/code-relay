@@ -1,18 +1,91 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface TracksSectionProps {
   onSelectTrack?: (track: "web2" | "web3") => void;
 }
 
 export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
+  const sectionRef = useRef<HTMLElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const web2CardRef = useRef<HTMLDivElement>(null);
+  const web3CardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!sectionRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      const headerChildren = headerRef.current ? Array.from(headerRef.current.children) : [];
+
+      tl.fromTo(
+        headerChildren,
+        {
+          x: (i) => (i % 2 === 0 ? -30 : 35),
+          y: -50,
+          skewX: (i) => (i % 2 === 0 ? -6 : 7),
+          rotation: (i) => (i % 2 === 0 ? -3 : 3),
+          opacity: 0,
+        },
+        {
+          x: 0,
+          y: 0,
+          skewX: 0,
+          rotation: 0,
+          opacity: 1,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: "back.out(1.2)",
+        }
+      )
+        .fromTo(
+          web2CardRef.current,
+          { x: -60, y: -80, skewX: -8, rotation: -4.5, opacity: 0, scale: 0.94 },
+          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
+          "-=0.3"
+        )
+        .fromTo(
+          web3CardRef.current,
+          { x: 60, y: -80, skewX: 8, rotation: 4.5, opacity: 0, scale: 0.94 },
+          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
+          "-=0.7"
+        );
+
+      tl.eventCallback("onComplete", () => {
+        gsap.set(headerChildren, { clearProps: "transform" });
+        gsap.set([web2CardRef.current, web3CardRef.current], { clearProps: "transform" });
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="tracks" className="relative w-full py-16 border-b-2 border-[#160207] bg-[#F6F0E8]">
+    <section
+      id="tracks"
+      ref={sectionRef}
+      data-no-scroll-animate="true"
+      className="relative w-full py-16 border-b-2 border-[#160207] bg-[#F6F0E8]"
+    >
       <div className="w-full px-6 sm:px-10 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col items-start mb-12 sm:mb-16">
+        <div ref={headerRef} className="flex flex-col items-start mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 rounded-md border-2 border-[#160207] bg-[#620821] px-3 py-1 shadow-hard-xs mb-3">
             <span className="font-mono text-xs font-bold text-[#F6F0E8] uppercase tracking-wider">
               Dual Track Architecture
@@ -31,6 +104,7 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
           
           {/* ================= WEB2 TRACK CARD ================= */}
           <div 
+            ref={web2CardRef}
             onClick={() => onSelectTrack && onSelectTrack("web2")}
             className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#380412] shadow-hard-xl transition-all duration-300 cursor-pointer text-white"
           >
@@ -154,6 +228,7 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
 
           {/* ================= WEB3 TRACK CARD ================= */}
           <div 
+            ref={web3CardRef}
             onClick={() => onSelectTrack && onSelectTrack("web3")}
             className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#2A344A] shadow-hard-xl transition-all duration-300 cursor-pointer text-white"
           >

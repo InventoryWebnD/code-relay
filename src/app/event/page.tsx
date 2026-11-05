@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import TracksSection from "@/components/TracksSection";
+import TracksSection from "@/components/event/TracksSection";
 import { useRegisterModal } from "@/context/RegisterModalContext";
 
 export default function EventPage() {

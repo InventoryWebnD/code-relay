@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { PROBLEM_STATEMENTS, ProblemStatement } from "@/data/problemStatements";
-import ProblemStatementCard from "@/components/ProblemStatementCard";
+import ProblemStatementCard from "@/components/problem-statements/ProblemStatementCard";
+import gsap from "gsap";
+import { getSkewTrajectory } from "@/hooks/useGsapScrollTrigger";
 
 export default function ProblemStatementsPage() {
   const [selectedEdition, setSelectedEdition] = useState<"4.0" | "3.0">("4.0");
@@ -10,6 +12,7 @@ export default function ProblemStatementsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeStatement, setActiveStatement] = useState<ProblemStatement | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const cardsGridRef = useRef<HTMLDivElement>(null);
 
   // Switch edition and reset track filter
   const handleEditionChange = (edition: "4.0" | "3.0") => {
@@ -51,6 +54,43 @@ export default function ProblemStatementsPage() {
       return true;
     });
   }, [editionStatements, selectedTrack, searchQuery]);
+
+  useEffect(() => {
+    if (!cardsGridRef.current) return;
+    const cards = Array.from(cardsGridRef.current.children);
+    if (cards.length === 0) return;
+
+    cards.forEach((card, i) => {
+      const traj = getSkewTrajectory(i);
+      gsap.fromTo(
+        card,
+        {
+          x: traj.x,
+          y: traj.y,
+          skewX: traj.skewX,
+          skewY: traj.skewY,
+          rotation: traj.rotation,
+          opacity: 0,
+          scale: 0.95,
+        },
+        {
+          x: 0,
+          y: 0,
+          skewX: 0,
+          skewY: 0,
+          rotation: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 0.65,
+          delay: i * 0.05,
+          ease: "back.out(1.25)",
+          onComplete: () => {
+            gsap.set(card, { clearProps: "transform" });
+          },
+        }
+      );
+    });
+  }, [filteredStatements]);
 
   const handleCopyCitation = (statement: ProblemStatement) => {
     const text = `${statement.title} — ${statement.editionLabel} (${statement.track} Track)`;
@@ -337,7 +377,7 @@ export default function ProblemStatementsPage() {
             </div>
           ) : (
             /* Responsive Grid: 2 or 3 cols on desktop, 1 on mobile */
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div ref={cardsGridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {filteredStatements.map((statement) => (
                 <ProblemStatementCard
                   key={statement.id}

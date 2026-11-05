@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState } from "react";
-import RegisterModal from "@/components/RegisterModal";
+import RegisterModal from "@/components/shared/RegisterModal";
 
 interface RegisterModalContextType {
   isOpen: boolean;

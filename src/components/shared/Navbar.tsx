@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRegisterModal } from "@/context/RegisterModalContext";
+import gsap from "gsap";
 
 interface NavbarProps {
   onRegisterClick?: () => void;
@@ -37,8 +38,34 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
     return pathname.startsWith(href);
   };
 
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!navRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        navRef.current,
+        { x: -15, y: -60, skewX: -2.5, rotation: -1.2, opacity: 0 },
+        {
+          x: 0,
+          y: 0,
+          skewX: 0,
+          rotation: 0,
+          opacity: 1,
+          duration: 0.75,
+          ease: "back.out(1.2)",
+          onComplete: () => {
+            gsap.set(navRef.current, { clearProps: "transform" });
+          },
+        }
+      );
+    }, navRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full border-b-2 border-[#160207] bg-[#F6F0E8]/95 backdrop-blur-sm">
+    <header ref={navRef} className="sticky top-0 z-40 w-full border-b-2 border-[#160207] bg-[#F6F0E8]/95 backdrop-blur-sm">
       <div className="w-full flex items-center justify-between px-6 sm:px-10 lg:px-12 py-3.5">
         
         {/* Brand / Logo */}
