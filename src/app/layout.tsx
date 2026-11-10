@@ -6,6 +6,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import CustomCursor from "@/components/shared/CustomCursor";
 import ScrollAnimationProvider from "@/components/shared/ScrollAnimationProvider";
+import PageTransitionSplash from "@/components/shared/PageTransitionSplash";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -43,6 +44,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#F6F0E8] text-[#1E030A] selection:bg-[#991B3D] selection:text-white">
         <RegisterModalProvider>
           <ScrollAnimationProvider>
+            <PageTransitionSplash />
             <CustomCursor />
             <Navbar />
             <main className="flex-1 w-full">

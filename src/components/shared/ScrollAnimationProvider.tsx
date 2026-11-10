@@ -25,8 +25,9 @@ export default function ScrollAnimationProvider({
     if (prefersReducedMotion) return;
 
     // Allow Next.js DOM to settle after page/route transition
+    let ctx: gsap.Context | null = null;
     const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
+      ctx = gsap.context(() => {
         // Query all sections on the current route
         const sections = document.querySelectorAll(
           "main section:not([data-no-scroll-animate='true'])"
@@ -140,15 +141,11 @@ export default function ScrollAnimationProvider({
 
         ScrollTrigger.refresh();
       });
-
-      return () => {
-        ctx.revert();
-      };
     }, 120);
 
     return () => {
       clearTimeout(timer);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      ctx?.revert();
     };
   }, [pathname]);
 
