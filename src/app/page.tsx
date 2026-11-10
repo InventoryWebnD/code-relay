@@ -1,6 +1,4 @@
-import HeroSection from "@/components/home/HeroSection";
-import IdentityStrip from "@/components/home/IdentityStrip";
-import ClosingCTA from "@/components/home/ClosingCTA";
+import { HeroSection, IdentityStrip, ClosingCTA } from "@/components/home";
 
 export default function Home() {
   return (

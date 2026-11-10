@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -18,6 +18,36 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
   const headerRef = useRef<HTMLDivElement>(null);
   const web2CardRef = useRef<HTMLDivElement>(null);
   const web3CardRef = useRef<HTMLDivElement>(null);
+
+  const [isWeb2Open, setIsWeb2Open] = useState(false);
+  const [isWeb3Open, setIsWeb3Open] = useState(false);
+
+  const toggleTrack = (track: "web2" | "web3", e: React.MouseEvent) => {
+    // If the click is on an anchor or button inside the card, allow normal navigation
+    if ((e.target as HTMLElement).closest("a, button")) {
+      return;
+    }
+    if (track === "web2") {
+      setIsWeb2Open((prev) => !prev);
+    } else {
+      setIsWeb3Open((prev) => !prev);
+    }
+    if (onSelectTrack) {
+      onSelectTrack(track);
+    }
+  };
+
+  const handleKeyDown = (track: "web2" | "web3", e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      if ((e.target as HTMLElement).closest("a, button")) return;
+      e.preventDefault();
+      if (track === "web2") {
+        setIsWeb2Open((prev) => !prev);
+      } else {
+        setIsWeb3Open((prev) => !prev);
+      }
+    }
+  };
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -95,7 +125,7 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
             TWO TRACKS. ONE RELAY.
           </h2>
           <p className="mt-3 text-base sm:text-lg text-[#3A1822] max-w-4xl font-medium">
-            Choose your engineering discipline. Both tracks run concurrently over 36 hours. Hover over each track card to release the blast shield and inspect challenge parameters.
+            Choose your engineering discipline. Both tracks run concurrently over 36 hours. Release the blast shield to inspect challenge parameters.
           </p>
         </div>
 
@@ -105,12 +135,21 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
           {/* ================= WEB2 TRACK CARD ================= */}
           <div 
             ref={web2CardRef}
-            onClick={() => onSelectTrack && onSelectTrack("web2")}
-            className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#380412] shadow-hard-xl transition-all duration-300 cursor-pointer text-white"
+            onClick={(e) => toggleTrack("web2", e)}
+            onKeyDown={(e) => handleKeyDown("web2", e)}
+            tabIndex={0}
+            role="button"
+            aria-expanded={isWeb2Open}
+            aria-label="Toggle Web2 track details"
+            className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#380412] shadow-hard-xl transition-all duration-300 cursor-pointer text-white focus:outline-none focus:ring-2 focus:ring-[#991B3D]"
           >
             
             {/* FULLY COVERING SHUTTERS (cover-upper & cover-lower) */}
-            <div className="absolute top-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out group-hover:-translate-y-[105%]">
+            <div
+              className={`absolute top-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out ${
+                isWeb2Open ? "-translate-y-[105%]" : "translate-y-0"
+              } group-hover:-translate-y-[105%]`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/cover-upper.svg"
@@ -119,23 +158,17 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
               />
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out group-hover:translate-y-[105%]">
+            <div
+              className={`absolute bottom-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out ${
+                isWeb2Open ? "translate-y-[105%]" : "translate-y-0"
+              } group-hover:translate-y-[105%]`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/cover-lower.svg"
                 alt="Track Blast Shield Lower"
                 className="w-full h-full object-fill filter drop-shadow-[0px_-4px_8px_rgba(0,0,0,0.8)]"
               />
-            </div>
-
-            {/* Center Lock Badge (Hidden when hovered) */}
-            <div className="absolute inset-0 z-40 flex flex-col items-center justify-center pointer-events-none transition-all duration-300 group-hover:opacity-0 group-hover:scale-95">
-              <div className="flex items-center gap-2.5 rounded-xl border-2 border-[#160207] bg-[#22020A] px-5 py-3 shadow-hard-lg">
-                <span className="font-mono text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-                  Hover to reveal Web2 specifications
-                </span>
-                <span className="text-[#F6F0E8] font-mono text-sm">↓↑</span>
-              </div>
             </div>
 
             {/* REVEALED CONTENT UNDERNEATH */}
@@ -229,12 +262,21 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
           {/* ================= WEB3 TRACK CARD ================= */}
           <div 
             ref={web3CardRef}
-            onClick={() => onSelectTrack && onSelectTrack("web3")}
-            className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#2A344A] shadow-hard-xl transition-all duration-300 cursor-pointer text-white"
+            onClick={(e) => toggleTrack("web3", e)}
+            onKeyDown={(e) => handleKeyDown("web3", e)}
+            tabIndex={0}
+            role="button"
+            aria-expanded={isWeb3Open}
+            aria-label="Toggle Web3 track details"
+            className="group relative overflow-hidden rounded-2xl border-2 border-[#160207] bg-[#2A344A] shadow-hard-xl transition-all duration-300 cursor-pointer text-white focus:outline-none focus:ring-2 focus:ring-[#4B5D86]"
           >
             
             {/* FULLY COVERING SHUTTERS */}
-            <div className="absolute top-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out group-hover:-translate-y-[105%]">
+            <div
+              className={`absolute top-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out ${
+                isWeb3Open ? "-translate-y-[105%]" : "translate-y-0"
+              } group-hover:-translate-y-[105%]`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/cover-upper.svg"
@@ -243,23 +285,17 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
               />
             </div>
 
-            <div className="absolute bottom-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out group-hover:translate-y-[105%]">
+            <div
+              className={`absolute bottom-0 left-0 right-0 h-[52%] z-30 pointer-events-none transform transition-transform duration-500 ease-in-out ${
+                isWeb3Open ? "translate-y-[105%]" : "translate-y-0"
+              } group-hover:translate-y-[105%]`}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/cover-lower.svg"
                 alt="Track Blast Shield Lower"
                 className="w-full h-full object-fill filter drop-shadow-[0px_-4px_8px_rgba(0,0,0,0.8)]"
               />
-            </div>
-
-            {/* Center Lock Badge */}
-            <div className="absolute inset-0 z-40 flex flex-col items-center justify-center pointer-events-none transition-all duration-300 group-hover:opacity-0 group-hover:scale-95">
-              <div className="flex items-center gap-2.5 rounded-xl border-2 border-[#160207] bg-[#1E2638] px-5 py-3 shadow-hard-lg">
-                <span className="font-mono text-xs sm:text-sm font-black uppercase tracking-wider text-white">
-                  Hover to reveal Web3 specifications
-                </span>
-                <span className="text-[#F6F0E8] font-mono text-sm">↓↑</span>
-              </div>
             </div>
 
             {/* REVEALED CONTENT UNDERNEATH */}

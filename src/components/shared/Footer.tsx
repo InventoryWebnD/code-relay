@@ -2,89 +2,29 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { getSkewTrajectory } from "@/hooks/useGsapScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 export default function Footer() {
+  const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
-  const gridRef = useRef<HTMLDivElement>(null);
-  const bottomBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!footerRef.current) return;
 
     const ctx = gsap.context(() => {
-      const columns = gridRef.current ? Array.from(gridRef.current.children) : [];
-
-      columns.forEach((col, i) => {
-        const traj = getSkewTrajectory(i + 2);
-        gsap.fromTo(
-          col,
-          {
-            x: traj.x,
-            y: traj.y,
-            skewX: traj.skewX,
-            skewY: traj.skewY,
-            rotation: traj.rotation,
-            opacity: 0,
-            scale: 0.96,
-          },
-          {
-            x: 0,
-            y: 0,
-            skewX: 0,
-            skewY: 0,
-            rotation: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            delay: i * 0.1,
-            ease: "back.out(1.2)",
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 90%",
-              once: true,
-            },
-            onComplete: () => {
-              gsap.set(col, { clearProps: "transform" });
-            },
-          }
-        );
+      // Gentle entrance that guarantees the footer and its children are always visible
+      gsap.from(footerRef.current, {
+        y: 20,
+        opacity: 0.9,
+        duration: 0.5,
+        ease: "power2.out",
+        clearProps: "all",
       });
-
-      if (bottomBarRef.current) {
-        gsap.fromTo(
-          bottomBarRef.current,
-          { x: -30, y: -30, skewX: -4, rotation: -2, opacity: 0 },
-          {
-            x: 0,
-            y: 0,
-            skewX: 0,
-            rotation: 0,
-            opacity: 1,
-            duration: 0.7,
-            ease: "back.out(1.2)",
-            delay: 0.3,
-            scrollTrigger: {
-              trigger: footerRef.current,
-              start: "top 90%",
-              once: true,
-            },
-            onComplete: () => {
-              if (bottomBarRef.current) gsap.set(bottomBarRef.current, { clearProps: "transform" });
-            },
-          }
-        );
-      }
     }, footerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [pathname]);
 
   return (
     <footer
@@ -95,7 +35,7 @@ export default function Footer() {
       <div className="w-full px-6 sm:px-10 lg:px-12 py-12 lg:py-16">
         
         {/* Main Footer Grid */}
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
           
           {/* Brand & Attribution (5 cols on lg) */}
           <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
@@ -224,7 +164,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Horizontal Bar */}
-        <div ref={bottomBarRef} className="pt-8 border-t border-[#620821] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D8CCD0]">
+        <div className="pt-8 border-t border-[#620821] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D8CCD0]">
           <div>
             © 2025–2026 Code Relay 5.0. Web and Design Society, Indian Institute of Technology Bhubaneswar. All rights reserved.
           </div>

@@ -1,3 +1,9 @@
+export { default as EventCTA } from "./EventCTA";
+export { default as EventHeader } from "./EventHeader";
 export { default as EventInfoStrip } from "./EventInfoStrip";
+export { default as EventScheduleSection } from "./EventScheduleSection";
+export { default as FaqSection } from "./FaqSection";
+export { default as JudgingCriteriaSection } from "./JudgingCriteriaSection";
+export { default as ParticipationFormatSection } from "./ParticipationFormatSection";
+export { default as PrizesSection } from "./PrizesSection";
 export { default as TracksSection } from "./TracksSection";
-
