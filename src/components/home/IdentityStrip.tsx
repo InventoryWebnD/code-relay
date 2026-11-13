@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { getSkewTrajectory } from "@/hooks/useGsapScrollTrigger";
+import { getSkewTrajectory, isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 import { FOCUS_ITEMS } from "@/data/homeData";
 
 if (typeof window !== "undefined") {
@@ -19,11 +19,36 @@ export default function IdentityStrip() {
 
   useEffect(() => {
     if (!stripRef.current) return;
+    const lowEnd = isLowEndDevice();
 
     const ctx = gsap.context(() => {
       const badges = itemsContainerRef.current?.children
         ? Array.from(itemsContainerRef.current.children)
         : [];
+
+      if (lowEnd) {
+        gsap.fromTo(
+          [titleRef.current, ...badges],
+          { y: -15, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.04,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: stripRef.current,
+              start: "top 95%",
+              once: true,
+            },
+            onComplete: () => {
+              if (titleRef.current) gsap.set(titleRef.current, { clearProps: "all" });
+              badges.forEach((b) => gsap.set(b, { clearProps: "all" }));
+            },
+          }
+        );
+        return;
+      }
 
       gsap.fromTo(
         titleRef.current,

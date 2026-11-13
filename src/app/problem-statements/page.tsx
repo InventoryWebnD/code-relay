@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { PROBLEM_STATEMENTS, ProblemStatement } from "@/data/problemStatements";
 import {
   ProblemStatementsHero,
@@ -10,6 +10,10 @@ import {
 } from "@/components/problem-statements";
 
 export default function ProblemStatementsPage() {
+  useEffect(() => {
+    document.title = "Problem Statements Vault | Code Relay 5.0";
+  }, []);
+
   const [selectedEdition, setSelectedEdition] = useState<"4.0" | "3.0">("4.0");
   const [selectedTrack, setSelectedTrack] = useState<"ALL" | "Web2" | "Web3">("ALL");
   const [searchQuery, setSearchQuery] = useState("");

@@ -39,7 +39,25 @@ export const SKEW_PRESETS: SkewTrajectory[] = [
   { y: -85, x: 20, skewX: 5, skewY: 2, rotation: 2.5 },
 ];
 
-export function getSkewTrajectory(index: number): SkewTrajectory {
+export function isLowEndDevice(): boolean {
+  if (typeof window === "undefined") return false;
+  const isMobile = window.innerWidth < 768;
+  const lowCores =
+    typeof navigator !== "undefined" &&
+    Boolean(navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4);
+  const lowMemory =
+    typeof navigator !== "undefined" &&
+    Boolean(
+      (navigator as unknown as { deviceMemory?: number }).deviceMemory &&
+        (navigator as unknown as { deviceMemory?: number }).deviceMemory! <= 4
+    );
+  return isMobile || lowCores || lowMemory;
+}
+
+export function getSkewTrajectory(index: number, forceSimple?: boolean): SkewTrajectory {
+  if (forceSimple || isLowEndDevice()) {
+    return { y: -25, x: 0, skewX: 0, skewY: 0, rotation: 0 };
+  }
   return SKEW_PRESETS[Math.abs(index) % SKEW_PRESETS.length];
 }
 
@@ -68,11 +86,12 @@ export function animateElementsDrop(
   options: ScrollDropOptions = {},
   triggerElement?: Element | null
 ) {
+  const lowEnd = isLowEndDevice();
   const {
     trajectory,
-    duration = 0.85,
-    stagger = 0.08,
-    ease = "back.out(1.25)",
+    duration = lowEnd ? 0.45 : 0.85,
+    stagger = lowEnd ? 0.04 : 0.08,
+    ease = lowEnd ? "power2.out" : "back.out(1.25)",
     start = "top 85%",
     once = true,
     delay = 0,

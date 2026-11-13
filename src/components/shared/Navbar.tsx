@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRegisterModal } from "@/context/RegisterModalContext";
 import gsap from "gsap";
+import { isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 interface NavbarProps {
   onRegisterClick?: () => void;
@@ -42,6 +43,10 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
 
   useEffect(() => {
     if (!navRef.current) return;
+    if (isLowEndDevice()) {
+      gsap.set(navRef.current, { opacity: 1, clearProps: "all" });
+      return;
+    }
     const ctx = gsap.context(() => {
       gsap.fromTo(
         navRef.current,

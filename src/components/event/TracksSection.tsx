@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -51,6 +52,7 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
 
   useEffect(() => {
     if (!sectionRef.current) return;
+    const lowEnd = isLowEndDevice();
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -63,42 +65,62 @@ export default function TracksSection({ onSelectTrack }: TracksSectionProps) {
 
       const headerChildren = headerRef.current ? Array.from(headerRef.current.children) : [];
 
-      tl.fromTo(
-        headerChildren,
-        {
-          x: (i) => (i % 2 === 0 ? -30 : 35),
-          y: -50,
-          skewX: (i) => (i % 2 === 0 ? -6 : 7),
-          rotation: (i) => (i % 2 === 0 ? -3 : 3),
-          opacity: 0,
-        },
-        {
-          x: 0,
-          y: 0,
-          skewX: 0,
-          rotation: 0,
-          opacity: 1,
-          duration: 0.75,
-          stagger: 0.1,
-          ease: "back.out(1.2)",
-        }
-      )
-        .fromTo(
-          web2CardRef.current,
-          { x: -60, y: -80, skewX: -8, rotation: -4.5, opacity: 0, scale: 0.94 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
-          "-=0.3"
+      if (lowEnd) {
+        tl.fromTo(
+          headerChildren,
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: "power2.out" }
         )
-        .fromTo(
-          web3CardRef.current,
-          { x: 60, y: -80, skewX: 8, rotation: 4.5, opacity: 0, scale: 0.94 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
-          "-=0.7"
-        );
+          .fromTo(
+            web2CardRef.current,
+            { y: -25, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+            "-=0.2"
+          )
+          .fromTo(
+            web3CardRef.current,
+            { y: -25, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+            "-=0.3"
+          );
+      } else {
+        tl.fromTo(
+          headerChildren,
+          {
+            x: (i) => (i % 2 === 0 ? -30 : 35),
+            y: -50,
+            skewX: (i) => (i % 2 === 0 ? -6 : 7),
+            rotation: (i) => (i % 2 === 0 ? -3 : 3),
+            opacity: 0,
+          },
+          {
+            x: 0,
+            y: 0,
+            skewX: 0,
+            rotation: 0,
+            opacity: 1,
+            duration: 0.75,
+            stagger: 0.1,
+            ease: "back.out(1.2)",
+          }
+        )
+          .fromTo(
+            web2CardRef.current,
+            { x: -60, y: -80, skewX: -8, rotation: -4.5, opacity: 0, scale: 0.94 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
+            "-=0.3"
+          )
+          .fromTo(
+            web3CardRef.current,
+            { x: 60, y: -80, skewX: 8, rotation: 4.5, opacity: 0, scale: 0.94 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.3)" },
+            "-=0.7"
+          );
+      }
 
       tl.eventCallback("onComplete", () => {
-        gsap.set(headerChildren, { clearProps: "transform" });
-        gsap.set([web2CardRef.current, web3CardRef.current], { clearProps: "transform" });
+        gsap.set(headerChildren, { clearProps: "all" });
+        gsap.set([web2CardRef.current, web3CardRef.current], { clearProps: "all" });
       });
     }, sectionRef);
 

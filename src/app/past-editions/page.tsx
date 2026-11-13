@@ -1,9 +1,16 @@
+import { Metadata } from "next";
 import {
   PastEditionsHeader,
   PastEditionsShowcase,
   AlumniVoicesSection,
   PastEditionsCTA,
 } from "@/components/past-editions";
+
+export const metadata: Metadata = {
+  title: "Past Editions & Community Legacy | Code Relay 5.0",
+  description:
+    "Explore the legacy of Code Relay across Editions 1.0 to 4.0, featuring past projects, statistics, and testimonials from 2,900+ hackers.",
+};
 
 export default function PastEditionsPage() {
   return (

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import {
   EventHeader,
   TracksSection,
@@ -8,6 +9,12 @@ import {
   FaqSection,
   EventCTA,
 } from "@/components/event";
+
+export const metadata: Metadata = {
+  title: "The Event & Specifications | Code Relay 5.0",
+  description:
+    "Explore the 36-hour dual track relay sprint specifications, timeline, rules, prizes, and judging criteria for Code Relay 5.0.",
+};
 
 export default function EventPage() {
   return (

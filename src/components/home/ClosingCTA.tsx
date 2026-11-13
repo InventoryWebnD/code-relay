@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRegisterModal } from "@/context/RegisterModalContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -21,6 +22,7 @@ export default function ClosingCTA() {
 
   useEffect(() => {
     if (!sectionRef.current) return;
+    const lowEnd = isLowEndDevice();
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
@@ -31,35 +33,43 @@ export default function ClosingCTA() {
         },
       });
 
-      tl.fromTo(
-        cardRef.current,
-        { x: -40, y: -70, skewX: -6, rotation: -3, opacity: 0, scale: 0.95 },
-        { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.2)" }
-      )
-        .fromTo(
-          tagRef.current,
-          { x: 25, y: -35, skewX: 6, rotation: 3, opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.3)" },
-          "-=0.4"
-        )
-        .fromTo(
-          titleRef.current,
-          { x: -30, y: -50, skewX: -5, rotation: -2.5, opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.65, ease: "back.out(1.25)" },
-          "-=0.35"
-        )
-        .fromTo(
-          descRef.current,
-          { x: 25, y: -35, skewX: 4, rotation: 2, opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.55, ease: "power3.out" },
-          "-=0.3"
-        )
-        .fromTo(
-          btnsRef.current ? Array.from(btnsRef.current.children) : [],
-          { x: (i) => (i % 2 === 0 ? -30 : 35), y: -45, skewX: (i) => (i % 2 === 0 ? -6 : 7), rotation: (i) => (i % 2 === 0 ? -3 : 4), opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.65, stagger: 0.1, ease: "back.out(1.3)" },
-          "-=0.25"
+      if (lowEnd) {
+        tl.fromTo(
+          cardRef.current,
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" }
         );
+      } else {
+        tl.fromTo(
+          cardRef.current,
+          { x: -40, y: -70, skewX: -6, rotation: -3, opacity: 0, scale: 0.95 },
+          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, scale: 1, duration: 0.85, ease: "back.out(1.2)" }
+        )
+          .fromTo(
+            tagRef.current,
+            { x: 25, y: -35, skewX: 6, rotation: 3, opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.55, ease: "back.out(1.3)" },
+            "-=0.4"
+          )
+          .fromTo(
+            titleRef.current,
+            { x: -30, y: -50, skewX: -5, rotation: -2.5, opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.65, ease: "back.out(1.25)" },
+            "-=0.35"
+          )
+          .fromTo(
+            descRef.current,
+            { x: 25, y: -35, skewX: 4, rotation: 2, opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.55, ease: "power3.out" },
+            "-=0.3"
+          )
+          .fromTo(
+            btnsRef.current ? Array.from(btnsRef.current.children) : [],
+            { x: (i) => (i % 2 === 0 ? -30 : 35), y: -45, skewX: (i) => (i % 2 === 0 ? -6 : 7), rotation: (i) => (i % 2 === 0 ? -3 : 4), opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, duration: 0.65, stagger: 0.1, ease: "back.out(1.3)" },
+            "-=0.25"
+          );
+      }
 
       tl.eventCallback("onComplete", () => {
         gsap.set(
@@ -71,7 +81,7 @@ export default function ClosingCTA() {
             btnsRef.current,
             btnsRef.current?.children ? Array.from(btnsRef.current.children) : [],
           ].flat(),
-          { clearProps: "transform" }
+          { clearProps: "all" }
         );
       });
     }, sectionRef);

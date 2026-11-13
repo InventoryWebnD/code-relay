@@ -5,6 +5,7 @@ import Link from "next/link";
 import DimensionalHeroObject from "./DimensionalHeroObject";
 import { useRegisterModal } from "@/context/RegisterModalContext";
 import gsap from "gsap";
+import { isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 interface HeroSectionProps {
   onRegisterClick?: () => void;
@@ -29,56 +30,98 @@ export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
 
   useEffect(() => {
     if (!heroRef.current) return;
+    const lowEnd = isLowEndDevice();
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        defaults: { ease: "back.out(1.25)", duration: 0.85 },
-        delay: 0.1,
-      });
+      if (lowEnd) {
+        // Fast, high-efficiency entrance for mobile / low-end devices
+        const tl = gsap.timeline({
+          defaults: { ease: "power2.out", duration: 0.4 },
+          delay: 0.05,
+        });
 
-      tl.fromTo(
-        eyebrowRef.current,
-        { x: -35, y: -50, skewX: -7, rotation: -4, opacity: 0 },
-        { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 }
-      )
-        .fromTo(
-          headingRef.current,
-          { x: 45, y: -70, skewX: 7, rotation: 3.5, opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 },
-          "-=0.65"
+        tl.fromTo(
+          [eyebrowRef.current, headingRef.current, paraRef.current],
+          { y: -20, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.06 }
         )
-        .fromTo(
-          paraRef.current,
-          { x: -30, y: -45, skewX: -5, rotation: -2, opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 },
-          "-=0.6"
-        )
-        .fromTo(
-          ctaRef.current ? Array.from(ctaRef.current.children) : [],
-          { x: (i) => (i % 2 === 0 ? -30 : 35), y: -50, skewX: (i) => (i % 2 === 0 ? -6 : 7), rotation: (i) => (i % 2 === 0 ? -3 : 4), opacity: 0 },
-          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, stagger: 0.1 },
-          "-=0.55"
-        )
-        .fromTo(
-          objectRef.current,
-          { x: 60, y: -85, skewX: -8, skewY: 4, rotation: 6, opacity: 0, scale: 0.92 },
-          { x: 0, y: 0, skewX: 0, skewY: 0, rotation: 0, opacity: 1, scale: 1 },
-          "-=0.7"
-        );
-
-      tl.eventCallback("onComplete", () => {
-        gsap.set(
-          [
-            eyebrowRef.current,
-            headingRef.current,
-            paraRef.current,
-            ctaRef.current,
-            ctaRef.current?.children ? Array.from(ctaRef.current.children) : [],
+          .fromTo(
+            ctaRef.current ? Array.from(ctaRef.current.children) : [],
+            { y: -15, opacity: 0 },
+            { y: 0, opacity: 1, stagger: 0.05 },
+            "-=0.2"
+          )
+          .fromTo(
             objectRef.current,
-          ].flat(),
-          { clearProps: "transform" }
-        );
-      });
+            { y: -20, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.45 },
+            "-=0.25"
+          );
+
+        tl.eventCallback("onComplete", () => {
+          gsap.set(
+            [
+              eyebrowRef.current,
+              headingRef.current,
+              paraRef.current,
+              ctaRef.current,
+              ctaRef.current?.children ? Array.from(ctaRef.current.children) : [],
+              objectRef.current,
+            ].flat(),
+            { clearProps: "all" }
+          );
+        });
+      } else {
+        // Full expressive skew drop for desktop devices
+        const tl = gsap.timeline({
+          defaults: { ease: "back.out(1.25)", duration: 0.85 },
+          delay: 0.1,
+        });
+
+        tl.fromTo(
+          eyebrowRef.current,
+          { x: -35, y: -50, skewX: -7, rotation: -4, opacity: 0 },
+          { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 }
+        )
+          .fromTo(
+            headingRef.current,
+            { x: 45, y: -70, skewX: 7, rotation: 3.5, opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 },
+            "-=0.65"
+          )
+          .fromTo(
+            paraRef.current,
+            { x: -30, y: -45, skewX: -5, rotation: -2, opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1 },
+            "-=0.6"
+          )
+          .fromTo(
+            ctaRef.current ? Array.from(ctaRef.current.children) : [],
+            { x: (i) => (i % 2 === 0 ? -30 : 35), y: -50, skewX: (i) => (i % 2 === 0 ? -6 : 7), rotation: (i) => (i % 2 === 0 ? -3 : 4), opacity: 0 },
+            { x: 0, y: 0, skewX: 0, rotation: 0, opacity: 1, stagger: 0.1 },
+            "-=0.55"
+          )
+          .fromTo(
+            objectRef.current,
+            { x: 60, y: -85, skewX: -8, skewY: 4, rotation: 6, opacity: 0, scale: 0.92 },
+            { x: 0, y: 0, skewX: 0, skewY: 0, rotation: 0, opacity: 1, scale: 1 },
+            "-=0.7"
+          );
+
+        tl.eventCallback("onComplete", () => {
+          gsap.set(
+            [
+              eyebrowRef.current,
+              headingRef.current,
+              paraRef.current,
+              ctaRef.current,
+              ctaRef.current?.children ? Array.from(ctaRef.current.children) : [],
+              objectRef.current,
+            ].flat(),
+            { clearProps: "transform" }
+          );
+        });
+      }
     }, heroRef);
 
     return () => ctx.revert();

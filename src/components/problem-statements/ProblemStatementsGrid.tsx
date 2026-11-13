@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { ProblemStatement } from "@/data/problemStatements";
 import ProblemStatementCard from "@/components/problem-statements/ProblemStatementCard";
 import gsap from "gsap";
-import { getSkewTrajectory } from "@/hooks/useGsapScrollTrigger";
+import { getSkewTrajectory, isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 interface ProblemStatementsGridProps {
   statements: ProblemStatement[];
@@ -18,14 +18,22 @@ export default function ProblemStatementsGrid({
   onResetFilters,
 }: ProblemStatementsGridProps) {
   const cardsGridRef = useRef<HTMLDivElement>(null);
+  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (!cardsGridRef.current) return;
+    // Only animate on initial entrance, not on every search filter keystroke
+    if (hasAnimatedRef.current || !cardsGridRef.current) return;
     const cards = Array.from(cardsGridRef.current.children);
     if (cards.length === 0) return;
 
-    cards.forEach((card, i) => {
-      const traj = getSkewTrajectory(i);
+    hasAnimatedRef.current = true;
+    const lowEnd = isLowEndDevice();
+
+    // Cap animated cards to avoid performance penalties
+    const animCards = cards.slice(0, lowEnd ? 6 : 12);
+
+    animCards.forEach((card, i) => {
+      const traj = getSkewTrajectory(i, lowEnd);
       gsap.fromTo(
         card,
         {
@@ -35,7 +43,7 @@ export default function ProblemStatementsGrid({
           skewY: traj.skewY,
           rotation: traj.rotation,
           opacity: 0,
-          scale: 0.95,
+          scale: lowEnd ? 1 : 0.95,
         },
         {
           x: 0,
@@ -45,19 +53,22 @@ export default function ProblemStatementsGrid({
           rotation: 0,
           opacity: 1,
           scale: 1,
-          duration: 0.65,
-          delay: i * 0.05,
-          ease: "back.out(1.25)",
+          duration: lowEnd ? 0.35 : 0.65,
+          delay: lowEnd ? 0 : i * 0.04,
+          ease: lowEnd ? "power2.out" : "back.out(1.25)",
           onComplete: () => {
             gsap.set(card, { clearProps: "transform" });
           },
         }
       );
     });
-  }, [statements]);
+  }, []);
 
   return (
-    <section className="relative w-full py-12 sm:py-16 border-b-2 border-[#160207] bg-[#F6F0E8] min-h-[500px]">
+    <section
+      data-no-scroll-animate="true"
+      className="relative w-full py-12 sm:py-16 border-b-2 border-[#160207] bg-[#F6F0E8] min-h-[500px]"
+    >
       <div className="w-full px-6 sm:px-10 lg:px-12">
         {statements.length === 0 ? (
           /* Empty State */

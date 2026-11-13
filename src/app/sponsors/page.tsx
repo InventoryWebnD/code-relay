@@ -7,9 +7,9 @@ import {
 } from "@/components/sponsors";
 
 export const metadata = {
-  title: "Sponsors & Ecosystem | Code Relay 2026",
+  title: "Sponsors & Ecosystem Partners | Code Relay 5.0",
   description:
-    "Partner with Code Relay 2026 to engage 1,200+ elite engineers, discover premier talent, and sponsor custom problem statement tracks.",
+    "Partner with Code Relay 5.0 to engage 1,200+ elite engineers, discover premier talent, and sponsor custom problem statement tracks.",
 };
 
 export default function SponsorsPage() {

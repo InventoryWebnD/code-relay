@@ -21,7 +21,10 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Code Relay 5.0 | Nationwide Web2 & Web3 Hackathon — WebnD IIT Bhubaneswar",
+  title: {
+    default: "Code Relay 5.0 | Nationwide Web2 & Web3 Hackathon — WebnD IIT Bhubaneswar",
+    template: "%s",
+  },
   description: "Code Relay 5.0 is India's premier nationwide hackathon featuring Web2 and Web3 tracks, organized by the Web and Design Society, IIT Bhubaneswar.",
   keywords: ["Code Relay", "Code Relay 5.0", "WebnD", "IIT Bhubaneswar", "Hackathon", "Web2", "Web3", "Blockchain", "Full Stack"],
   openGraph: {
