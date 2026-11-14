@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import {
   PastEditionsHeader,
   PastEditionsShowcase,
-  AlumniVoicesSection,
   PastEditionsCTA,
 } from "@/components/past-editions";
 
@@ -21,10 +20,7 @@ export default function PastEditionsPage() {
       {/* 2. Chronological Overview of Editions (CR 4.0 - 1.0) */}
       <PastEditionsShowcase />
 
-      {/* 3. Alumni & Mentor Perspectives */}
-      <AlumniVoicesSection />
-
-      {/* 4. Problem Statements Archive CTA */}
+      {/*{/* 4. Problem Statements Archive CTA */}
       <PastEditionsCTA />
     </div>
   );

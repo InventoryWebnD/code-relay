@@ -6,6 +6,15 @@ export interface WinningProject {
   stack: string[];
 }
 
+export interface EditionWinner {
+  place: string;
+  teamName: string;
+  track: "WEB2" | "WEB3";
+  image: string;
+  badge: string;
+  badgeColor: string;
+}
+
 export interface EditionStat {
   label: string;
   value: string;
@@ -20,9 +29,10 @@ export interface PastEdition {
   accentColor: string;
   badgeBg: string;
   description: string;
-  stats: EditionStat[];
+  stats?: EditionStat[];
   highlights: string[];
-  winningProjects: WinningProject[];
+  winningProjects?: WinningProject[];
+  winners?: EditionWinner[];
   problemStatementQuery: string;
 }
 
@@ -54,7 +64,7 @@ export const PAST_EDITIONS: PastEdition[] = [
     tag: "FLAGSHIP WEB & AI",
     accentColor: "#991B3D",
     badgeBg: "bg-[#991B3D] text-white",
-    description: "Our largest edition to date. Over 1,200 builders from 120+ colleges competed across dual tracks, deploying autonomous agent workflows, distributed real-time telemetry pipelines, and account abstraction infrastructure.",
+    description: "Our largest edition to date. Builders from universities nationwide competed across dual tracks, deploying autonomous agent workflows, distributed real-time telemetry pipelines, and account abstraction infrastructure.",
     stats: [
       { label: "Participants", value: "1,200+" },
       { label: "Prize Pool", value: "₹2,00,000" },
@@ -65,6 +75,40 @@ export const PAST_EDITIONS: PastEdition[] = [
       "First edition featuring autonomous AI telemetry and agent orchestration benchmarks",
       "Introduction of the 36-hour continuous relay sprint format with live midnight review rounds",
       "100% of finalist projects deployed live on production domains or EVM testnets",
+    ],
+    winners: [
+      {
+        place: "Winner · 1st Place",
+        teamName: "Team DOTENV",
+        track: "WEB2",
+        image: "/img/web2_win.jpg",
+        badge: "WEB2 CHAMPION",
+        badgeColor: "bg-[#991B3D] text-white border-[#B82A4F]/60"
+      },
+      {
+        place: "Runner Up · 2nd Place",
+        teamName: "Team TRAILLIO",
+        track: "WEB2",
+        image: "/img/web2_ru.jpg",
+        badge: "WEB2 RUNNER-UP",
+        badgeColor: "bg-[#620821]/60 text-[#E8738D] border-[#B82A4F]/40"
+      },
+      {
+        place: "Winner · 1st Place",
+        teamName: "Team My HACKADEMIA",
+        track: "WEB3",
+        image: "/img/web3_win.jpg",
+        badge: "WEB3 CHAMPION",
+        badgeColor: "bg-[#4B5D86] text-white border-[#657AA8]/60"
+      },
+      {
+        place: "Runner Up · 2nd Place",
+        teamName: "Team THE DOORS",
+        track: "WEB3",
+        image: "/img/web3_ru.jpg",
+        badge: "WEB3 RUNNER-UP",
+        badgeColor: "bg-[#364464]/60 text-[#8E9DBE] border-[#4B5D86]/40"
+      }
     ],
     winningProjects: [
       {
@@ -92,7 +136,7 @@ export const PAST_EDITIONS: PastEdition[] = [
     tag: "THE DECENTRALIZED FORK",
     accentColor: "#4B5D86",
     badgeBg: "bg-[#4B5D86] text-white",
-    description: "The pivotal edition that introduced our dedicated Web3 track. 42 smart-contract, cryptographic proof, and decentralized governance systems were deployed live, accompanied by scalable distributed Web2 backends.",
+    description: "The pivotal edition that introduced our dedicated Web3 track. Smart-contract, cryptographic proof, and decentralized governance systems were deployed live, accompanied by scalable distributed Web2 backends.",
     stats: [
       { label: "Participants", value: "850+" },
       { label: "Prize Pool", value: "₹1,50,000" },
