@@ -6,12 +6,14 @@ import { compare } from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+import type { Provider } from "next-auth/providers";
+
 const credentialsSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1),
 });
 
-const providers = [
+const providers: Provider[] = [
   Credentials({
     name: "Email and password",
     credentials: {
@@ -45,7 +47,7 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }) as (typeof providers)[number],
+    }),
   );
 }
 

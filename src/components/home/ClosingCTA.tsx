@@ -2,12 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRegisterModal } from "@/context/RegisterModalContext";
 import { useParallaxSlide } from "@/hooks/useGsapScrollTrigger";
 
 export default function ClosingCTA() {
-  const { openRegisterModal } = useRegisterModal();
-
   // Parallax slide hooks for smooth scroll depth
   const trophyParallaxRef = useParallaxSlide<HTMLDivElement>(-0.2, "vertical");
   const backgroundParallaxRef = useParallaxSlide<HTMLDivElement>(0.15, "vertical");
@@ -94,13 +91,13 @@ export default function ClosingCTA() {
 
               {/* Action Buttons matching Reference */}
               <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-                <button
-                  onClick={openRegisterModal}
+                <Link
+                  href="/register"
                   className="btn-pill-primary group text-sm py-3 px-8"
                 >
                   <span>Register Now</span>
                   <span className="text-xs transition-transform group-hover:translate-x-1">▶</span>
-                </button>
+                </Link>
 
                 <Link
                   href="/event"

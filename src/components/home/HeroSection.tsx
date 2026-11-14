@@ -2,24 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRegisterModal } from "@/context/RegisterModalContext";
 import { useParallaxSlide } from "@/hooks/useGsapScrollTrigger";
 
-interface HeroSectionProps {
-  onRegisterClick?: () => void;
-}
-
-export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
-  const modalContext = useRegisterModal();
-
-  const handleRegister = () => {
-    if (onRegisterClick) {
-      onRegisterClick();
-    } else {
-      modalContext.openRegisterModal();
-    }
-  };
-
+export default function HeroSection() {
   // Parallax slide hooks for layered depth on scroll
   const bgGlowRef = useParallaxSlide<HTMLDivElement>(0.15, "vertical");
   const foregroundRef = useParallaxSlide<HTMLDivElement>(-0.2, "vertical");
@@ -146,13 +131,13 @@ export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
 
             {/* Reference-Styled Pill Buttons ("Adventure ▶" in reference) */}
             <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-              <button
-                onClick={handleRegister}
+              <Link
+                href="/register"
                 className="btn-pill-primary group"
               >
                 <span>Register Now</span>
                 <span className="text-xs transition-transform group-hover:translate-x-1">▶</span>
-              </button>
+              </Link>
 
               <Link
                 href="/event"

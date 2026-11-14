@@ -4,25 +4,13 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRegisterModal } from "@/context/RegisterModalContext";
+import { useSession } from "next-auth/react";
 
-interface NavbarProps {
-  onRegisterClick?: () => void;
-}
-
-export default function Navbar({ onRegisterClick }: NavbarProps) {
+export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const modalContext = useRegisterModal();
-
-  const handleRegister = () => {
-    if (onRegisterClick) {
-      onRegisterClick();
-    } else {
-      modalContext.openRegisterModal();
-    }
-    setMobileMenuOpen(false);
-  };
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === "authenticated" && Boolean(session?.user);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -133,28 +121,74 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
           })}
         </nav>
 
-        {/* Far Right CTA Button (Holographic Burgundy Panel) */}
+        {/* Far Right CTA / Profile Button (Holographic Burgundy Panel) */}
         <div className="hidden sm:flex items-center gap-3">
-          <button
-            onClick={handleRegister}
-            className="group relative inline-flex items-center justify-center gap-2 rounded-full border border-[#FF8DA7]/70 bg-gradient-to-r from-[#991B3D] via-[#B82A4F] to-[#991B3D] px-5 py-2 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(184,42,79,0.5),inset_0_1px_2px_rgba(255,255,255,0.45)] hover:border-[#FFA3B9] hover:shadow-[0_0_30px_rgba(232,115,141,0.75),inset_0_1px_2px_rgba(255,255,255,0.65)] hover:scale-[1.03] transition-all duration-300"
-          >
-            {/* Top light shimmer */}
-            <span className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-3/4 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_8px_#FFF] rounded-full pointer-events-none" />
-            <span className="relative z-10 drop-shadow-[0_0_8px_rgba(255,210,225,0.6)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
-              Register Now
-            </span>
-          </button>
+          {isAuthenticated ? (
+            <Link
+              href="/profile"
+              className="group relative inline-flex items-center justify-center gap-2.5 rounded-full border border-[#FF8DA7]/70 bg-gradient-to-r from-[#991B3D] via-[#B82A4F] to-[#991B3D] px-4 py-1.5 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(184,42,79,0.5),inset_0_1px_2px_rgba(255,255,255,0.45)] hover:border-[#FFA3B9] hover:shadow-[0_0_30px_rgba(232,115,141,0.75)] hover:scale-[1.03] transition-all duration-300"
+            >
+              <span className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-3/4 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_8px_#FFF] rounded-full pointer-events-none" />
+              
+              {/* Profile Avatar / Initials */}
+              <div className="relative flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#160207] border border-[#FFA3B9]/80 text-[#FFA3B9] text-[10px] font-mono font-bold shadow-[0_0_8px_rgba(255,163,185,0.5)]">
+                {session?.user?.image ? (
+                  <Image
+                    src={session.user.image}
+                    alt={session.user.name || "User"}
+                    fill
+                    className="rounded-full object-cover"
+                  />
+                ) : (
+                  <span>
+                    {(session?.user?.name || "U")
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .slice(0, 2)
+                      .toUpperCase()}
+                  </span>
+                )}
+              </div>
+
+              <span className="relative z-10 max-w-[120px] truncate text-white drop-shadow-[0_0_8px_rgba(255,210,225,0.6)]">
+                {session?.user?.name?.split(" ")[0] || "Profile"}
+              </span>
+            </Link>
+          ) : (
+            <Link
+              href="/register"
+              className="group relative inline-flex items-center justify-center gap-2 rounded-full border border-[#FF8DA7]/70 bg-gradient-to-r from-[#991B3D] via-[#B82A4F] to-[#991B3D] px-5 py-2 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(184,42,79,0.5),inset_0_1px_2px_rgba(255,255,255,0.45)] hover:border-[#FFA3B9] hover:shadow-[0_0_30px_rgba(232,115,141,0.75),inset_0_1px_2px_rgba(255,255,255,0.65)] hover:scale-[1.03] transition-all duration-300"
+            >
+              {/* Top light shimmer */}
+              <span className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-3/4 h-[1.5px] bg-gradient-to-r from-transparent via-white to-transparent shadow-[0_0_8px_#FFF] rounded-full pointer-events-none" />
+              <span className="relative z-10 drop-shadow-[0_0_8px_rgba(255,210,225,0.6)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+                Register Now
+              </span>
+            </Link>
+          )}
         </div>
 
         {/* Mobile menu button */}
         <div className="flex lg:hidden items-center gap-2">
-          <button
-            onClick={handleRegister}
-            className="rounded-full border border-[#FF8DA7]/60 bg-gradient-to-r from-[#991B3D] to-[#B82A4F] px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(153,27,61,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] sm:hidden"
-          >
-            Register
-          </button>
+          {isAuthenticated ? (
+            <Link
+              href="/profile"
+              className="flex items-center gap-1.5 rounded-full border border-[#FF8DA7]/60 bg-gradient-to-r from-[#991B3D] to-[#B82A4F] px-3 py-1 text-xs font-heading font-bold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(153,27,61,0.5)] sm:hidden"
+            >
+              <span className="h-4 w-4 rounded-full bg-[#160207] border border-[#FFA3B9] flex items-center justify-center text-[9px] text-[#FFA3B9]">
+                {(session?.user?.name || "U")[0].toUpperCase()}
+              </span>
+              <span>Profile</span>
+            </Link>
+          ) : (
+            <Link
+              href="/register"
+              className="rounded-full border border-[#FF8DA7]/60 bg-gradient-to-r from-[#991B3D] to-[#B82A4F] px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(153,27,61,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] sm:hidden"
+            >
+              Register
+            </Link>
+          )}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
@@ -197,6 +231,25 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
                 </Link>
               );
             })}
+
+            {isAuthenticated ? (
+              <Link
+                href="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#991B3D] to-[#B82A4F] border border-[#FFA3B9]/80 py-2.5 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(184,42,79,0.5)]"
+              >
+                <span>My Profile ({session?.user?.name?.split(" ")[0] || "User"})</span>
+                <span>→</span>
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                onClick={() => setMobileMenuOpen(false)}
+                className="mt-2 text-center rounded-xl bg-gradient-to-r from-[#991B3D] to-[#B82A4F] border border-[#FFA3B9]/80 py-2.5 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(184,42,79,0.5)]"
+              >
+                Register Now →
+              </Link>
+            )}
           </nav>
         </div>
       )}
