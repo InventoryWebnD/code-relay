@@ -135,8 +135,8 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
 
         {/* Far Right CTA Button (Holographic Burgundy Panel) */}
         <div className="hidden sm:flex items-center gap-3">
-          <button
-            onClick={handleRegister}
+          <Link
+            href="/register"
             className="group relative inline-flex items-center justify-center gap-2 rounded-full border border-[#FF8DA7]/70 bg-gradient-to-r from-[#991B3D] via-[#B82A4F] to-[#991B3D] px-5 py-2 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(184,42,79,0.5),inset_0_1px_2px_rgba(255,255,255,0.45)] hover:border-[#FFA3B9] hover:shadow-[0_0_30px_rgba(232,115,141,0.75),inset_0_1px_2px_rgba(255,255,255,0.65)] hover:scale-[1.03] transition-all duration-300"
           >
             {/* Top light shimmer */}
@@ -144,17 +144,17 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
             <span className="relative z-10 drop-shadow-[0_0_8px_rgba(255,210,225,0.6)] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
               Register Now
             </span>
-          </button>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
         <div className="flex lg:hidden items-center gap-2">
-          <button
-            onClick={handleRegister}
+          <Link
+            href="/register"
             className="rounded-full border border-[#FF8DA7]/60 bg-gradient-to-r from-[#991B3D] to-[#B82A4F] px-4 py-1.5 text-xs font-heading font-bold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(153,27,61,0.5),inset_0_1px_1px_rgba(255,255,255,0.3)] sm:hidden"
           >
             Register
-          </button>
+          </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
@@ -197,6 +197,14 @@ export default function Navbar({ onRegisterClick }: NavbarProps) {
                 </Link>
               );
             })}
+
+            <Link
+              href="/register"
+              onClick={() => setMobileMenuOpen(false)}
+              className="mt-2 text-center rounded-xl bg-gradient-to-r from-[#991B3D] to-[#B82A4F] border border-[#FFA3B9]/80 py-2.5 text-xs font-heading font-extrabold uppercase tracking-wider text-white shadow-[0_0_15px_rgba(184,42,79,0.5)]"
+            >
+              Register Now →
+            </Link>
           </nav>
         </div>
       )}

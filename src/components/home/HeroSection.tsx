@@ -146,13 +146,13 @@ export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
 
             {/* Reference-Styled Pill Buttons ("Adventure ▶" in reference) */}
             <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
-              <button
-                onClick={handleRegister}
+              <Link
+                href="/register"
                 className="btn-pill-primary group"
               >
                 <span>Register Now</span>
                 <span className="text-xs transition-transform group-hover:translate-x-1">▶</span>
-              </button>
+              </Link>
 
               <Link
                 href="/event"
