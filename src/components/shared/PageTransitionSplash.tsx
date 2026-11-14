@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
 import gsap from "gsap";
-import { isLowEndDevice } from "@/hooks/useGsapScrollTrigger";
 
 export interface PageInfo {
   tag: string;
@@ -114,8 +114,6 @@ export default function PageTransitionSplash() {
     gsap.set(overlay, { display: "flex", opacity: 1, pointerEvents: "auto" });
     gsap.set(centerContent, { opacity: 1, clearProps: "transform" });
 
-    const lowEnd = isLowEndDevice();
-
     const tl = gsap.timeline({
       onComplete: () => {
         gsap.set(overlay, { display: "none", pointerEvents: "none" });
@@ -125,110 +123,31 @@ export default function PageTransitionSplash() {
       },
     });
 
-    if (lowEnd) {
-      // High-performance, fast mobile & low-end transition:
-      // Single panel vertical slide with zero heavy skew or composite reflows
-      tl.fromTo(
-        mainPanel,
-        { yPercent: -100 },
-        { yPercent: 0, duration: 0.25, ease: "power3.out" },
-        0
+    tl.fromTo(
+      mainPanel,
+      { yPercent: -100 },
+      { yPercent: 0, duration: 0.3, ease: "power3.inOut" },
+      0
+    )
+      .fromTo(
+        centerContent,
+        { y: -25, opacity: 0, scale: 0.98 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" },
+        0.08
       )
-        .fromTo(
-          centerContent,
-          { y: -20, opacity: 0, scale: 0.96 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.25, ease: "power2.out" },
-          0.06
-        )
-        .call(() => {
-          if (destinationHref) router.push(destinationHref);
-        }, [], 0.25)
-        .to(
-          centerContent,
-          { y: 15, opacity: 0, duration: 0.18, ease: "power2.in" },
-          "+=0.2"
-        )
-        .to(
-          mainPanel,
-          { yPercent: 100, duration: 0.25, ease: "power3.in" },
-          "-=0.04"
-        );
-    } else {
-      // Full expressive dual-panel skew animation for desktop
-      // 1. Curtains slam down with angular skew
-      tl.fromTo(
-        backPanel,
-        { yPercent: -105, skewY: -8, skewX: -4, scaleY: 1.1 },
-        { yPercent: 0, skewY: 0, skewX: 0, scaleY: 1, duration: 0.35, ease: "power4.inOut" },
-        0
-      ).fromTo(
-        mainPanel,
-        { yPercent: -105, skewY: -6, skewX: -3, scaleY: 1.1 },
-        { yPercent: 0, skewY: 0, skewX: 0, scaleY: 1, duration: 0.38, ease: "power4.inOut" },
-        0.03
-      );
-
-      // 2. Center Content with bold angular skew entrance
-      tl.fromTo(
+      .call(() => {
+        if (destinationHref) router.push(destinationHref);
+      }, [], 0.3)
+      .to(
         centerContent,
-        {
-          y: -65,
-          x: -30,
-          skewX: 18,
-          skewY: -4,
-          rotation: -4,
-          opacity: 0,
-          scale: 0.85,
-        },
-        {
-          y: 0,
-          x: 0,
-          skewX: 0,
-          skewY: 0,
-          rotation: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 0.45,
-          ease: "back.out(1.35)",
-        },
-        0.15
-      );
-
-      // 3. Trigger route navigation while splash fully covers the screen
-      tl.call(() => {
-        if (destinationHref) {
-          router.push(destinationHref);
-        }
-      }, [], 0.38);
-
-      // 4. Center heading skews and zooms out after hold
-      tl.to(
-        centerContent,
-        {
-          y: 45,
-          x: 25,
-          skewX: -14,
-          skewY: 3,
-          rotation: 3,
-          opacity: 0,
-          scale: 1.08,
-          duration: 0.28,
-          ease: "power3.in",
-        },
-        "+=0.35"
-      );
-
-      // 5. Curtains slide away with reverse skew
-      tl.to(
+        { y: 20, opacity: 0, duration: 0.22, ease: "power2.in" },
+        "+=0.2"
+      )
+      .to(
         mainPanel,
-        { yPercent: 105, skewY: 6, skewX: 3, scaleY: 1.1, duration: 0.38, ease: "power4.inOut" },
-        "-=0.1"
-      ).to(
-        backPanel,
-        { yPercent: 105, skewY: 8, skewX: 4, scaleY: 1.1, duration: 0.38, ease: "power4.inOut" },
-        "-=0.34"
+        { yPercent: 100, duration: 0.3, ease: "power3.inOut" },
+        "-=0.06"
       );
-    }
   }, [router]);
 
   // Global click listener to intercept internal link clicks
@@ -301,14 +220,22 @@ export default function PageTransitionSplash() {
       >
         {/* Top Header Strip inside Splash */}
         <div className="w-full flex items-center justify-between border-b border-[#160207]/40 pb-3 sm:pb-4 shrink-0">
-          <div className="flex items-center gap-2">
-            <span className="flex h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#991B3D] animate-ping" />
+          <div className="flex items-center gap-2.5">
+            <div className="relative w-6 h-6 shrink-0 rounded-md overflow-hidden border border-[#B82A4F]/60 bg-[#991B3D]/80 p-0.5">
+              <Image
+                src="/assets/cr_logo.png"
+                alt="Code Relay Logo"
+                width={24}
+                height={24}
+                className="w-full h-full object-contain"
+              />
+            </div>
             <span className="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-[#F6F0E8]">
               CODE RELAY 5.0
             </span>
           </div>
           <span className="font-mono text-[11px] sm:text-xs font-semibold text-[#E0D4C3] uppercase tracking-widest hidden sm:inline-block">
-            IIT BHUBANESWAR // WEBnD
+            IIT BHUBANESWAR · WEBnD
           </span>
         </div>
 
@@ -353,7 +280,7 @@ export default function PageTransitionSplash() {
             <span className="truncate">SYSTEM RELAY HANDOFF IN PROGRESS</span>
           </div>
           <span className="hidden sm:inline-block">
-            DISCIPLINE // WEB2 &amp; WEB3
+            DISCIPLINE · WEB2 &amp; WEB3
           </span>
         </div>
       </div>

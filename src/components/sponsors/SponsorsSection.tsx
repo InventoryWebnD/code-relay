@@ -21,7 +21,7 @@ export default function SponsorsSection() {
       category: "TITLE PARTNER",
       badge: "PLATINUM",
       tier: "PLATINUM",
-      tierLabel: "TIER 01 // PLATINUM",
+      tierLabel: "TIER 01 · PLATINUM",
       svgNormal: "/assets/card-2-platinum.svg",
       svgHover: "/assets/card-2-platinum-hover.svg",
       badgeColor: "bg-[#0284c7] text-white",
@@ -32,7 +32,7 @@ export default function SponsorsSection() {
       category: "CLOUD INFRASTRUCTURE",
       badge: "PLATINUM",
       tier: "PLATINUM",
-      tierLabel: "TIER 01 // PLATINUM",
+      tierLabel: "TIER 01 · PLATINUM",
       svgNormal: "/assets/card-2-platinum.svg",
       svgHover: "/assets/card-2-platinum-hover.svg",
       badgeColor: "bg-[#0284c7] text-white",
@@ -43,7 +43,7 @@ export default function SponsorsSection() {
       category: "NODE ECOSYSTEM",
       badge: "GOLD",
       tier: "GOLD",
-      tierLabel: "TIER 02 // GOLD",
+      tierLabel: "TIER 02 · GOLD",
       svgNormal: "/assets/card-2.svg",
       svgHover: "/assets/card-2-hover.svg",
       badgeColor: "bg-[#f59e0b] text-black",
@@ -54,7 +54,7 @@ export default function SponsorsSection() {
       category: "COMPUTE & ACCEL",
       badge: "GOLD",
       tier: "GOLD",
-      tierLabel: "TIER 02 // GOLD",
+      tierLabel: "TIER 02 · GOLD",
       svgNormal: "/assets/card-2.svg",
       svgHover: "/assets/card-2-hover.svg",
       badgeColor: "bg-[#f59e0b] text-black",
@@ -65,7 +65,7 @@ export default function SponsorsSection() {
       category: "ECOSYSTEM CAPITAL",
       badge: "SILVER",
       tier: "SILVER",
-      tierLabel: "TIER 03 // SILVER",
+      tierLabel: "TIER 03 · SILVER",
       svgNormal: "/assets/card-2-silver.svg",
       svgHover: "/assets/card-2-silver-hover.svg",
       badgeColor: "bg-[#94a3b8] text-black",
@@ -76,7 +76,7 @@ export default function SponsorsSection() {
       category: "ON-CHAIN STORAGE",
       badge: "PROTOCOL",
       tier: "VIOLET",
-      tierLabel: "TIER 03 // PROTOCOL",
+      tierLabel: "TIER 03 · PROTOCOL",
       svgNormal: "/assets/card-2-violet.svg",
       svgHover: "/assets/card-2-violet-hover.svg",
       badgeColor: "bg-[#7c3aed] text-white",
@@ -86,13 +86,13 @@ export default function SponsorsSection() {
 
   return (
     <section id="sponsors" className="relative w-full py-16 sm:py-20 border-b-2 border-black bg-[#070b14]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-12">
           <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#0d1424] px-3 py-1 shadow-hard-xs mb-3">
             <span className="font-mono text-xs font-bold text-slate-400 uppercase">
-              {"// SECTION 04: INDUSTRY NETWORK"}
+              SECTION 04: INDUSTRY NETWORK
             </span>
           </div>
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-white">

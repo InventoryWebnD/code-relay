@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -65,6 +66,15 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
           <div>
             {/* Header Badge */}
             <div className="flex items-center gap-2 mb-3">
+              <div className="relative w-5 h-5 shrink-0 rounded overflow-hidden">
+                <Image
+                  src="/assets/cr_logo.png"
+                  alt="Code Relay Logo"
+                  width={20}
+                  height={20}
+                  className="w-full h-full object-contain"
+                />
+              </div>
               <span className="font-mono text-xs font-bold text-[#991B3D] uppercase tracking-wider">
                 Early Admission Portal · Edition 5.0
               </span>

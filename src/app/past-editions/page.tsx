@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function PastEditionsPage() {
   return (
-    <div className="w-full flex flex-col bg-[#F6F0E8] text-[#1E030A]">
+    <div className="w-full flex flex-col bg-[#160207] text-[#F6F0E8] overflow-hidden selection:bg-[#991B3D] selection:text-white">
       {/* 1. Header Section with Cumulative Statistics */}
       <PastEditionsHeader />
 

@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function SponsorsPage() {
   return (
-    <div className="relative min-h-screen bg-[#FFFDF9] text-[#160207] overflow-x-hidden selection:bg-[#991B3D] selection:text-white">
+    <div className="relative min-h-screen bg-[#160207] text-[#F6F0E8] overflow-hidden selection:bg-[#991B3D] selection:text-white">
       {/* 1. Page Header */}
       <SponsorsHeader />
 
