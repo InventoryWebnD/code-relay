@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { registerSchema } from "@/lib/validation";
 import { handleRouteError, jsonError } from "@/lib/http";
 
+export const maxDuration = 30;
+
 export async function POST(request: NextRequest) {
   try {
     const body = registerSchema.parse(await request.json());

@@ -80,12 +80,21 @@ export default function RegisterForm() {
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      let data: {
+        error?: string;
+        details?: { formErrors?: string[] };
+        user?: { name: string; email: string; institution: string };
+      } | null = null;
+      try {
+        data = await res.json();
+      } catch {
+        // response was not JSON
+      }
 
       if (!res.ok) {
         setErrorMessage(
           data?.error ||
-          (data?.details?.formErrors?.length ? data.details.formErrors[0] : "Registration failed. Please check your inputs.")
+          (data?.details?.formErrors?.length ? data.details.formErrors[0] : `Registration request returned status ${res.status}. Please try again.`)
         );
         setIsLoading(false);
         return;
