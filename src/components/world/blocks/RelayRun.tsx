@@ -79,9 +79,9 @@ export default function RelayRun({ id = "relay" }: { id?: string }) {
         </div>
 
         {ROUNDS.map((r, i) => (
-          <article key={r.id} className="rr-lap relative flex shrink-0 flex-col justify-center min-[900px]:w-[min(620px,44vw)]">
+          <article key={r.id} className="rr-lap relative flex shrink-0 flex-col justify-center pt-14 min-[900px]:w-[min(620px,44vw)] min-[900px]:pt-0">
             <span
-              className="rr-num pointer-events-none absolute -top-[0.55em] right-0 font-display text-[clamp(160px,22vw,360px)] leading-none opacity-90"
+              className="rr-num pointer-events-none absolute -top-[0.55em] right-0 font-display text-[clamp(120px,22vw,360px)] leading-none opacity-25 min-[900px]:opacity-90"
               style={{ color: "transparent", WebkitTextStroke: `3px ${ACCENT[i]}` }}
               aria-hidden
             >
@@ -98,7 +98,7 @@ export default function RelayRun({ id = "relay" }: { id?: string }) {
               <h3 className="rr-pop mt-6 font-display text-[clamp(40px,4.6vw,76px)]">{r.title}</h3>
               <p className="rr-pop mt-4 max-w-md text-lg text-[var(--ink)]/80">{r.body}</p>
               <div className="rr-pop mt-8 flex items-baseline gap-4">
-                <span className="font-display text-[clamp(44px,4.6vw,72px)]" style={{ color: ACCENT[i] }}>
+                <span className="whitespace-nowrap font-display text-[clamp(36px,4.6vw,72px)]" style={{ color: ACCENT[i] }}>
                   {r.stat}
                 </span>
                 <span className="label text-[var(--ink)]/60">{r.statLabel}</span>

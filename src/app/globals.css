@@ -90,6 +90,11 @@ body {
   line-height: 0.88;
   text-transform: uppercase;
 }
+/* sentence-case display text (card titles, questions) wraps to several lines
+   on phones: give it room so the lines don't collide */
+.font-display[class*="normal-case"] {
+  line-height: 1.08;
+}
 
 .font-heading {
   font-family: var(--font-heading);

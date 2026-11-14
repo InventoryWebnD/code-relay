@@ -31,7 +31,7 @@ export default function TracksShowcase({ id = "tracks" }: { id?: string }) {
               key={tr.id}
               onClick={() => setActive(i)}
               onPointerEnter={() => setActive(i)}
-              className="group relative font-display text-[clamp(56px,10vw,150px)] leading-none transition-[color,transform] duration-500"
+              className="group relative font-display text-[clamp(36px,11vw,150px)] leading-none transition-[color,transform] duration-500"
               style={{ color: active === i ? tr.color : "transparent", WebkitTextStroke: active === i ? "0" : "2px var(--ink)" }}
               data-cursor={tr.name}
             >

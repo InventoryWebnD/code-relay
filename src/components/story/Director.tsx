@@ -176,7 +176,7 @@ export default function Director() {
     frameAt(focusU, f);
     story.focus.copy(f.pos);
     const narrow = size.width < 820;
-    const zoom = narrow ? 1.45 : 1;
+    const zoom = narrow ? 1.15 : 1;
     const pf = shotAt(p, 1) * zoom;
     const pu = shotAt(p, 2) * (narrow ? 1.2 : 1);
     const pr = shotAt(p, 3) * zoom;
@@ -203,7 +203,7 @@ export default function Director() {
     camera.lookAt(cam.look);
     const pc = camera as THREE.PerspectiveCamera;
     // phones: the copy fills the lower half, so lift the whole picture up
-    const lift = narrow ? Math.round(size.height * 0.2) : 0;
+    const lift = narrow ? Math.round(size.height * 0.14) : 0;
     const liftKey = lift * 100000 + size.width;
     if (liftKey !== cam.lift) {
       cam.lift = liftKey;

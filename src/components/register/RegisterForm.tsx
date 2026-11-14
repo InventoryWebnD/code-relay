@@ -157,7 +157,7 @@ export default function RegisterForm() {
           </p>
 
           {/* Key Highlights Card */}
-          <div className="w-full editorial-card rounded-2xl p-6 border border-[rgba(255,255,255,0.08)] bg-[#24040d]/60 mb-8 space-y-4">
+          <div className="hidden w-full editorial-card rounded-2xl p-6 border border-[rgba(255,255,255,0.08)] bg-[#24040d]/60 mb-8 space-y-4 lg:block">
             <div className="flex items-start gap-3.5">
               <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#991B3D]/50 border border-[#FFA3B9]/30 text-white font-mono text-xs font-bold">
                 01

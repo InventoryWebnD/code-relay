@@ -46,7 +46,7 @@ export function ReachBlock() {
           {CR4_HIGHLIGHTS.map((s, i) => (
             <div key={s.label} className={`py-6 pr-4 ${i ? "lg:border-l-2 lg:border-[var(--cream)]/15 lg:pl-8" : ""}`}>
               <span className="label text-[var(--sun)]">CR 4.0</span>
-              <CountUp value={s.value} suffix={s.suffix} className="mt-3 block font-display text-[clamp(44px,5vw,84px)]" />
+              <CountUp value={s.value} suffix={s.suffix} className="mt-3 block font-display text-[clamp(30px,9vw,84px)] lg:text-[clamp(44px,5vw,84px)]" />
               <span className="label mt-3 block text-[var(--cream)]/60">{s.label}</span>
             </div>
           ))}

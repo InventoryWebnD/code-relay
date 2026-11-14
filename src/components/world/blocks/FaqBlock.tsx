@@ -31,7 +31,7 @@ export default function FaqBlock({ id = "faq" }: { id?: string }) {
                     <span className={`label pt-1.5 transition-colors ${isOpen ? "text-[var(--crimson)]" : "text-[var(--ink)]/40"}`}>
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="font-display text-lg !normal-case tracking-tight transition-transform duration-500 group-hover:translate-x-2 sm:text-2xl">
+                    <span className="font-display text-lg !leading-[1.08] !normal-case tracking-tight transition-transform duration-500 group-hover:translate-x-2 sm:text-2xl">
                       {f.q}
                     </span>
                   </span>

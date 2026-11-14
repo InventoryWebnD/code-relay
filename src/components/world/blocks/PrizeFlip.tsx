@@ -18,16 +18,15 @@ export default function PrizeFlip({ id = "prizes" }: { id?: string }) {
       <div className="relative z-10 mx-auto max-w-[1300px] px-5 sm:px-10">
         <SectionHead align="center" label="Loot drop" title={"Prizes worth\nthe all-nighter"} sub="Hover or tap a coin to flip it." />
 
-        <Reveal group variant="pop" className="mt-16 grid justify-items-center gap-12 md:grid-cols-3" stagger={0.14}>
+        <Reveal group variant="pop" className="mt-12 grid justify-items-center gap-8 sm:mt-16 sm:gap-12 md:grid-cols-3" stagger={0.14}>
           {PRIZES.map((p, i) => (
             <div
               key={p.badge}
-              className="perspective aspect-square w-full max-w-[340px]"
+              className={`perspective aspect-square w-full max-w-[270px] sm:max-w-[340px] ${i === 1 ? "" : "md:mt-12"}`}
               onPointerEnter={(e) => e.pointerType === "mouse" && setFlipped(i)}
               onPointerLeave={(e) => e.pointerType === "mouse" && setFlipped(null)}
               onClick={() => setFlipped(flipped === i ? null : i)}
               data-cursor="Flip"
-              style={{ marginTop: i === 1 ? 0 : "3rem" }}
             >
               <div
                 className="preserve-3d relative h-full w-full transition-transform duration-[900ms] ease-[cubic-bezier(.34,1.56,.64,1)]"
@@ -56,7 +55,7 @@ export default function PrizeFlip({ id = "prizes" }: { id?: string }) {
                   className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-full bg-[var(--paper)] px-[14%] text-center text-[var(--ink)]"
                   style={{ transform: "rotateY(180deg)", boxShadow: "inset 0 0 0 3px #15060B" }}
                 >
-                  <p className="text-[15px] leading-relaxed">{p.description}</p>
+                  <p className="text-[13px] leading-snug sm:text-[15px] sm:leading-relaxed">{p.description}</p>
                   <span className="label mt-4 text-[var(--crimson)]">{p.footerNote}</span>
                 </div>
               </div>

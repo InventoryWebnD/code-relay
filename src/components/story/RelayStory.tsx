@@ -25,7 +25,7 @@ function Chapter({ n, label, children, align = "left" }: { n: number; label: str
   return (
     <div
       data-chapter={n}
-      className={`story-chapter pointer-events-none absolute inset-x-0 bottom-0 px-5 pb-24 sm:px-10 sm:pb-16 lg:px-16 ${align === "right" ? "lg:flex lg:justify-end" : ""}`}
+      className={`story-chapter pointer-events-none absolute inset-x-0 bottom-0 px-5 pb-20 sm:px-10 sm:pb-16 lg:px-16 ${align === "right" ? "lg:flex lg:justify-end" : ""}`}
       style={{ opacity: 0, visibility: "hidden" }}
     >
       <div className="max-w-[560px]">
@@ -168,7 +168,7 @@ export default function RelayStory() {
 
         <div ref={overlay} className="pointer-events-none absolute inset-0 [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
           {/* 0 — title */}
-          <div data-chapter={0} className="story-chapter pointer-events-none absolute inset-0 flex flex-col justify-end px-5 pb-24 sm:px-10 sm:pb-16 lg:px-16" style={{ opacity: 0 }}>
+          <div data-chapter={0} className="story-chapter pointer-events-none absolute inset-0 flex flex-col justify-end px-5 pb-20 sm:px-10 sm:pb-16 lg:px-16" style={{ opacity: 0 }}>
             <h1 className="font-display text-[clamp(48px,8.2vw,140px)] leading-[0.86] tracking-[-0.04em]">
               Code
               <br />
@@ -176,7 +176,7 @@ export default function RelayStory() {
             </h1>
             <p className="mt-6 max-w-md text-base text-[var(--cream)]/75 sm:text-lg">
               Meet <span className="font-bold text-[#7fd6d6]">Webby</span>. Every relay starts with one runner and one idea. Scroll to run the
-              story. Click to jump.
+              story. Tap anywhere to make Webby jump.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
               <Link href="/register" className="btn-chunky border-[var(--sun)] bg-[var(--sun)] text-[var(--ink)]" data-cursor="Go!">
@@ -189,16 +189,16 @@ export default function RelayStory() {
           </div>
 
           <Chapter n={1} label={`${r1.label} · ${r1.mode} · ${r1.when}`}>
-            <h2 className="mt-5 font-display text-[clamp(34px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">
+            <h2 className="mt-5 font-display text-[clamp(28px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">
               Ideas rise from <span className="text-[var(--sun)]">every corner</span> of India.
             </h2>
-            <p className="mt-5 max-w-md text-[var(--cream)]/75">
+            <p className="mt-4 max-w-md text-sm text-[var(--cream)]/75 sm:mt-5 sm:text-base">
               {r1.body} Every idea lights the baton a little brighter.
             </p>
           </Chapter>
 
           <Chapter n={2} label="Two tracks · one road">
-            <h2 className="mt-5 font-display text-[clamp(34px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">Pick your path.</h2>
+            <h2 className="mt-5 font-display text-[clamp(28px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">Pick your path.</h2>
             <div className="mt-6 grid max-w-xl grid-cols-2 gap-4">
               {TRACKS.map((t) => (
                 <div key={t.id} className="rounded-2xl border border-[var(--cream)]/15 bg-[var(--cream)]/[0.04] p-4 backdrop-blur-md">
@@ -207,7 +207,7 @@ export default function RelayStory() {
                     <span className="font-display text-lg">{t.name}</span>
                   </div>
                   <div className="mt-1 text-sm text-[var(--cream)]/70">{t.tagline}</div>
-                  <ul className="mt-3 space-y-1 text-xs text-[var(--cream)]/55">
+                  <ul className="mt-3 hidden space-y-1 text-xs text-[var(--cream)]/55 sm:block">
                     {t.items.map((it) => (
                       <li key={it.title}>— {it.title}</li>
                     ))}
@@ -218,10 +218,10 @@ export default function RelayStory() {
           </Chapter>
 
           <Chapter n={3} label={`${sl.label} · ${sl.when}`} align="right">
-            <h2 className="mt-5 font-display text-[clamp(34px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">
+            <h2 className="mt-5 font-display text-[clamp(28px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">
               <span className="text-[var(--sun)]">{EVENT.shortlist}</span> teams keep their light.
             </h2>
-            <p className="mt-5 max-w-md text-[var(--cream)]/75">
+            <p className="mt-4 max-w-md text-sm text-[var(--cream)]/75 sm:mt-5 sm:text-base">
               {sl.body} Then the opener hands over the baton. Nobody wins this alone: teams of {EVENT.teamSize}.
             </p>
             <div className="mt-6 grid grid-cols-4 gap-2">
@@ -238,7 +238,7 @@ export default function RelayStory() {
 
           <Chapter n={4} label={`${r2.label} · ${r2.mode} · ${r2.when}`}>
             <div className="mt-4 flex items-end gap-4">
-              <span ref={hours} className="font-display text-[clamp(84px,13vw,200px)] leading-[0.8] tracking-[-0.05em] text-[var(--sun)]">
+              <span ref={hours} className="font-display text-[clamp(64px,13vw,200px)] leading-[0.8] tracking-[-0.05em] text-[var(--sun)]">
                 00
               </span>
               <span className="label mb-3 text-[var(--cream)]/70">
@@ -248,7 +248,7 @@ export default function RelayStory() {
               </span>
             </div>
             <h2 className="mt-4 font-display text-[clamp(28px,3.6vw,54px)] leading-[0.95] tracking-[-0.03em]">The final sprint at {EVENT.institute}.</h2>
-            <p className="mt-4 max-w-md text-[var(--cream)]/75">{r2.body}</p>
+            <p className="mt-4 max-w-md text-sm text-[var(--cream)]/75 sm:text-base">{r2.body}</p>
           </Chapter>
 
           <Chapter n={5} label={`Finish line · ${EVENT.hashtag}`}>

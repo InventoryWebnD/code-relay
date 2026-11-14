@@ -105,7 +105,7 @@ export default function Footer() {
               alt="WebnD mascot"
               className="pointer-events-none absolute -top-[18%] right-[3%] w-[clamp(70px,11vw,170px)] -rotate-6 bob"
             />
-            <div className="flex justify-between font-display text-[clamp(52px,14.2vw,250px)] leading-[0.8]" aria-label={word}>
+            <div className="flex justify-between font-display text-[9.4vw] leading-[0.8] sm:text-[clamp(52px,14.2vw,250px)]" aria-label={word}>
               {Array.from(word).map((c, i) => (
                 <span
                   key={i}

@@ -90,7 +90,7 @@ export default function Manifesto() {
                 <CountUp
                   value={s.value}
                   suffix={s.suffix}
-                  className="block font-display text-[clamp(40px,5vw,84px)] transition-colors duration-300 group-hover:text-[var(--crimson)]"
+                  className="block font-display text-[clamp(30px,9vw,84px)] lg:text-[clamp(40px,5vw,84px)] transition-colors duration-300 group-hover:text-[var(--crimson)]"
                 />
                 <span className="label mt-3 block text-[var(--ink)]/65">{s.label}</span>
               </div>

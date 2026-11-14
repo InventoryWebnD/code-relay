@@ -54,12 +54,12 @@ export function ScheduleBlock() {
           <span className="label max-w-xs text-[var(--crimson)]">⚠ Provisional. The final schedule is shared with finalists.</span>
         </div>
 
-        <div className="mt-14 flex flex-wrap gap-x-10 gap-y-2">
+        <div className="mt-14 grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:gap-x-10 sm:gap-y-2">
           {SCHEDULE_DAYS.map((s, i) => (
             <button key={s.day} onClick={() => setDay(i)} className="group text-left">
               <span className={`label block transition-colors ${day === i ? "text-[var(--crimson)]" : "text-[var(--ink)]/45"}`}>Day 0{i + 1}</span>
               <span
-                className="font-display text-[clamp(28px,4vw,56px)] transition-all duration-500"
+                className="block font-display text-[clamp(20px,6.2vw,56px)] transition-all duration-500 sm:text-[clamp(28px,4vw,56px)]"
                 style={{ color: day === i ? "var(--ink)" : "transparent", WebkitTextStroke: day === i ? "0" : "1.5px var(--ink)" }}
               >
                 {s.day.split(":")[1]?.trim().split(" ")[0] ?? `Day ${i + 1}`}
@@ -72,7 +72,7 @@ export function ScheduleBlock() {
           {d.events.map((e) => (
             <div key={e.title} className="row-flood group grid gap-2 px-2 py-6 sm:grid-cols-[180px_1fr_1.3fr] sm:items-center sm:gap-8 sm:px-4" style={{ ["--flood" as string]: "var(--crimson)" }}>
               <span className="font-mono text-sm font-bold text-[var(--crimson)] transition-colors group-hover:text-[var(--sun)]">{e.time}</span>
-              <h4 className="font-display text-xl !normal-case tracking-tight sm:text-2xl">{e.title}</h4>
+              <h4 className="font-display text-xl !leading-[1.08] !normal-case tracking-tight sm:text-2xl">{e.title}</h4>
               <p className="text-[15px] opacity-75">{e.desc}</p>
             </div>
           ))}
@@ -114,7 +114,7 @@ export function JudgingBlock() {
                 <div className="grid items-end gap-4 sm:grid-cols-[200px_1fr]">
                   <CountUp value={pct} suffix="%" className="font-display text-[clamp(56px,6vw,96px)] leading-none" />
                   <div>
-                    <h4 className="font-display text-xl !normal-case tracking-tight sm:text-2xl">{c.title}</h4>
+                    <h4 className="font-display text-xl !leading-[1.08] !normal-case tracking-tight sm:text-2xl">{c.title}</h4>
                     <p className="mt-1 text-[15px] text-[var(--ink)]/70">{c.desc}</p>
                   </div>
                 </div>

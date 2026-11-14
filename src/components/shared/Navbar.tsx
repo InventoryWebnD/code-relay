@@ -35,8 +35,11 @@ export default function Navbar() {
     let last = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
-      if (!open) setHidden(y > 300 && y > last + 2);
-      if (y < last - 2) setHidden(false);
+      const dy = y - last;
+      // ignore jitter and no-op scroll events: only real movement flips it
+      if (Math.abs(dy) < 4) return;
+      if (y < 120) setHidden(false);
+      else if (!open) setHidden(dy > 0);
       last = y;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -91,7 +94,7 @@ export default function Navbar() {
       >
         <div className="mx-auto flex max-w-[1600px] items-start justify-between gap-6 px-5 pt-5 sm:px-10 sm:pt-7 lg:px-16">
           {/* Brand */}
-          <Link href="/" className="pointer-events-auto group flex items-baseline gap-2" data-cursor="Home" aria-label="Code Relay 5.0 home">
+          <Link href="/" className="pointer-events-auto group -m-3 flex items-baseline gap-2 p-3" data-cursor="Home" aria-label="Code Relay 5.0 home">
             <span className="font-display text-[17px] leading-none tracking-tight">CR</span>
             <span className="font-mono text-[11px] font-bold leading-none opacity-70 transition-opacity group-hover:opacity-100">/5.0</span>
           </Link>
@@ -138,7 +141,7 @@ export default function Navbar() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="font-display text-[12px] leading-[1.15] lg:hidden"
+              className="-m-3 p-3 font-display text-[13px] leading-[1.15] lg:hidden"
             >
               {open ? "Close" : "Menu"}
             </button>
@@ -153,7 +156,7 @@ export default function Navbar() {
           <div key={i} className="m-layer absolute inset-y-0 right-0 w-full sm:w-[min(560px,90vw)]" style={{ background: c }} />
         ))}
         <div className="m-panel grid-bg absolute inset-y-0 right-0 flex w-full flex-col justify-between overflow-hidden bg-[var(--cream)] px-6 pb-8 pt-28 sm:w-[min(560px,90vw)] sm:border-l-[3px] sm:border-[var(--ink)]">
-          <nav className="flex flex-col gap-1">
+          <nav className="relative z-10 flex flex-col gap-1">
             {NAV.map((l, i) => (
               <div key={l.href} className="overflow-hidden">
                 <Link
@@ -178,7 +181,7 @@ export default function Navbar() {
           <img
             src="/brand/webnd-mascot-fly.webp"
             alt=""
-            className="m-mascot pointer-events-none absolute -right-6 top-[38%] w-40 sm:w-52"
+            className="m-mascot pointer-events-none absolute -right-4 bottom-[24%] w-28 opacity-90 sm:w-44"
           />
 
           <div className="flex flex-col gap-4">
