@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { jsonError } from "@/lib/http";
-import { NextResponse } from "next/server";
 
 export async function getCurrentUser() {
   const session = await auth();

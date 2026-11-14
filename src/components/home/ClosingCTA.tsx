@@ -2,12 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRegisterModal } from "@/context/RegisterModalContext";
 import { useParallaxSlide } from "@/hooks/useGsapScrollTrigger";
 
 export default function ClosingCTA() {
-  const { openRegisterModal } = useRegisterModal();
-
   // Parallax slide hooks for smooth scroll depth
   const trophyParallaxRef = useParallaxSlide<HTMLDivElement>(-0.2, "vertical");
   const backgroundParallaxRef = useParallaxSlide<HTMLDivElement>(0.15, "vertical");

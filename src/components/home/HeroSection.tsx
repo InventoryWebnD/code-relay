@@ -2,24 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRegisterModal } from "@/context/RegisterModalContext";
 import { useParallaxSlide } from "@/hooks/useGsapScrollTrigger";
 
-interface HeroSectionProps {
-  onRegisterClick?: () => void;
-}
-
-export default function HeroSection({ onRegisterClick }: HeroSectionProps) {
-  const modalContext = useRegisterModal();
-
-  const handleRegister = () => {
-    if (onRegisterClick) {
-      onRegisterClick();
-    } else {
-      modalContext.openRegisterModal();
-    }
-  };
-
+export default function HeroSection() {
   // Parallax slide hooks for layered depth on scroll
   const bgGlowRef = useParallaxSlide<HTMLDivElement>(0.15, "vertical");
   const foregroundRef = useParallaxSlide<HTMLDivElement>(-0.2, "vertical");

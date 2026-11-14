@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -95,6 +96,17 @@ export default function RegisterForm() {
         email: data?.user?.email || email,
         institution: data?.user?.institution || institution,
       });
+
+      // Automatically sign in the newly registered participant
+      try {
+        await signIn("credentials", {
+          email: payload.email,
+          password: payload.password,
+          redirect: false,
+        });
+      } catch (authErr) {
+        console.error("Auto sign-in error after registration:", authErr);
+      }
     } catch (err) {
       console.error("Registration request error:", err);
       setErrorMessage("Network error occurred while connecting to the server. Please try again.");
@@ -247,18 +259,18 @@ export default function RegisterForm() {
                 {/* Next Steps CTA Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-4">
                   <Link
-                    href="/event#timeline"
+                    href="/profile"
                     className="btn-pill-primary w-full sm:w-auto px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-center"
                   >
-                    <span>Check Timeline</span>
+                    <span>Go to My Profile</span>
                     <span>→</span>
                   </Link>
 
                   <Link
-                    href="/problem-statements"
+                    href="/event#timeline"
                     className="btn-pill-secondary w-full sm:w-auto px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-center"
                   >
-                    <span>View Past Challenges</span>
+                    <span>Check Timeline</span>
                     <span>→</span>
                   </Link>
                 </div>
