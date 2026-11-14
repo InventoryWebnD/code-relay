@@ -4,8 +4,6 @@ import { requireUser } from "@/lib/auth-helpers";
 import { handleRouteError, jsonError } from "@/lib/http";
 import { SUBMISSION_BUCKET, supabaseAdmin } from "@/lib/supabase-admin";
 
-export const runtime = "nodejs";
-
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const ALLOWED_TYPES = new Set([
   "application/pdf",
