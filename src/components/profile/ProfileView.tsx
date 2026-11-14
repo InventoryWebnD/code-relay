@@ -33,7 +33,9 @@ const STUDY_YEARS = [
 ];
 
 export default function ProfileView() {
-  const { data: session, status } = useSession();
+  const sessionContext = useSession();
+  const session = sessionContext?.data;
+  const status = sessionContext?.status || "unauthenticated";
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [saveLoading, setSaveLoading] = useState(false);
