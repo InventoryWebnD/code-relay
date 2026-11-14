@@ -45,14 +45,6 @@ export default function ClosingCTA() {
         {/* ================= FEATURED EDITORIAL CARD WITH 3D VIGNETTE ================= */}
         <div className="editorial-card relative rounded-3xl p-8 sm:p-12 lg:p-14 overflow-hidden border border-[#620821]/50">
 
-          {/* Decorative Corner Accents */}
-          <div className="absolute top-4 left-4 font-mono text-xs text-[#657AA8] tracking-widest uppercase">
-            [ARENA_STAGE_05]
-          </div>
-          <div className="absolute top-4 right-4 font-mono text-xs text-[#657AA8] tracking-widest uppercase">
-            [T=36_HOURS]
-          </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
 
             {/* Left Content (7 cols) */}

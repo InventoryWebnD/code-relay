@@ -34,22 +34,24 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="sticky top-0 z-50 w-full border-b border-[#620821]/40 relative bg-[#160207] overflow-hidden"
+      className="sticky top-0 z-50 w-full border-b border-[#620821]/40 relative bg-[#160207]"
     >
-      {/* Background Topbar Image */}
-      <div className="absolute inset-0 z-0 pointer-events-none select-none">
-        <Image
-          src="/decoratives/topbar.png"
-          alt="Topbar Background"
-          fill
-          className="w-full h-full object-fill pointer-events-none select-none"
-          priority
-        />
-        {/* Subtle dark tint to maintain contrast & crisp readability */}
-        <div className="absolute inset-0 bg-[#160207]/35 pointer-events-none" />
-      </div>
+      {/* Topbar Bar with Scoped Background Image */}
+      <div className="relative w-full overflow-hidden">
+        {/* Background Topbar Image (Strictly confined to the topbar row) */}
+        <div className="absolute inset-0 z-0 pointer-events-none select-none">
+          <Image
+            src="/decoratives/topbar.png"
+            alt="Topbar Background"
+            fill
+            className="w-full h-full object-fill pointer-events-none select-none"
+            priority
+          />
+          {/* Subtle dark tint to maintain contrast & crisp readability */}
+          <div className="absolute inset-0 bg-[#160207]/35 pointer-events-none" />
+        </div>
 
-      <div className="relative z-10 w-full flex items-center justify-between px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24 py-3.5 pb-8">
+        <div className="relative z-10 w-full flex items-center justify-between px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24 py-3.5 pb-8">
 
         {/* Brand / Logo */}
         <Link href="/" className="group flex items-center gap-3">
@@ -207,6 +209,7 @@ export default function Navbar() {
             )}
           </button>
         </div>
+      </div>
       </div>
 
       {/* Mobile Drawer */}

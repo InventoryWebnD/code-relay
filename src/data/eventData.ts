@@ -114,7 +114,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "What is the hybrid format and venue location?",
-    a: "Participants have the option to attend on-campus at the IIT Bhubaneswar permanent campus (Argul, Jatni) or compete virtually through our verified online relay rooms with live Discord/video support.",
+    a: "Participants can register online for round 1 and submit their ideas. If qualified for round 2, they will have to attend it on-campus at the IIT Bhubaneswar permanent campus (Argul, Jatni).",
   },
   {
     q: "Can I participate in both Web2 and Web3 tracks?",

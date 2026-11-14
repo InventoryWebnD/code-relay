@@ -1,7 +1,7 @@
 import {
   SponsorsHeader,
+  PastSponsorsSection,
   SponsorshipTiersSection,
-  EcosystemSupportersSection,
   SponsorsContactSection,
   SponsorsCTA,
 } from "@/components/sponsors";
@@ -18,13 +18,13 @@ export default function SponsorsPage() {
       {/* 1. Page Header */}
       <SponsorsHeader />
 
-      {/* 2. Structured Tier Opportunities */}
+      {/* 2. Past Sponsors (4.0 & 3.0 with official logos) */}
+      <PastSponsorsSection />
+
+      {/* 3. Partnership Options (Website Theme) */}
       <SponsorshipTiersSection />
 
-      {/* 3. Historical Ecosystem Supporters */}
-      <EcosystemSupportersSection />
-
-      {/* 4. Sponsorship Contact & Direct Inquiry Desk */}
+      {/* 4. Contact Us with Social Links */}
       <SponsorsContactSection />
 
       {/* 5. Bottom Navigation Bar */}

@@ -177,19 +177,6 @@ export default function IdentityStrip() {
             ))}
           </div>
 
-          {/* Mobile slide indicator pills */}
-          <div className="flex md:hidden items-center justify-center gap-2 mt-6">
-            {cards.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveSlide(i)}
-                aria-label={`Go to slide ${i + 1}`}
-                className={`h-2 rounded-full transition-all ${activeSlide === i ? "w-6 bg-[#E44714]" : "w-2 bg-white/20"
-                  }`}
-              />
-            ))}
-          </div>
-
         </div>
 
         {/* ================= EDITION 5.0 CORE FOCUS ITEMS (PRESERVED CONTENT) ================= */}
