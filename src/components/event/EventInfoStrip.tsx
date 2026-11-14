@@ -13,7 +13,7 @@ interface InfoCardProps {
 export default function EventInfoStrip() {
   const cards: InfoCardProps[] = [
     {
-      index: "01 // SCOPE",
+      index: "01 · SCOPE",
       badge: "PAN-INDIA",
       badgeColor: "blue",
       title: "Nationwide Hackathon",
@@ -21,7 +21,7 @@ export default function EventInfoStrip() {
       description: "Undergraduate and postgraduate builders collaborate in multidisciplinary teams of 2–4 members.",
     },
     {
-      index: "02 // TRACKS",
+      index: "02 · TRACKS",
       badge: "DUAL ENGINE",
       badgeColor: "violet",
       title: "Web2 & Web3 Tracks",
@@ -29,7 +29,7 @@ export default function EventInfoStrip() {
       description: "Compete in specialized tracks featuring real-world engineering hurdles and decentralized protocol challenges.",
     },
     {
-      index: "03 // TIMELINE",
+      index: "03 · TIMELINE",
       badge: "SPRING 2025",
       badgeColor: "lime",
       title: "Event Date",
@@ -38,7 +38,7 @@ export default function EventInfoStrip() {
       isPlaceholder: true,
     },
     {
-      index: "04 // ADMISSIONS",
+      index: "04 · ADMISSIONS",
       badge: "OPENING SOON",
       badgeColor: "slate",
       title: "Registration Deadline",
@@ -50,7 +50,7 @@ export default function EventInfoStrip() {
 
   return (
     <section id="event" className="relative w-full py-16 border-b-2 border-black bg-[#050912]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Section Heading Tag */}
         <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1e293b]">

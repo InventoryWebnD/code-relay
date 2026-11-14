@@ -45,14 +45,14 @@ export default function PastEditionsSection() {
 
   return (
     <section id="past-editions" className="relative w-full py-20 border-b-2 border-black bg-[#050912]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#0d1424] px-3 py-1 shadow-hard-xs mb-3">
               <span className="font-mono text-xs font-bold text-[#60a5fa] uppercase">
-                {"// SECTION 03: ARCHIVE & LEGACY"}
+                SECTION 03: ARCHIVE &amp; LEGACY
               </span>
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">
@@ -104,7 +104,7 @@ export default function PastEditionsSection() {
                     {/* Top Bar of the visual placeholder */}
                     <div className="relative z-10 flex items-center justify-between">
                       <span className="font-mono text-[10px] font-bold text-slate-400">
-                        ARCHIVE_ID // {item.year}
+                        ARCHIVE_ID · {item.year}
                       </span>
                       <span 
                         className="rounded-md border border-black px-2 py-0.5 text-[9px] font-black uppercase shadow-hard-xs"

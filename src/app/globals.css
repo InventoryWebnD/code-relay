@@ -2,7 +2,8 @@
 
 :root {
   /* ========================================================
-     OFFICIAL BRAND PALETTE (CODE RELAY 5.0)
+     OFFICIAL BRAND PALETTE (CODE RELAY 5.0 — DARK EDITORIAL CITADEL)
+     From design.md
      ======================================================== */
   --color-burgundy: #991b3d;
   --color-burgundy-light: #b82a4f;
@@ -27,24 +28,25 @@
   /* Semantic Design Tokens */
   --color-brand-primary: var(--color-burgundy);
   --color-brand-deep: var(--color-wine);
-  --color-surface: var(--color-ivory);
-  --color-surface-card: var(--color-ivory-card);
+  --color-surface: var(--color-black);
+  --color-surface-card: var(--color-wine-deepest);
   --color-accent-secondary: var(--color-slate-blue);
 
   /* Typography / Text Tokens */
-  --text-dark-primary: #1e030a;
-  --text-dark-secondary: #48232c;
-  --text-dark-muted: #6d4b54;
-
-  --text-light-primary: #ffffff;
-  --text-light-secondary: #f6f0e8;
-  --text-light-muted: #d6c6cc;
+  --text-primary: #f6f0e8;
+  --text-secondary: #e0d4c3;
+  --text-muted: #9e8992;
+  --text-accent: #657aa8;
 
   /* Borders & Shadows */
-  --border-brand: #620821;
+  --border-brand: rgba(153, 27, 61, 0.45);
+  --border-subtle: rgba(246, 240, 232, 0.12);
   --border-dark: #160207;
-  --shadow-color: #620821;
-  --shadow-color-dark: #160207;
+
+  /* Derived Gradients & Glows (from design.md) */
+  --bg-canvas-gradient: linear-gradient(180deg, #160207 0%, #22020a 45%, #160207 100%);
+  --card-surface-gradient: linear-gradient(180deg, rgba(98, 8, 33, 0.35) 0%, rgba(34, 2, 10, 0.85) 100%);
+  --portal-glow-gradient: radial-gradient(circle, rgba(184, 42, 79, 0.4) 0%, rgba(75, 93, 134, 0.2) 55%, transparent 75%);
 }
 
 @theme inline {
@@ -53,13 +55,13 @@
 }
 
 body {
-  background-color: var(--color-surface);
-  color: var(--text-dark-primary);
+  background-color: #160207;
+  color: var(--text-primary);
   font-family: var(--font-body);
   background-image: 
-    radial-gradient(rgba(98, 8, 33, 0.1) 1px, transparent 1px),
-    linear-gradient(to right, rgba(98, 8, 33, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(98, 8, 33, 0.03) 1px, transparent 1px);
+    radial-gradient(rgba(184, 42, 79, 0.12) 1px, transparent 1px),
+    linear-gradient(to right, rgba(98, 8, 33, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(98, 8, 33, 0.04) 1px, transparent 1px);
   background-size: 32px 32px, 64px 64px, 64px 64px;
   background-position: 0 0, 0 0, 0 0;
   overflow-x: hidden;
@@ -71,128 +73,154 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 /* ========================================================
-   2.5D HARD DIRECTIONAL SHADOWS & DIMENSIONAL PANELS
-   Offset downwards and to the right with solid hard edges
+   EDITORIAL TECH-NOIR STYLES (FROM DESIGN.MD & REFERENCE)
+   ======================================================== */
+
+/* Circular & Oval Vignette Portals */
+.portal-vignette {
+  position: relative;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 50%, rgba(184, 42, 79, 0.4) 0%, rgba(75, 93, 134, 0.22) 55%, transparent 75%);
+  box-shadow: inset 0 0 30px rgba(184, 42, 79, 0.25);
+  border: 1px solid rgba(184, 42, 79, 0.3);
+}
+
+/* Editorial Dark Glass Card */
+.editorial-card {
+  background: linear-gradient(180deg, rgba(56, 4, 18, 0.55) 0%, rgba(22, 2, 7, 0.88) 100%);
+  border: 1px solid rgba(153, 27, 61, 0.35);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.editorial-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(184, 42, 79, 0.65);
+  box-shadow: 0 25px 50px -12px rgba(153, 27, 61, 0.3);
+}
+
+/* Clean Pill Button (Reference style) */
+.btn-pill-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background-color: #991b3d;
+  color: #ffffff;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 20px rgba(153, 27, 61, 0.45);
+  transition: all 0.2s ease;
+}
+
+.btn-pill-primary:hover {
+  background-color: #b82a4f;
+  transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(184, 42, 79, 0.65);
+}
+
+.btn-pill-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(246, 240, 232, 0.25);
+  background-color: rgba(246, 240, 232, 0.06);
+  color: #f6f0e8;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+}
+
+.btn-pill-secondary:hover {
+  background-color: rgba(246, 240, 232, 0.15);
+  border-color: rgba(246, 240, 232, 0.5);
+  color: #ffffff;
+}
+
+/* ========================================================
+   CLEAN METALLIC TYPOGRAPHY (NO MULTI-LAYERED 3D EFFECT)
+   ======================================================== */
+.metallic-hero-text,
+.metallic-3d-text {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  text-transform: uppercase;
+  background: linear-gradient(
+    180deg,
+    #FFFFFF 0%,
+    #F3F6FA 25%,
+    #D0D9E5 55%,
+    #98A6B8 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Subtle pendulum swing for the hanging nameplate */
+@keyframes subtle-swing {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(2.5deg); }
+  50%  { transform: rotate(0deg); }
+  75%  { transform: rotate(-2.5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.nameplate-swing {
+  transform-origin: top center;
+  animation: subtle-swing 5s ease-in-out infinite;
+}
+
+/* ========================================================
+   2.5D HARD DIRECTIONAL SHADOWS & PANELS
    ======================================================== */
 .shadow-hard-xs {
-  box-shadow: 2px 2px 0px var(--border-dark);
+  box-shadow: 2px 2px 0px #0a0103;
 }
 
 .shadow-hard-sm {
-  box-shadow: 3px 3px 0px var(--border-dark);
+  box-shadow: 3px 3px 0px #0a0103;
 }
 
 .shadow-hard {
-  box-shadow: 4px 4px 0px var(--border-dark);
+  box-shadow: 4px 4px 0px #0a0103;
 }
 
 .shadow-hard-md {
-  box-shadow: 6px 6px 0px var(--border-dark);
+  box-shadow: 6px 6px 0px #0a0103;
 }
 
 .shadow-hard-lg {
-  box-shadow: 8px 8px 0px var(--border-dark);
+  box-shadow: 8px 8px 0px #0a0103;
 }
 
 .shadow-hard-xl {
-  box-shadow: 12px 12px 0px var(--border-dark);
+  box-shadow: 12px 12px 0px #0a0103;
 }
 
-/* Brand specific hard offset shadows */
-.shadow-hard-wine {
-  box-shadow: 5px 5px 0px var(--color-wine-dark);
-}
-
-.shadow-hard-burgundy {
-  box-shadow: 5px 5px 0px var(--color-burgundy-dark);
-}
-
-.shadow-hard-slate {
-  box-shadow: 5px 5px 0px var(--color-slate-blue-dark);
-}
-
-.shadow-hard-ivory {
-  box-shadow: 4px 4px 0px var(--color-ivory);
-}
-
-.shadow-hard-white {
-  box-shadow: 4px 4px 0px #ffffff;
-}
-
-/* ========================================================
-   2.5D BUTTON PRESS MECHANICS
-   ======================================================== */
 .btn-pressable {
-  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-pressable:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--border-dark);
+  transform: translateY(-2px);
 }
 
 .btn-pressable:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--border-dark);
-}
-
-.btn-pressable-hero {
-  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.12s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.btn-pressable-hero:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px var(--border-dark);
-}
-
-.btn-pressable-hero:active {
-  transform: translate(2px, 2px);
-  box-shadow: 3px 3px 0px var(--border-dark);
-}
-
-/* ========================================================
-   2.5D CARD LIFT EFFECT
-   ======================================================== */
-.card-25d {
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.card-25d:hover {
-  transform: translate(-3px, -3px);
-  box-shadow: 10px 10px 0px var(--border-dark);
-}
-
-/* Isometric Stage */
-.isometric-stage {
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-/* Technical Motif Crosshairs & Borders */
-.tech-border-pattern {
-  position: relative;
-}
-
-.tech-border-pattern::before {
-  content: "+";
-  position: absolute;
-  top: -8px;
-  left: -8px;
-  color: var(--color-wine);
-  font-family: monospace;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.tech-border-pattern::after {
-  content: "+";
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  color: var(--color-wine);
-  font-family: monospace;
-  font-size: 14px;
-  font-weight: bold;
+  transform: translateY(1px);
 }
 
 /* Universal Custom Cursor */

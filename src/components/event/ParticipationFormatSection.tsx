@@ -1,47 +1,59 @@
+import Image from "next/image";
 import { PARTICIPATION_FORMATS } from "@/data/eventData";
+
+const DECORATIVES_BY_INDEX = [
+  "/decoratives/computer-with-table.webp",
+  "/decoratives/bannerBoard.webp",
+  "/decoratives/3d-cubic-chip.webp",
+  "/decoratives/computers.webp",
+];
 
 export default function ParticipationFormatSection() {
   return (
-    <section id="format" className="relative w-full py-16 sm:py-20 border-b-2 border-[#160207] bg-[#F6F0E8]">
-      <div className="w-full px-6 sm:px-10 lg:px-12">
-        <div className="flex flex-col items-start mb-12">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-[#160207] bg-[#620821] px-3 py-1 shadow-hard-xs mb-3">
-            <span className="font-mono text-xs font-bold text-[#F6F0E8] uppercase tracking-wider">
-              Event Rules &amp; Specifications
-            </span>
-          </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#620821]">
+    <section id="format" className="relative w-full py-20 border-b border-[rgba(255,255,255,0.08)] bg-[#160207] overflow-hidden">
+      <div className="relative w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
+        <div className="flex flex-col items-start mb-12 sm:mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#F6F0E8]">
             PARTICIPATION FORMAT &amp; ELIGIBILITY
           </h2>
-          <p className="mt-2 text-base text-[#48232C] max-w-3xl font-medium">
+          <p className="mt-3 text-base sm:text-lg text-[#E0D4C3] max-w-3xl font-normal leading-relaxed">
             Everything you need to know about team structure, collegiate requirements, and the relay execution format.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {PARTICIPATION_FORMATS.map((item) => (
+          {PARTICIPATION_FORMATS.map((item, idx) => (
             <div
               key={item.specNumber}
-              className="card-25d rounded-xl border-2 border-[#160207] bg-[#FFFDF9] p-6 shadow-hard-lg flex flex-col justify-between"
+              className="editorial-card relative rounded-2xl p-6 flex flex-col justify-between overflow-hidden group hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
             >
               <div>
-                <div className="flex items-center justify-between pb-3 border-b border-[#E0D4C3] mb-4">
-                  <span className="font-mono text-xs font-bold text-[#991B3D]">
-                    {item.specNumber}
-                  </span>
-                  <span className={`rounded border border-[#160207] px-2 py-0.5 text-[10px] font-black uppercase shadow-hard-xs ${item.tagColor}`}>
+                {/* Header with tag */}
+                <div className="flex items-center justify-between pb-3 border-b border-[rgba(255,255,255,0.08)] mb-4">
+                  <span className="rounded-full border border-[rgba(255,255,255,0.14)] bg-white/5 px-2.5 py-0.5 text-[10px] font-mono font-bold uppercase text-[#E0D4C3]">
                     {item.tag}
                   </span>
                 </div>
-                <h3 className="font-heading text-xl font-bold text-[#620821] mb-2">
+
+                {/* Decorative Vignette Icon */}
+                <div className="relative w-16 h-16 mb-4 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(153,27,61,0.35)_0%,transparent_70%)]" />
+                  <div className="relative w-12 h-12">
+                    <Image
+                      src={DECORATIVES_BY_INDEX[idx % DECORATIVES_BY_INDEX.length]}
+                      alt={item.title}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                </div>
+
+                <h3 className="font-heading text-lg font-black uppercase text-[#F6F0E8] mb-2 leading-snug">
                   {item.title}
                 </h3>
-                <p className="text-sm text-[#48232C] leading-relaxed">
+                <p className="text-sm text-[#E0D4C3] leading-relaxed font-normal">
                   {item.description}
                 </p>
-              </div>
-              <div className="pt-4 border-t border-[#E0D4C3] mt-4 flex items-center justify-between">
-                <span className="text-[11px] font-mono text-[#6D4B54]">{item.status}</span>
               </div>
             </div>
           ))}
@@ -50,4 +62,3 @@ export default function ParticipationFormatSection() {
     </section>
   );
 }
-

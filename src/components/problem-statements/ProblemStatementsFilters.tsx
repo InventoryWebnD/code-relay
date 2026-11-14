@@ -24,27 +24,27 @@ export default function ProblemStatementsFilters({
   onReset,
 }: ProblemStatementsFiltersProps) {
   return (
-    <section className="sticky top-[69px] z-30 w-full border-b-2 border-[#160207] bg-[#F6F0E8]/95 backdrop-blur-sm py-4 shadow-hard-xs">
-      <div className="w-full px-6 sm:px-10 lg:px-12">
+    <section className="sticky top-[69px] z-30 w-full border-b border-[rgba(255,255,255,0.08)] bg-[#160207]/90 backdrop-blur-md py-4">
+      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           {/* Track Filter Segmented Control */}
           <div className="flex items-center gap-2">
-            <span className="hidden sm:inline-block font-mono text-xs font-bold text-[#620821] uppercase tracking-wider mr-1">
+            <span className="hidden sm:inline-block font-mono text-xs font-bold text-[#E8738D] uppercase tracking-wider mr-1">
               Track:
             </span>
-            <div className="inline-flex rounded-xl border-2 border-[#160207] bg-[#FFFDF9] p-1 shadow-hard-xs">
+            <div className="inline-flex rounded-full border border-[rgba(255,255,255,0.12)] bg-[#20030a]/80 p-1">
               {/* All Tracks */}
               <button
                 type="button"
                 onClick={() => onSelectTrack("ALL")}
-                className={`btn-pressable inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-heading font-black uppercase tracking-wider transition-all ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider transition-all ${
                   selectedTrack === "ALL"
-                    ? "border border-[#160207] bg-[#620821] text-white shadow-hard-xs"
-                    : "text-[#48232C] hover:text-[#991B3D]"
+                    ? "bg-[#991B3D] text-white shadow-sm"
+                    : "text-[#E0D4C3] hover:text-white"
                 }`}
               >
                 <span>All Tracks</span>
-                <span className={`rounded px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "ALL" ? "bg-black/30 text-white" : "bg-[#EADBCC] text-[#380412]"}`}>
+                <span className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "ALL" ? "bg-black/30 text-white" : "bg-white/10 text-[#E0D4C3]"}`}>
                   {totalCount}
                 </span>
               </button>
@@ -53,14 +53,14 @@ export default function ProblemStatementsFilters({
               <button
                 type="button"
                 onClick={() => onSelectTrack("Web2")}
-                className={`btn-pressable inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-heading font-black uppercase tracking-wider transition-all ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider transition-all ${
                   selectedTrack === "Web2"
-                    ? "border border-[#160207] bg-[#991B3D] text-white shadow-hard-xs"
-                    : "text-[#48232C] hover:text-[#991B3D]"
+                    ? "bg-[#991B3D] text-white shadow-sm"
+                    : "text-[#E0D4C3] hover:text-white"
                 }`}
               >
                 <span>Web2</span>
-                <span className={`rounded px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "Web2" ? "bg-black/30 text-white" : "bg-[#EADBCC] text-[#380412]"}`}>
+                <span className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "Web2" ? "bg-black/30 text-white" : "bg-white/10 text-[#E0D4C3]"}`}>
                   {web2Count}
                 </span>
               </button>
@@ -69,14 +69,14 @@ export default function ProblemStatementsFilters({
               <button
                 type="button"
                 onClick={() => onSelectTrack("Web3")}
-                className={`btn-pressable inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-heading font-black uppercase tracking-wider transition-all ${
+                className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1 text-xs font-heading font-bold uppercase tracking-wider transition-all ${
                   selectedTrack === "Web3"
-                    ? "border border-[#160207] bg-[#4B5D86] text-white shadow-hard-xs"
-                    : "text-[#48232C] hover:text-[#991B3D]"
+                    ? "bg-[#4B5D86] text-white shadow-sm"
+                    : "text-[#E0D4C3] hover:text-white"
                 }`}
               >
                 <span>Web3</span>
-                <span className={`rounded px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "Web3" ? "bg-black/30 text-white" : "bg-[#EADBCC] text-[#380412]"}`}>
+                <span className={`rounded-full px-1.5 py-0.2 font-mono text-[10px] ${selectedTrack === "Web3" ? "bg-black/30 text-white" : "bg-white/10 text-[#E0D4C3]"}`}>
                   {web3Count}
                 </span>
               </button>
@@ -90,21 +90,21 @@ export default function ProblemStatementsFilters({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search statements..."
-              className="w-full rounded-xl border-2 border-[#160207] bg-[#FFFDF9] px-3.5 py-1.5 pl-9 text-xs sm:text-sm font-medium text-[#1E030A] placeholder-[#6D4B54] shadow-hard-xs focus:border-[#991B3D] focus:outline-none"
+              className="w-full rounded-full border border-[rgba(255,255,255,0.14)] bg-[#20030a]/80 px-4 py-1.5 pl-9 text-xs sm:text-sm font-medium text-[#F6F0E8] placeholder-[#E0D4C3]/50 focus:border-[#991B3D] focus:outline-none transition-all"
             />
             <svg
-              className="absolute left-3 top-2.5 h-4 w-4 text-[#6D4B54]"
+              className="absolute left-3 top-2.5 h-4 w-4 text-[#E0D4C3]/60"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchChange("")}
-                className="absolute right-2.5 top-2 text-[10px] font-mono font-bold text-[#6D4B54] hover:text-[#1E030A]"
+                className="absolute right-3 top-2 text-[10px] font-mono font-bold text-[#E8738D] hover:text-white"
               >
                 CLEAR
               </button>
@@ -113,13 +113,13 @@ export default function ProblemStatementsFilters({
         </div>
 
         {/* Live Count and Filter Status Strip */}
-        <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#6D4B54]">
+        <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono text-[#E0D4C3]/70">
           <div className="flex items-center gap-2">
             <span>
-              Showing <strong className="text-[#620821]">{filteredCount}</strong> statement{filteredCount === 1 ? "" : "s"} for{" "}
-              <span className="text-[#991B3D] font-bold">Code Relay {selectedEdition}</span>
+              Showing <strong className="text-[#F6F0E8]">{filteredCount}</strong> statement{filteredCount === 1 ? "" : "s"} for{" "}
+              <span className="text-[#E8738D] font-bold">Code Relay {selectedEdition}</span>
               {selectedTrack !== "ALL" && (
-                <> · Track: <span className="text-[#620821] font-bold">{selectedTrack}</span></>
+                <> · Track: <span className="text-[#F6F0E8] font-bold">{selectedTrack}</span></>
               )}
             </span>
           </div>
@@ -128,7 +128,7 @@ export default function ProblemStatementsFilters({
             <button
               type="button"
               onClick={onReset}
-              className="text-[#991B3D] hover:text-[#620821] underline font-bold"
+              className="text-[#E8738D] hover:text-white underline font-bold"
             >
               Reset Filters
             </button>
@@ -138,4 +138,3 @@ export default function ProblemStatementsFilters({
     </section>
   );
 }
-

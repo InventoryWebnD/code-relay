@@ -43,10 +43,7 @@ export interface PrizeCard {
 
 export const IN_PAGE_NAV_PILLS = [
   { label: "Tracks", href: "#tracks" },
-  { label: "Format & Eligibility", href: "#format" },
-  { label: "Provisional Schedule", href: "#schedule" },
-  { label: "Prizes", href: "#prizes" },
-  { label: "Judging Criteria", href: "#judging" },
+  { label: "Timeline", href: "#timeline" },
   { label: "FAQs", href: "#faq" },
 ];
 

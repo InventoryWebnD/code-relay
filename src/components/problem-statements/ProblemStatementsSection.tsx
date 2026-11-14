@@ -42,14 +42,14 @@ export default function ProblemStatementsSection() {
 
   return (
     <section id="problem-statements" className="relative w-full py-20 border-b-2 border-black bg-[#070b14]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 gap-4">
           <div>
             <div className="inline-flex items-center gap-2 rounded-md border-2 border-black bg-[#131d33] px-3 py-1 shadow-hard-xs mb-3">
               <span className="font-mono text-xs font-bold text-[#d4ff00] uppercase">
-                {"// SECTION 03.5: PROBLEM VERTICALS"}
+                SECTION 03.5: PROBLEM VERTICALS
               </span>
             </div>
             <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white">

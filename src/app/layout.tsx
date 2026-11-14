@@ -22,13 +22,36 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Code Relay 5.0 | Nationwide Web2 & Web3 Hackathon — WebnD IIT Bhubaneswar",
+  title: {
+    default: "Code Relay 5.0 | Nationwide Web2 & Web3 Hackathon — WebnD IIT Bhubaneswar",
+    template: "%s",
+  },
   description: "Code Relay 5.0 is India's premier nationwide hackathon featuring Web2 and Web3 tracks, organized by the Web and Design Society, IIT Bhubaneswar.",
   keywords: ["Code Relay", "Code Relay 5.0", "WebnD", "IIT Bhubaneswar", "Hackathon", "Web2", "Web3", "Blockchain", "Full Stack"],
+  icons: {
+    icon: [
+      { url: "/assets/cr_logo.png" },
+      { url: "/icon.png" },
+      { url: "/favicon.ico" },
+    ],
+    apple: [
+      { url: "/assets/cr_logo.png" },
+      { url: "/apple-icon.png" },
+    ],
+    shortcut: "/assets/cr_logo.png",
+  },
   openGraph: {
     title: "Code Relay 5.0 — Nationwide Web2 & Web3 Hackathon",
     description: "Two tracks. One relay. Organized by the Web & Design Society, IIT Bhubaneswar.",
     type: "website",
+    images: [
+      {
+        url: "/assets/cr_logo.png",
+        width: 412,
+        height: 412,
+        alt: "Code Relay 5.0 Official Logo",
+      },
+    ],
   },
 };
 
@@ -42,7 +65,7 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#F6F0E8] text-[#1E030A] selection:bg-[#991B3D] selection:text-white">
+      <body className="min-h-full flex flex-col bg-[#160207] text-[#F6F0E8] selection:bg-[#991B3D] selection:text-white">
         <RegisterModalProvider>
           <ScrollAnimationProvider>
             <PageTransitionSplash />

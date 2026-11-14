@@ -2,18 +2,13 @@ import { TIER_OPPORTUNITIES } from "@/data/sponsorsData";
 
 export default function SponsorshipTiersSection() {
   return (
-    <section className="relative w-full py-16 sm:py-20 border-b-2 border-[#160207] bg-[#F6F0E8]">
-      <div className="w-full px-6 sm:px-10 lg:px-12">
-        <div className="flex flex-col items-start mb-12">
-          <div className="inline-flex items-center gap-2 rounded-md border-2 border-[#160207] bg-[#620821] px-3 py-1 shadow-hard-xs mb-3">
-            <span className="font-mono text-xs font-bold text-[#F6F0E8] uppercase tracking-wider">
-              Partnership Tiers
-            </span>
-          </div>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#620821]">
+    <section className="relative w-full py-20 border-b border-[rgba(255,255,255,0.08)] bg-[#160207] overflow-hidden">
+      <div className="relative w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
+        <div className="flex flex-col items-start mb-12 sm:mb-16">
+          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#F6F0E8]">
             CONFIRMED TIERS &amp; ENGAGEMENT MODELS
           </h2>
-          <p className="mt-2 text-base text-[#48232C] max-w-3xl font-medium">
+          <p className="mt-3 text-base sm:text-lg text-[#E0D4C3] max-w-3xl font-normal leading-relaxed">
             Flexible partnership packages crafted to provide maximum return on investment through talent recruitment, product adoption, and nationwide brand positioning.
           </p>
         </div>
@@ -22,47 +17,47 @@ export default function SponsorshipTiersSection() {
           {TIER_OPPORTUNITIES.map((tier) => (
             <div
               key={tier.tier}
-              className="card-25d relative flex flex-col justify-between rounded-xl border-2 border-[#160207] bg-[#FFFDF9] p-6 sm:p-8 shadow-hard-lg text-[#1E030A]"
+              className="editorial-card relative flex flex-col justify-between rounded-2xl p-6 sm:p-8 group hover:border-[rgba(255,255,255,0.2)] transition-all duration-300"
             >
               <div>
                 {/* Top Badge */}
-                <div className="flex items-center justify-between pb-3.5 border-b border-[#E0D4C3] mb-4">
-                  <span className="font-mono text-xs font-bold text-[#6D4B54]">
+                <div className="flex items-center justify-between pb-4 border-b border-[rgba(255,255,255,0.08)] mb-4">
+                  <span className="font-mono text-xs font-bold text-[#E8738D]">
                     {tier.tier}
                   </span>
-                  <span className={`rounded-md border border-[#160207] px-2.5 py-0.5 text-[10px] font-heading font-black uppercase shadow-hard-xs ${tier.badgeColor}`}>
+                  <span className="rounded-full border border-[rgba(255,255,255,0.15)] bg-white/5 px-3 py-0.5 text-[10px] font-mono font-bold uppercase text-[#F6F0E8]">
                     {tier.badge}
                   </span>
                 </div>
 
-                <h3 className="font-heading text-2xl font-bold text-[#620821] mb-2">
+                <h3 className="font-heading text-2xl font-black uppercase text-[#F6F0E8] mb-2 leading-snug">
                   {tier.title}
                 </h3>
 
-                <p className="text-sm text-[#48232C] leading-relaxed mb-6 font-normal">
+                <p className="text-sm text-[#E0D4C3] leading-relaxed mb-6 font-normal">
                   {tier.description}
                 </p>
 
-                <h4 className="font-mono text-xs font-bold uppercase text-[#991B3D] mb-3 tracking-wider">
+                <h4 className="font-mono text-xs font-bold uppercase text-[#8E9DBE] mb-3 tracking-wider">
                   KEY DELIVERABLES:
                 </h4>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2.5 mb-6">
                   {tier.deliverables.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#48232C]">
-                      <span className="text-[#991B3D] font-bold shrink-0">›</span>
+                    <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#E0D4C3]">
+                      <span className="text-[#E8738D] font-bold shrink-0">›</span>
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="pt-4 border-t border-[#E0D4C3] flex items-center justify-between">
-                <span className={`font-mono text-xs font-bold ${tier.statusColor}`}>
+              <div className="pt-4 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between">
+                <span className="font-mono text-xs font-bold text-[#E8738D]">
                   Status: {tier.status}
                 </span>
                 <a
                   href="#contact"
-                  className="btn-pressable inline-flex items-center gap-2 rounded-lg border-2 border-[#160207] bg-[#620821] hover:bg-[#991B3D] px-3.5 py-1.5 text-xs font-mono font-bold text-white shadow-hard-xs transition-colors"
+                  className="btn-pill-primary inline-flex items-center gap-2 py-1.5 px-4 text-xs font-bold tracking-wider"
                 >
                   <span>Inquire</span>
                   <span>→</span>
@@ -75,4 +70,3 @@ export default function SponsorshipTiersSection() {
     </section>
   );
 }
-
