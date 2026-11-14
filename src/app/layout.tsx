@@ -66,19 +66,19 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${plusJakartaSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#160207] text-[#F6F0E8] selection:bg-[#991B3D] selection:text-white">
-        <RegisterModalProvider>
-          <ScrollAnimationProvider>
-            <PageTransitionSplash />
-            <CustomCursor />
-            <Navbar />
-            <main className="flex-1 w-full">
-              <SessionProvider>
-              {children}
-              </SessionProvider>
-            </main>
-            <Footer />
-          </ScrollAnimationProvider>
-        </RegisterModalProvider>
+        <SessionProvider>
+          <RegisterModalProvider>
+            <ScrollAnimationProvider>
+              <PageTransitionSplash />
+              <CustomCursor />
+              <Navbar />
+              <main className="flex-1 w-full">
+                {children}
+              </main>
+              <Footer />
+            </ScrollAnimationProvider>
+          </RegisterModalProvider>
+        </SessionProvider>
       </body>
     </html>
   );

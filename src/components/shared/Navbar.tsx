@@ -9,7 +9,9 @@ import { useSession } from "next-auth/react";
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { data: session, status } = useSession();
+  const sessionContext = useSession();
+  const session = sessionContext?.data;
+  const status = sessionContext?.status;
   const isAuthenticated = status === "authenticated" && Boolean(session?.user);
 
   const navLinks = [
