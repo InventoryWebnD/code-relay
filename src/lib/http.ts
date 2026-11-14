@@ -14,5 +14,13 @@ export function handleRouteError(error: unknown) {
   }
 
   console.error("API route error:", error);
-  return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+
+  const message =
+    error instanceof Error
+      ? error.message.includes("Can't reach database")
+        ? "Database connection timed out. Please check your Supabase connection pooler URL."
+        : error.message
+      : "Internal server error";
+
+  return NextResponse.json({ error: message }, { status: 500 });
 }
