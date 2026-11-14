@@ -1,27 +1,25 @@
 import { Metadata } from "next";
-import {
-  PastEditionsHeader,
-  PastEditionsShowcase,
-  PastEditionsCTA,
-} from "@/components/past-editions";
+import { EditionExplorer, HallOfFame, LegacyHero } from "@/components/past-editions/LegacyBlocks";
+import DomeGallery from "@/components/world/blocks/DomeGallery";
+import ReviewStack from "@/components/world/blocks/ReviewStack";
+import SponsorWall from "@/components/world/blocks/SponsorWall";
+import FinalCTA from "@/components/world/blocks/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Past Editions & Community Legacy | Code Relay 5.0",
-  description:
-    "Explore the legacy of Code Relay across Editions 1.0 to 4.0, featuring past projects, statistics, and testimonials from 2,900+ hackers.",
+  title: "Past Editions | Code Relay",
+  description: "Four editions of Code Relay by WebnD, IIT Bhubaneswar: themes, stats, winners, gallery and reviews.",
 };
 
 export default function PastEditionsPage() {
   return (
-    <div className="w-full flex flex-col bg-[#160207] text-[#F6F0E8] overflow-hidden selection:bg-[#991B3D] selection:text-white">
-      {/* 1. Header Section with Cumulative Statistics */}
-      <PastEditionsHeader />
-
-      {/* 2. Chronological Overview of Editions (CR 4.0 - 1.0) */}
-      <PastEditionsShowcase />
-
-      {/*{/* 4. Problem Statements Archive CTA */}
-      <PastEditionsCTA />
-    </div>
+    <>
+      <LegacyHero />
+      <EditionExplorer />
+      <HallOfFame />
+      <DomeGallery title={"The\narchive"} label="Gallery" />
+      <ReviewStack />
+      <SponsorWall />
+      <FinalCTA title="Run lap five" />
+    </>
   );
 }

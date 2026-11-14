@@ -195,7 +195,7 @@ export default function RegisterForm() {
                   Round 1 &amp; Offline Finale
                 </h4>
                 <p className="text-xs text-[#D6C6CC] mt-0.5 leading-relaxed">
-                  Online deck submissions until Dec 12, followed by the on-campus 36-hour sprint at IIT Bhubaneswar (Jan 15–17).
+                  Online deck submissions until Dec 12, followed by the on-campus 30-hour sprint at IIT Bhubaneswar (Jan 15–17).
                 </p>
               </div>
             </div>

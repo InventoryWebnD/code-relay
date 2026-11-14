@@ -61,7 +61,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             </div>
             <div className="flex items-center gap-2 text-[#FFA3B9]">
               <span>✓</span>
-              <span>36-Hour Offline Relay Sprint @ IIT Bhubaneswar (Round 2)</span>
+              <span>30-Hour Offline Relay Sprint @ IIT Bhubaneswar (Round 2)</span>
             </div>
             <div className="flex items-center gap-2 text-[#FFA3B9]">
               <span>✓</span>

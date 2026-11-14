@@ -72,7 +72,7 @@ export const SCHEDULE_DAYS: ScheduleDay[] = [
     day: "Day 03: Code Freeze & Demo Day",
     date: "SUNDAY (PROVISIONAL)",
     events: [
-      { time: "08:00", title: "CODE FREEZE (T=36 Hours)", desc: "Strict repository commit lock. Submissions closed on portal with video demos." },
+      { time: "08:00", title: "CODE FREEZE", desc: "Strict repository commit lock. Submissions closed on portal with video demos." },
       { time: "09:30 - 13:00", title: "Preliminary Jury Evaluations", desc: "Code review, test suite execution, and shortlisting of top finalist teams." },
       { time: "14:30 - 17:00", title: "Grand Finalist Pitches & Live Demos", desc: "Top 12 teams pitch live on stage and stream before our distinguished jury." },
       { time: "17:30 - 18:30", title: "Valedictory & Prize Distribution", desc: "Announcement of track winners, bounty distributions, and closing remarks." },
@@ -122,7 +122,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "What are the rules regarding pre-existing code?",
-    a: "All code submitted for judging must be written during the 36-hour hackathon duration. You may utilize public open-source libraries, packages, frameworks, and APIs, but the core project logic, contracts, and interfaces must be original work created during the event.",
+    a: "All code submitted for judging must be written during the 30-hour hackathon duration. You may utilize public open-source libraries, packages, frameworks, and APIs, but the core project logic, contracts, and interfaces must be original work created during the event.",
   },
   {
     q: "When will the official problem statements be released?",
@@ -149,18 +149,18 @@ export const PARTICIPATION_FORMATS: ParticipationFormatItem[] = [
   },
   {
     specNumber: "Spec 03",
-    tag: "36H MARATHON",
+    tag: "30H MARATHON",
     tagColor: "bg-[#620821] text-white",
     title: "Continuous Relay Sprint",
-    description: "36 uninterrupted hours of architecture, development, and debugging with milestone checkpoints and mentorship touchpoints.",
+    description: "30 uninterrupted hours of architecture, development, and debugging with milestone checkpoints and mentorship touchpoints.",
     status: "Confirmed",
   },
   {
     specNumber: "Spec 04",
     tag: "HYBRID VENUE",
     tagColor: "bg-[#EADBCC] text-[#380412]",
-    title: "Campus & Virtual Rooms",
-    description: "Hacking takes place on the scenic IIT Bhubaneswar campus with real-time synchronized virtual relay rooms for remote teams.",
+    title: "Online, Then On Campus",
+    description: "Round 1 is an online idea round you can enter from anywhere in India. Shortlisted teams build the final prototype on campus at IIT Bhubaneswar.",
     status: "Confirmed",
   },
 ];

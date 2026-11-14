@@ -1,31 +1,31 @@
 import { Metadata } from "next";
-import {
-  EventHeader,
-  TracksSection,
-  EventTimelineSection,
-  FaqSection,
-} from "@/components/event";
+import EventHero from "@/components/event/EventHero";
+import { FactsRibbon, JudgingBlock, RulesBento, ScheduleBlock } from "@/components/event/EventBlocks";
+import RelayRun from "@/components/world/blocks/RelayRun";
+import TracksShowcase from "@/components/world/blocks/TracksShowcase";
+import PrizeFlip from "@/components/world/blocks/PrizeFlip";
+import FaqBlock from "@/components/world/blocks/FaqBlock";
+import FinalCTA from "@/components/world/blocks/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "The Event & Specifications | Code Relay 5.0",
+  title: "The Event | Code Relay 5.0",
   description:
-    "Explore the dual track relay sprint specifications, timeline, rules, and FAQs for Code Relay 5.0.",
+    "Format, tracks, schedule, judging and prizes for Code Relay 5.0: an online idea round followed by a 30-hour on-campus final at IIT Bhubaneswar.",
 };
 
 export default function EventPage() {
   return (
-    <div className="w-full flex flex-col bg-[#160207] text-[#F6F0E8] overflow-hidden selection:bg-[#991B3D] selection:text-white">
-      {/* 1. Page Header */}
-      <EventHeader />
-
-      {/* 2. Track Descriptions (TWO TRACKS. ONE RELAY.) */}
-      <TracksSection />
-
-      {/* 3. Vertical Interactive Timeline (Scroll Triggered) */}
-      <EventTimelineSection />
-
-      {/* 4. Frequently Asked Questions */}
-      <FaqSection />
-    </div>
+    <>
+      <EventHero />
+      <FactsRibbon />
+      <RelayRun id="format" />
+      <TracksShowcase />
+      <ScheduleBlock />
+      <JudgingBlock />
+      <RulesBento />
+      <PrizeFlip />
+      <FaqBlock />
+      <FinalCTA title="Ready set go" />
+    </>
   );
 }

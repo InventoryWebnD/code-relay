@@ -1,135 +1,134 @@
+"use client";
+
 import Link from "next/link";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Marquee, Reveal } from "@/components/world/motion";
+import { EVENT } from "@/data/cr5";
+
+const LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/event", label: "The Event" },
+  { href: "/past-editions", label: "Past Editions" },
+  { href: "/sponsors", label: "Sponsors" },
+  { href: "/problem-statements", label: "PS Vault" },
+  { href: "/register", label: "Register" },
+];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const word = "CODE RELAY";
+
   return (
-    <footer
-      data-no-scroll-animate="true"
-      className="relative w-full bg-[#0f0104] text-[#F6F0E8] border-t border-[#620821]/40"
-    >
-      <div className="w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24 py-12 lg:py-16">
+    <footer className="relative mt-auto overflow-hidden border-t-[3px] border-[var(--ink)] bg-[var(--ink)] text-[var(--cream)]">
+      <div className="border-b-[3px] border-[var(--ink)] bg-[var(--sun)] py-3 text-[var(--ink)]">
+        <Marquee speed={22}>
+          {["Sprint to innovation", "Pass the baton", "30 hours", "Web2 × Web3", "IIT Bhubaneswar", "Edition 5.0"].map((t) => (
+            <span key={t} className="mx-6 flex items-center gap-6 font-display text-xl sm:text-2xl">
+              {t}
+              <span className="inline-block h-4 w-4 rotate-45 bg-[var(--ink)]" />
+            </span>
+          ))}
+        </Marquee>
+      </div>
 
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
-
-          {/* Brand & Attribution (5 cols on lg) */}
-          <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-8">
-            <Link href="/" className="flex items-center gap-3 mb-4 group">
-              <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-[#B82A4F]/50 bg-[#991B3D]/80 text-white shadow-[0_0_15px_rgba(153,27,61,0.4)] group-hover:scale-105 transition-transform overflow-hidden p-1">
-                <Image
-                  src="/assets/cr_logo.png"
-                  alt="Code Relay Official Logo"
-                  width={40}
-                  height={40}
-                  className="w-full h-full object-contain"
-                />
+      <div className="grid-bg-dark relative px-5 sm:px-10 lg:px-16 pt-16 sm:pt-24 pb-8">
+        <div className="mx-auto max-w-[1500px]">
+          <div className="grid gap-12 lg:grid-cols-12">
+            <Reveal className="lg:col-span-6">
+              <p className="label text-[var(--sun)]">Ready to run?</p>
+              <h3 className="mt-4 font-display text-[clamp(36px,5.5vw,84px)]">
+                Grab the baton.
+                <br />
+                <span className="text-outline-cream">Ship the future.</span>
+              </h3>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/register" className="btn-chunky bg-[var(--crimson)] text-[var(--cream)] border-[var(--cream)]" data-cursor="Go!">
+                  Register now ↗
+                </Link>
+                <Link href="/sponsors" className="btn-chunky bg-[var(--cream)] text-[var(--ink)]">
+                  Partner with us
+                </Link>
               </div>
-              <div className="flex flex-col">
-                <div className="flex items-center gap-2">
-                  <span className="font-heading text-xl font-bold tracking-tight text-white group-hover:text-[#F6F0E8] transition-colors">
-                    CODE RELAY 5.0
-                  </span>
-                  <span className="rounded-full border border-[#B82A4F]/60 bg-[#991B3D] px-2 py-0.5 text-[10px] font-bold uppercase text-white shadow-hard-xs">
-                    Edition 5.0
-                  </span>
-                </div>
-                <span className="text-xs font-medium text-[#657AA8]">
-                  National Collegiate Hackathon
+            </Reveal>
+
+            <Reveal className="lg:col-span-3" delay={0.1}>
+              <p className="label text-[var(--teal)] mb-4">Explore</p>
+              <ul className="space-y-2">
+                {LINKS.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className={`group inline-flex items-center gap-2 text-lg font-bold ${pathname === l.href ? "text-[var(--sun)]" : ""}`}
+                    >
+                      <span className="inline-block w-0 overflow-hidden transition-all duration-300 group-hover:w-5">→</span>
+                      <span className="transition-colors group-hover:text-[var(--blush)]">{l.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal className="lg:col-span-3" delay={0.2}>
+              <p className="label text-[var(--teal)] mb-4">Talk to us</p>
+              <ul className="space-y-3 text-[15px]">
+                <li>
+                  <span className="block label text-[var(--cream)]/50">Contact</span>
+                  {EVENT.contact.name}
+                </li>
+                <li>
+                  <a href={`mailto:${EVENT.contact.email}`} className="underline decoration-[var(--crimson-hot)] decoration-2 underline-offset-4 hover:text-[var(--blush)] break-all">
+                    {EVENT.contact.email}
+                  </a>
+                </li>
+                <li>
+                  <a href={EVENT.contact.phoneHref} className="hover:text-[var(--blush)]">
+                    {EVENT.contact.phone}
+                  </a>
+                </li>
+                <li className="flex flex-wrap gap-2 pt-1">
+                  <a href={EVENT.contact.instagramUrl} target="_blank" rel="noreferrer" className="label rounded-full border-2 border-[var(--cream)] px-3 py-1.5 hover:bg-[var(--cream)] hover:text-[var(--ink)] transition-colors">
+                    {EVENT.contact.instagram}
+                  </a>
+                  <a href={EVENT.contact.linkedinUrl} target="_blank" rel="noreferrer" className="label rounded-full border-2 border-[var(--cream)] px-3 py-1.5 hover:bg-[var(--cream)] hover:text-[var(--ink)] transition-colors">
+                    LinkedIn
+                  </a>
+                </li>
+              </ul>
+            </Reveal>
+          </div>
+
+          {/* giant interactive wordmark */}
+          <div className="relative mt-20 sm:mt-28 select-none">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/webnd-mascot-stand.webp"
+              alt="WebnD mascot"
+              className="pointer-events-none absolute -top-[18%] right-[3%] w-[clamp(70px,11vw,170px)] -rotate-6 bob"
+            />
+            <div className="flex justify-between font-display text-[clamp(52px,14.2vw,250px)] leading-[0.8]" aria-label={word}>
+              {Array.from(word).map((c, i) => (
+                <span
+                  key={i}
+                  className="inline-block transition-[transform,color] duration-300 ease-[cubic-bezier(.34,1.56,.64,1)] hover:-translate-y-[18%] hover:-rotate-6 hover:text-[var(--crimson-hot)]"
+                  aria-hidden
+                >
+                  {c === " " ? " " : c}
                 </span>
-              </div>
-            </Link>
-
-            <p className="text-sm text-[#D6C6CC] max-w-md mb-6 leading-relaxed">
-              Organized by the <strong className="text-white font-semibold">Web and Design Society (WebnD)</strong> at the Indian Institute of Technology Bhubaneswar. Fostering nationwide collegiate engineering, protocol design, and rapid prototyping.
-            </p>
-          </div>
-
-          {/* Primary Navigation Links (2 cols on lg) */}
-          <div className="lg:col-span-2 flex flex-col space-y-3">
-            <span className="font-heading text-xs font-bold uppercase tracking-wider text-white mb-1">
-              Navigation
-            </span>
-            <Link href="/" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Home
-            </Link>
-            <Link href="/event" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              The Event
-            </Link>
-            <Link href="/problem-statements" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Past Problem Statements
-            </Link>
-            <Link href="/past-editions" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Past Editions
-            </Link>
-            <Link href="/sponsors" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Sponsors &amp; Partners
-            </Link>
-          </div>
-
-          {/* Hackathon Resources (3 cols on lg) */}
-          <div className="lg:col-span-3 flex flex-col space-y-3">
-            <span className="font-heading text-xs font-bold uppercase tracking-wider text-white mb-1">
-              Event Details
-            </span>
-            <Link href="/event#tracks" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Web2 and Web3 Tracks
-            </Link>
-            <Link href="/event#timeline" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Event Timeline &amp; Rounds
-            </Link>
-            <Link href="/event#faq" className="text-sm text-[#D6C6CC] hover:text-white transition-colors">
-              Frequently Asked Questions
-            </Link>
-          </div>
-
-          {/* Connect & Contact (2 cols on lg) */}
-          <div className="lg:col-span-2 flex flex-col space-y-3">
-            <span className="font-heading text-xs font-bold uppercase tracking-wider text-white mb-1">
-              Connect
-            </span>
-            <div className="flex flex-col space-y-2.5">
-              <a
-                href="https://www.instagram.com/webnd.iitbbs/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-[#D6C6CC] hover:text-white transition-colors"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.linkedin.com/company/webd-iitbbs/"
-                target="_blank"
-                rel="noreferrer"
-                className="text-sm text-[#D6C6CC] hover:text-white transition-colors"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="mailto:secyweb.sg@iitbbs.ac.in"
-                className="text-sm text-[#F6F0E8] font-bold hover:underline"
-              >
-                secyweb.sg@iitbbs.ac.in
-              </a>
+              ))}
             </div>
           </div>
 
-        </div>
-
-        {/* Bottom Horizontal Bar */}
-        <div className="pt-8 border-t border-[#620821]/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#9E8992]">
-          <div>
-            © 2025–2026 Code Relay 5.0. Web and Design Society, Indian Institute of Technology Bhubaneswar. All rights reserved.
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="rounded-full border border-[#620821] bg-[#22020A] px-3 py-1 font-heading text-xs font-semibold text-[#D6C6CC]">
-              IIT Bhubaneswar
-            </span>
-            <span className="rounded-full border border-[#B82A4F]/60 bg-[#991B3D] px-3 py-1 font-heading text-xs font-bold text-white shadow-hard-xs">
-              Edition 5.0
-            </span>
+          <div className="mt-8 flex flex-col-reverse gap-4 border-t-2 border-[var(--cream)]/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="label text-[var(--cream)]/60">
+              © 2026 {EVENT.org} · {EVENT.institute}
+            </p>
+            <div className="flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/webnd-mark.png" alt="WebnD" className="h-6 w-auto" />
+              <span className="label text-[var(--cream)]/60">Built by WebnD with way too much caffeine</span>
+            </div>
           </div>
         </div>
-
       </div>
     </footer>
   );

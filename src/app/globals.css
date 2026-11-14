@@ -1,91 +1,453 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   CODE RELAY 5.0 — "THE RELAY WORLD"
+   Bold, playful, sticker-and-grid design system.
+   Palette: crimson · wine · cream · navy (+ WebnD teal & sun from mascots)
+   ========================================================================== */
+
 :root {
-  /* ========================================================
-     OFFICIAL BRAND PALETTE (CODE RELAY 5.0 — DARK EDITORIAL CITADEL)
-     From design.md
-     ======================================================== */
-  --color-burgundy: #991b3d;
-  --color-burgundy-light: #b82a4f;
-  --color-burgundy-dark: #7a122e;
+  --ink: #15060b;
+  --ink-soft: #2a1118;
+  --cream: #f6f0e8;
+  --paper: #fffbf5;
+  --crimson: #991b3d;
+  --crimson-hot: #c2264f;
+  --wine: #620821;
+  --navy: #0b1b4d;
+  --navy-soft: #1f3478;
+  --teal: #5aa7a7;
+  --sun: #f5b000;
+  --blush: #f2b8c6;
 
-  --color-wine: #620821;
-  --color-wine-dark: #380412;
-  --color-wine-deepest: #22020a;
+  --grid-line: rgba(21, 6, 11, 0.07);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
-  --color-ivory: #f6f0e8;
-  --color-ivory-card: #fffdfa;
-  --color-ivory-tint: #ede5da;
-  --color-ivory-dark: #e0d4c3;
-
-  --color-slate-blue: #4b5d86;
-  --color-slate-blue-light: #657aa8;
-  --color-slate-blue-dark: #364464;
-
-  --color-white: #ffffff;
-  --color-black: #160207;
-
-  /* Semantic Design Tokens */
-  --color-brand-primary: var(--color-burgundy);
-  --color-brand-deep: var(--color-wine);
-  --color-surface: var(--color-black);
-  --color-surface-card: var(--color-wine-deepest);
-  --color-accent-secondary: var(--color-slate-blue);
-
-  /* Typography / Text Tokens */
+  /* legacy tokens still used by auth/profile forms */
   --text-primary: #f6f0e8;
   --text-secondary: #e0d4c3;
   --text-muted: #9e8992;
-  --text-accent: #657aa8;
-
-  /* Borders & Shadows */
-  --border-brand: rgba(153, 27, 61, 0.45);
-  --border-subtle: rgba(246, 240, 232, 0.12);
-  --border-dark: #160207;
-
-  /* Derived Gradients & Glows (from design.md) */
-  --bg-canvas-gradient: linear-gradient(180deg, #160207 0%, #22020a 45%, #160207 100%);
-  --card-surface-gradient: linear-gradient(180deg, rgba(98, 8, 33, 0.35) 0%, rgba(34, 2, 10, 0.85) 100%);
-  --portal-glow-gradient: radial-gradient(circle, rgba(184, 42, 79, 0.4) 0%, rgba(75, 93, 134, 0.2) 55%, transparent 75%);
 }
 
 @theme inline {
-  --font-heading: var(--font-space-grotesk), system-ui, sans-serif;
-  --font-body: var(--font-jakarta), system-ui, sans-serif;
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --font-heading: var(--font-unbounded), system-ui, sans-serif;
+  --font-body: var(--font-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-ink: var(--ink);
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-crimson: var(--crimson);
+  --color-crimson-hot: var(--crimson-hot);
+  --color-wine: var(--wine);
+  --color-navy: var(--navy);
+  --color-teal: var(--teal);
+  --color-sun: var(--sun);
+  --color-blush: var(--blush);
+}
+
+html {
+  background: var(--cream);
+  overflow-x: clip; /* no sideways page scroll from wide decorative sections */
+  scrollbar-width: thin;
+  scrollbar-color: var(--crimson) var(--cream);
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
 }
 
 body {
-  background-color: #160207;
-  color: var(--text-primary);
+  background-color: var(--cream);
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  color: var(--ink);
   font-family: var(--font-body);
-  background-image: 
-    radial-gradient(rgba(184, 42, 79, 0.12) 1px, transparent 1px),
-    linear-gradient(to right, rgba(98, 8, 33, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(98, 8, 33, 0.04) 1px, transparent 1px);
-  background-size: 32px 32px, 64px 64px, 64px 64px;
-  background-position: 0 0, 0 0, 0 0;
-  overflow-x: hidden;
+  overflow-x: clip; /* clip, not hidden: hidden would make body a scroll box and break sticky */
+  -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4, h5, h6, .font-heading {
+::selection {
+  background: var(--crimson);
+  color: var(--cream);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.font-heading {
   font-family: var(--font-heading);
-  letter-spacing: -0.02em;
 }
 
-/* ========================================================
-   EDITORIAL TECH-NOIR STYLES (FROM DESIGN.MD & REFERENCE)
-   ======================================================== */
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
 
-/* Circular & Oval Vignette Portals */
-.portal-vignette {
+/* --------------------------------------------------------------------------
+   World backgrounds
+   -------------------------------------------------------------------------- */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.grid-bg-dark {
+  background-image:
+    linear-gradient(to right, rgba(246, 240, 232, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(246, 240, 232, 0.07) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.dots-bg {
+  background-image: radial-gradient(rgba(21, 6, 11, 0.16) 1.4px, transparent 1.4px);
+  background-size: 18px 18px;
+}
+
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -3%); }
+  60% { transform: translate(-1%, 3%); }
+  80% { transform: translate(3%, 1%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* --------------------------------------------------------------------------
+   Stickers & chunky surfaces
+   -------------------------------------------------------------------------- */
+.stk {
+  border: 3px solid var(--ink);
+  border-radius: 22px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.stk-sm {
+  border: 2.5px solid var(--ink);
+  border-radius: 14px;
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.stk-lift {
+  transition:
+    transform 0.35s var(--ease-spring),
+    box-shadow 0.35s var(--ease-spring);
+}
+.stk-lift:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 10px 10px 0 var(--ink);
+}
+.stk-lift:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+  transition-duration: 0.08s;
+}
+
+.btn-chunky {
   position: relative;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 50% 50%, rgba(184, 42, 79, 0.4) 0%, rgba(75, 93, 134, 0.22) 55%, transparent 75%);
-  box-shadow: inset 0 0 30px rgba(184, 42, 79, 0.25);
-  border: 1px solid rgba(184, 42, 79, 0.3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 0.95rem 1.6rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  transition:
+    transform 0.4s var(--ease-spring),
+    color 0.3s ease;
+  overflow: hidden;
+  isolation: isolate;
+  white-space: nowrap;
+}
+.btn-chunky::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 140%;
+  aspect-ratio: 1;
+  z-index: -1;
+  background: var(--ink);
+  border-radius: 50%;
+  transform: translate(-50%, 0) scale(0.2);
+  transition: transform 0.6s var(--ease-out);
+}
+.btn-chunky:hover::before {
+  transform: translate(-50%, -62%) scale(1);
+}
+.btn-chunky:hover {
+  color: var(--cream) !important;
+}
+.btn-chunky:active {
+  transform: scale(0.95);
+  transition-duration: 0.1s;
 }
 
-/* Editorial Dark Glass Card */
+.btn-ghost {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.95rem 0.4rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.btn-ghost::after {
+  content: "";
+  position: absolute;
+  left: 0.4rem;
+  right: 0.4rem;
+  bottom: 0.7rem;
+  height: 2px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-out);
+}
+.btn-ghost:hover::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.btn-ghost::before {
+  content: "→";
+  order: 2;
+  transition: transform 0.4s var(--ease-spring);
+}
+.btn-ghost:hover::before {
+  transform: translateX(6px) rotate(-45deg);
+}
+
+/* Editorial row: a full-width line item that floods with colour on hover */
+.row-flood {
+  position: relative;
+  isolation: isolate;
+  border-top: 2px solid rgba(21, 6, 11, 0.15);
+  transition: color 0.35s ease;
+}
+.row-flood::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--flood, var(--ink));
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0.55s var(--ease-out);
+}
+.row-flood:hover::before {
+  clip-path: inset(0 0 0 0);
+}
+.row-flood:hover {
+  color: var(--flood-ink, var(--cream));
+}
+
+/* Glass pill used for floating labels over the world */
+.glass {
+  background: rgba(255, 251, 245, 0.62);
+  backdrop-filter: blur(14px) saturate(1.3);
+  -webkit-backdrop-filter: blur(14px) saturate(1.3);
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+}
+.text-outline-cream {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--cream);
+}
+
+.text-shadow-hard {
+  text-shadow: 4px 4px 0 var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Motion primitives
+   -------------------------------------------------------------------------- */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes marquee-rev {
+  from { transform: translate3d(-50%, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-speed, 28s) linear infinite;
+}
+.marquee-track.rev {
+  animation-name: marquee-rev;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
+  50% { transform: translateY(-12px) rotate(calc(var(--r, 0deg) + 2deg)); }
+}
+.bob {
+  animation: bob 4.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.wiggle-hover:hover {
+  animation: wiggle 0.35s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-dot {
+  position: relative;
+}
+.pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: inherit;
+  animation: pulse-ring 1.6s var(--ease-out) infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes caret {
+  50% { opacity: 0; }
+}
+.caret::after {
+  content: "_";
+  margin-left: 2px;
+  animation: caret 0.9s steps(1) infinite;
+}
+
+/* Split-text reveal primitives (driven by GSAP) */
+.split-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.split-char {
+  display: inline-block;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal],
+  [data-reveal-group] > * {
+    opacity: 0;
+  }
+  .split-char {
+    transform: translateY(115%);
+  }
+}
+
+/* 3D helpers */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+.perspective {
+  perspective: 1200px;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Custom cursor */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--crimson);
+  border: 2px solid var(--cream);
+  border-radius: 999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .bob,
+  .spin-slow,
+  .grain::after {
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   LEGACY — dark "control room" styles kept for auth / register / profile
+   ========================================================================== */
+.control-room {
+  background: #160207;
+  color: #f6f0e8;
+}
+
 .editorial-card {
   background: linear-gradient(180deg, rgba(56, 4, 18, 0.55) 0%, rgba(22, 2, 7, 0.88) 100%);
   border: 1px solid rgba(153, 27, 61, 0.35);
@@ -93,14 +455,10 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   backdrop-filter: blur(12px);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
-
 .editorial-card:hover {
-  transform: translateY(-4px);
   border-color: rgba(184, 42, 79, 0.65);
-  box-shadow: 0 25px 50px -12px rgba(153, 27, 61, 0.3);
 }
 
-/* Clean Pill Button (Reference style) */
 .btn-pill-primary {
   display: inline-flex;
   align-items: center;
@@ -111,18 +469,18 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color: #ffffff;
   padding: 0.75rem 1.75rem;
   font-family: var(--font-heading);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 0 20px rgba(153, 27, 61, 0.45);
+  letter-spacing: 0.04em;
+  border: 2px solid #f6f0e8;
+  box-shadow: 4px 4px 0 #f6f0e8;
   transition: all 0.2s ease;
 }
-
 .btn-pill-primary:hover {
-  background-color: #b82a4f;
-  transform: translateY(-1px);
-  box-shadow: 0 0 28px rgba(184, 42, 79, 0.65);
+  background-color: #c2264f;
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #f6f0e8;
 }
 
 .btn-pill-secondary {
@@ -136,107 +494,29 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   color: #f6f0e8;
   padding: 0.75rem 1.75rem;
   font-family: var(--font-heading);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  backdrop-filter: blur(8px);
   transition: all 0.2s ease;
 }
-
 .btn-pill-secondary:hover {
   background-color: rgba(246, 240, 232, 0.15);
-  border-color: rgba(246, 240, 232, 0.5);
-  color: #ffffff;
 }
 
-/* ========================================================
-   CLEAN METALLIC TYPOGRAPHY (NO MULTI-LAYERED 3D EFFECT)
-   ======================================================== */
-.metallic-hero-text,
-.metallic-3d-text {
-  font-family: var(--font-heading);
-  font-weight: 900;
-  text-transform: uppercase;
-  background: linear-gradient(
-    180deg,
-    #FFFFFF 0%,
-    #F3F6FA 25%,
-    #D0D9E5 55%,
-    #98A6B8 100%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+.shadow-hard-xs { box-shadow: 2px 2px 0 #0a0103; }
+.shadow-hard-sm { box-shadow: 3px 3px 0 #0a0103; }
+.shadow-hard { box-shadow: 4px 4px 0 #0a0103; }
+.shadow-hard-md { box-shadow: 6px 6px 0 #0a0103; }
+.shadow-hard-lg { box-shadow: 8px 8px 0 #0a0103; }
+.btn-pressable { transition: transform 0.15s ease; }
+.btn-pressable:hover { transform: translateY(-2px); }
+
+@keyframes rowIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
 }
 
-/* Subtle pendulum swing for the hanging nameplate */
-@keyframes subtle-swing {
-  0%   { transform: rotate(0deg); }
-  25%  { transform: rotate(2.5deg); }
-  50%  { transform: rotate(0deg); }
-  75%  { transform: rotate(-2.5deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.nameplate-swing {
-  transform-origin: top center;
-  animation: subtle-swing 5s ease-in-out infinite;
-}
-
-/* ========================================================
-   2.5D HARD DIRECTIONAL SHADOWS & PANELS
-   ======================================================== */
-.shadow-hard-xs {
-  box-shadow: 2px 2px 0px #0a0103;
-}
-
-.shadow-hard-sm {
-  box-shadow: 3px 3px 0px #0a0103;
-}
-
-.shadow-hard {
-  box-shadow: 4px 4px 0px #0a0103;
-}
-
-.shadow-hard-md {
-  box-shadow: 6px 6px 0px #0a0103;
-}
-
-.shadow-hard-lg {
-  box-shadow: 8px 8px 0px #0a0103;
-}
-
-.shadow-hard-xl {
-  box-shadow: 12px 12px 0px #0a0103;
-}
-
-.btn-pressable {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.btn-pressable:hover {
-  transform: translateY(-2px);
-}
-
-.btn-pressable:active {
-  transform: translateY(1px);
-}
-
-/* Universal Custom Cursor */
-@media (pointer: fine) {
-  *,
-  *::before,
-  *::after,
-  html,
-  body {
-    cursor: none !important;
-  }
-}
-
-html.custom-cursor-active,
-html.custom-cursor-active *,
-html.custom-cursor-active *::before,
-html.custom-cursor-active *::after {
-  cursor: none !important;
+/* story: sound equaliser bars */
+@keyframes eq {
+  0%, 100% { height: 3px; }
+  50% { height: 12px; }
 }

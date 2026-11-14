@@ -1,23 +1,32 @@
 import { Metadata } from "next";
-import { HeroSection, IdentityStrip, ClosingCTA } from "@/components/home";
+import RelayStory from "@/components/story/RelayStory";
+import Manifesto from "@/components/home/Manifesto";
+import TracksShowcase from "@/components/world/blocks/TracksShowcase";
+import PrizeFlip from "@/components/world/blocks/PrizeFlip";
+import DomeGallery from "@/components/world/blocks/DomeGallery";
+import ReviewStack from "@/components/world/blocks/ReviewStack";
+import SponsorWall from "@/components/world/blocks/SponsorWall";
+import FaqBlock from "@/components/world/blocks/FaqBlock";
+import FinalCTA from "@/components/world/blocks/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Code Relay 5.0 | Nationwide Web2 & Web3 Hackathon — WebnD IIT Bhubaneswar",
+  title: "Code Relay 5.0 | Sprint to Innovation — WebnD IIT Bhubaneswar",
   description:
-    "Code Relay 5.0 is India's premier nationwide collegiate hackathon featuring parallel Web2 and Web3 tracks, organized by the Web and Design Society, IIT Bhubaneswar.",
+    "Code Relay 5.0: WebnD IIT Bhubaneswar's flagship nationwide hackathon. Web2 and Web3 tracks, an online idea round and a 30-hour on-campus final.",
 };
 
 export default function Home() {
   return (
-    <div className="w-full flex flex-col bg-[#160207] text-[#F6F0E8]">
-      {/* 1. Dominant Hero Section with 3D Monolith & Atmospheric Mountain Backdrop */}
-      <HeroSection />
-
-      {/* 2. Choose Your Track & Core Focus Section (Editorial 3-Card Carousel) */}
-      <IdentityStrip />
-
-      {/* 3. Priority Roster & Arena Sprint Call */}
-      <ClosingCTA />
-    </div>
+    <>
+      <RelayStory />
+      <Manifesto />
+      <TracksShowcase />
+      <PrizeFlip />
+      <DomeGallery />
+      <ReviewStack />
+      <SponsorWall />
+      <FaqBlock />
+      <FinalCTA />
+    </>
   );
 }

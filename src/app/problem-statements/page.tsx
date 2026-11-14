@@ -1,13 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { PROBLEM_STATEMENTS, ProblemStatement } from "@/data/problemStatements";
-import {
-  ProblemStatementsHero,
-  ProblemStatementsFilters,
-  ProblemStatementsGrid,
-  ProblemStatementModal,
-} from "@/components/problem-statements";
+import { VaultHero, VaultFilters, VaultGrid, VaultModal } from "@/components/problem-statements/Vault";
 
 export default function ProblemStatementsPage() {
   useEffect(() => {
@@ -68,21 +63,23 @@ export default function ProblemStatementsPage() {
     }
   };
 
+  const closeModal = useCallback(() => setActiveStatement(null), []);
+
   const handleResetFilters = () => {
     setSelectedTrack("ALL");
     setSearchQuery("");
   };
 
   return (
-    <div className="w-full flex flex-col bg-[#160207] text-[#F6F0E8] overflow-hidden selection:bg-[#991B3D] selection:text-white">
+    <div className="w-full flex flex-col">
       {/* 1. Compact Hero / Introduction */}
-      <ProblemStatementsHero
+      <VaultHero
         selectedEdition={selectedEdition}
         onEditionChange={handleEditionChange}
       />
 
       {/* 2. Controls: Track Filters & Search */}
-      <ProblemStatementsFilters
+      <VaultFilters
         selectedTrack={selectedTrack}
         onSelectTrack={setSelectedTrack}
         searchQuery={searchQuery}
@@ -96,16 +93,16 @@ export default function ProblemStatementsPage() {
       />
 
       {/* 3. Problem Statement Cards Grid */}
-      <ProblemStatementsGrid
+      <VaultGrid
         statements={filteredStatements}
         onExplore={(st) => setActiveStatement(st)}
         onResetFilters={handleResetFilters}
       />
 
       {/* 4. Explore Challenge Modal */}
-      <ProblemStatementModal
+      <VaultModal
         statement={activeStatement}
-        onClose={() => setActiveStatement(null)}
+        onClose={closeModal}
         copiedId={copiedId}
         onCopyCitation={handleCopyCitation}
       />

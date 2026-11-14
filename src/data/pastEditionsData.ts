@@ -66,10 +66,10 @@ export const PAST_EDITIONS: PastEdition[] = [
     badgeBg: "bg-[#991B3D] text-white",
     description: "Our largest edition to date. Builders from universities nationwide competed across dual tracks, deploying autonomous agent workflows, distributed real-time telemetry pipelines, and account abstraction infrastructure.",
     stats: [
-      { label: "Participants", value: "1,200+" },
-      { label: "Prize Pool", value: "₹2,00,000" },
-      { label: "Finalist Teams", value: "48" },
-      { label: "Colleges Represented", value: "120+" },
+      { label: "Student Registrations", value: "2,000+" },
+      { label: "Team Registrations", value: "1,000+" },
+      { label: "Project Submissions", value: "400+" },
+      { label: "Impressions on Unstop", value: "90K+" },
     ],
     highlights: [
       "First edition featuring autonomous AI telemetry and agent orchestration benchmarks",
@@ -138,9 +138,9 @@ export const PAST_EDITIONS: PastEdition[] = [
     badgeBg: "bg-[#4B5D86] text-white",
     description: "The pivotal edition that introduced our dedicated Web3 track. Smart-contract, cryptographic proof, and decentralized governance systems were deployed live, accompanied by scalable distributed Web2 backends.",
     stats: [
-      { label: "Participants", value: "850+" },
+      { label: "Student Registrations", value: "1,500+" },
+      { label: "Team Registrations", value: "600+" },
       { label: "Prize Pool", value: "₹1,50,000" },
-      { label: "Submissions", value: "42" },
       { label: "Colleges Represented", value: "85+" },
     ],
     highlights: [
