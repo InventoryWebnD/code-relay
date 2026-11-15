@@ -178,7 +178,7 @@ export const PRIZES: PrizeCard[] = [
     amountSubtitle: "+ CLOUD & API CREDITS",
     description: "Awarded to the most innovative, scalable, and production-ready distributed system or intelligent web application in the Web2 track.",
     cardBg: "bg-[#380412]",
-    footerNote: "INCLUDES IIT BBS MEMENTO & CERTIFICATE",
+    footerNote: "PRIZES & CERTIFICATES FOR WINNERS",
   },
   {
     badge: "WEB3 TRACK WINNER",
@@ -188,7 +188,7 @@ export const PRIZES: PrizeCard[] = [
     amountSubtitle: "+ PROTOCOL GRANTS & AUDITS",
     description: "Awarded to the top decentralized protocol, zero-knowledge application, or smart account infrastructure project in the Web3 track.",
     cardBg: "bg-[#2A344A]",
-    footerNote: "INCLUDES IIT BBS MEMENTO & CERTIFICATE",
+    footerNote: "PRIZES & CERTIFICATES FOR WINNERS",
   },
   {
     badge: "TOTAL PRIZE POOL",
@@ -198,7 +198,7 @@ export const PRIZES: PrizeCard[] = [
     amountSubtitle: "INCLUDING IN-KIND REWARDS",
     description: "Cash prizes for both track winners, plus runners-up awards and in-kind rewards from our partners.",
     cardBg: "bg-[#22020A]",
-    footerNote: "ALL FINALISTS RECEIVE SWAG KITS",
+    footerNote: "PRIZES & CERTIFICATES FOR WINNERS",
   },
 ];
 
