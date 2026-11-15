@@ -30,6 +30,8 @@ export const EVENT = {
     linkedin: "WebnD IIT Bhubaneswar",
     linkedinUrl: "https://www.linkedin.com/company/webd-iitbbs/",
     webndInstagram: "https://www.instagram.com/webnd.iitbbs/",
+    /** participants' Discord: announcements and updates for CR 5.0 */
+    discordUrl: "https://discord.gg/y54wHSpVC",
   },
   brochures: {
     sponsorship: "/brochures/code-relay-5-sponsorship.pdf",
@@ -480,6 +482,8 @@ export interface Partner {
 }
 
 export const PARTNERS_CR5: Partner[] = [
+  { name: "TrueFoundry", role: "Title sponsor · Web2", logo: "/sponsors/truefoundrylogo1.png", website: "https://www.truefoundry.com", bg: "#030c28", h: 40 },
+  { name: "CSM Technologies", role: "Technology partner · Web2", logo: "/sponsors/csmlogo.png", website: "https://www.csm.tech", bg: "#231f20", h: 44 },
   { name: "Hostinger", role: "Hosting partner", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 40 },
   { name: "Red Bull", role: "Beverage partner", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 72 },
   { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 64 },

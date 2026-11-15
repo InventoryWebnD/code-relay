@@ -11,7 +11,7 @@ export default function PartnerLogos({ id = "partners" }: { id?: string }) {
       <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
         <SectionHead label={`Code Relay ${EVENT.edition} partners`} title={"Backed by\nbrands we love"} />
 
-        <Reveal group stagger={0.08} className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+        <Reveal group stagger={0.08} className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
           {PARTNERS_CR5.map((p) => (
             <a
               key={p.name}
