@@ -33,7 +33,7 @@ function Tile({ item, fit = "cover" }: { item: GalleryItem; fit?: "cover" | "con
   return (
     <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 p-3 text-center" style={{ background: item.tone }}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/cr-mascot.png" alt="" draggable={false} className="h-[45%] w-auto opacity-90" />
+      <img src="/brand/webnd-mascot-stand.webp" alt="" draggable={false} className="h-[45%] w-auto opacity-90" />
       <span className="label text-[9px] text-[var(--cream)]/80">Photo slot</span>
     </div>
   );

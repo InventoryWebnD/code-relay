@@ -480,7 +480,7 @@ function Arena() {
 const tmpC = new THREE.Color();
 
 /* -------------------------------------------------------------------------- */
-/* 05 · The finish: arch, trophy, the CR mascot and a sky full of confetti     */
+/* 05 · The finish: arch, trophy, the WebnD mascot and a sky full of confetti     */
 /* -------------------------------------------------------------------------- */
 function checkerTexture() {
   const c = document.createElement("canvas");
@@ -499,7 +499,7 @@ function checkerTexture() {
 }
 
 function Mascot({ position }: { position: THREE.Vector3 }) {
-  const tex = useTexture("/brand/cr-mascot.png");
+  const tex = useTexture("/brand/webnd-mascot-stand.webp");
   const ref = useRef<THREE.Group>(null);
   const c = chapter("finish");
   const aspect = useMemo(() => {

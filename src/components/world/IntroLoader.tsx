@@ -145,7 +145,7 @@ export default function IntroLoader() {
           <div className="wordmark relative">
             <div className="peek-wrap absolute -top-[clamp(64px,11vw,140px)] left-[8%] h-[clamp(72px,12vw,150px)] w-[clamp(80px,13vw,170px)] overflow-hidden">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/cr-mascot.png" alt="" className="peek absolute bottom-[-30%] left-0 w-full" />
+              <img src="/brand/webnd-mascot-stand.webp" alt="" className="peek absolute bottom-[-30%] left-0 w-full" />
             </div>
             <div className="flex flex-col items-start gap-[0.12em] text-[clamp(44px,10vw,136px)]">
               <Word text="CODE" portal />

@@ -10,7 +10,7 @@ export default function ControlRoom({ label, children, narrow = false }: { label
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src="/brand/webnd-mascot-fly.webp" alt="" className="pointer-events-none absolute right-[3%] top-24 hidden w-28 rotate-12 lg:block bob" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/cr-mascot.png" alt="" className="pointer-events-none absolute bottom-10 left-[2%] hidden w-28 -rotate-12 lg:block bob" />
+      <img src="/brand/webnd-mascot-stand.webp" alt="" className="pointer-events-none absolute bottom-10 left-[2%] hidden w-28 -rotate-12 lg:block bob" />
       <div className={`relative mx-auto ${narrow ? "max-w-xl" : "max-w-[1400px]"}`}>
         <Reveal variant="pop" className="mb-4 flex justify-center">
           <span className="label inline-flex items-center gap-2 rounded-full bg-[var(--ink)] px-4 py-2 text-[var(--cream)]">

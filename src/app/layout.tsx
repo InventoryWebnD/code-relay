@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     title: "Code Relay 5.0 — Sprint to Innovation",
     description: "Two tracks. One relay. 30 hours at IIT Bhubaneswar. Organised by the Web & Design Society.",
     type: "website",
-    images: [{ url: "/brand/cr-mascot.png", width: 807, height: 792, alt: "Code Relay 5.0 mascot" }],
+    images: [{ url: "/brand/webnd-mascot.png", width: 766, height: 800, alt: "The WebnD mascot, Code Relay 5.0" }],
   },
 };
 
