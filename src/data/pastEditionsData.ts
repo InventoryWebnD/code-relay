@@ -76,40 +76,6 @@ export const PAST_EDITIONS: PastEdition[] = [
       "Introduction of the 36-hour continuous relay sprint format with live midnight review rounds",
       "100% of finalist projects deployed live on production domains or EVM testnets",
     ],
-    winners: [
-      {
-        place: "Winner · 1st Place",
-        teamName: "Team DOTENV",
-        track: "WEB2",
-        image: "/img/web2_win.jpg",
-        badge: "WEB2 CHAMPION",
-        badgeColor: "bg-[#991B3D] text-white border-[#B82A4F]/60"
-      },
-      {
-        place: "Runner Up · 2nd Place",
-        teamName: "Team TRAILLIO",
-        track: "WEB2",
-        image: "/img/web2_ru.jpg",
-        badge: "WEB2 RUNNER-UP",
-        badgeColor: "bg-[#620821]/60 text-[#E8738D] border-[#B82A4F]/40"
-      },
-      {
-        place: "Winner · 1st Place",
-        teamName: "Team My HACKADEMIA",
-        track: "WEB3",
-        image: "/img/web3_win.jpg",
-        badge: "WEB3 CHAMPION",
-        badgeColor: "bg-[#4B5D86] text-white border-[#657AA8]/60"
-      },
-      {
-        place: "Runner Up · 2nd Place",
-        teamName: "Team THE DOORS",
-        track: "WEB3",
-        image: "/img/web3_ru.jpg",
-        badge: "WEB3 RUNNER-UP",
-        badgeColor: "bg-[#364464]/60 text-[#8E9DBE] border-[#4B5D86]/40"
-      }
-    ],
     winningProjects: [
       {
         place: "1ST PLACE (WEB2 TRACK)",
@@ -147,6 +113,40 @@ export const PAST_EDITIONS: PastEdition[] = [
       "Inaugural launch of the dedicated Web3 and cryptographic protocol track",
       "Implementation of live on-chain testnet deployment evaluations",
       "Technical mentorship pairing with leading blockchain and full-stack researchers",
+    ],
+    winners: [
+      {
+        place: "Winner · 1st Place",
+        teamName: "Team DOTENV",
+        track: "WEB2",
+        image: "/img/web2_win.jpg",
+        badge: "WEB2 CHAMPION",
+        badgeColor: "bg-[#991B3D] text-white border-[#B82A4F]/60"
+      },
+      {
+        place: "Runner Up · 2nd Place",
+        teamName: "Team TRAILLIO",
+        track: "WEB2",
+        image: "/img/web2_ru.jpg",
+        badge: "WEB2 RUNNER-UP",
+        badgeColor: "bg-[#620821]/60 text-[#E8738D] border-[#B82A4F]/40"
+      },
+      {
+        place: "Winner · 1st Place",
+        teamName: "Team My HACKADEMIA",
+        track: "WEB3",
+        image: "/img/web3_win.jpg",
+        badge: "WEB3 CHAMPION",
+        badgeColor: "bg-[#4B5D86] text-white border-[#657AA8]/60"
+      },
+      {
+        place: "Runner Up · 2nd Place",
+        teamName: "Team THE DOORS",
+        track: "WEB3",
+        image: "/img/web3_ru.jpg",
+        badge: "WEB3 RUNNER-UP",
+        badgeColor: "bg-[#364464]/60 text-[#8E9DBE] border-[#4B5D86]/40"
+      }
     ],
     winningProjects: [
       {
