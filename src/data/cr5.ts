@@ -609,7 +609,7 @@ export const PAST_PARTNERS: (Partner & { edition?: string })[] = [
 /* CR 5.0 organising committee                                          */
 /* ------------------------------------------------------------------ */
 export const OC_CR5: { role: string; people: string[] }[] = [
-  { role: "Developers", people: ["Shruti", "Shriya", "Rajesh"] },
+  { role: "Developers", people: ["Shruti", "Shriya"] },
   { role: "Convenors", people: ["Kshitij", "Aarush"] },
   { role: "Media heads", people: ["Nikhil", "Lakshya"] },
 ];
