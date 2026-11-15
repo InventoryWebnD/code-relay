@@ -101,8 +101,9 @@ export default function Navbar() {
       >
         <div className="mx-auto flex max-w-[1600px] items-start justify-between gap-6 px-5 pt-5 sm:px-10 sm:pt-7 lg:px-16">
           {/* Brand */}
-          <Link href="/" className="pointer-events-auto group -m-3 flex items-baseline gap-2 p-3" data-cursor="Home" aria-label="Code Relay 5.0 home">
-            <span className="font-display text-[17px] leading-none tracking-tight">CR</span>
+          <Link href="/" className="pointer-events-auto group -m-3 flex items-center gap-2 p-3" data-cursor="Home" aria-label="Code Relay 5.0 home">
+            {/* the CR logo itself is drawn on its own layer below (outside the colour-inverting blend) */}
+            <span className="block h-8 w-8 shrink-0" aria-hidden />
             <span className="font-mono text-[11px] font-bold leading-none opacity-70 transition-opacity group-hover:opacity-100">/5.0</span>
           </Link>
 
@@ -158,6 +159,22 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+
+      {/* CR logo: aligned with the brand link above, outside mix-blend-difference
+          (which would invert its colours); clicks pass through to the link */}
+      <div
+        aria-hidden
+        className={`pointer-events-none fixed left-0 right-0 top-0 z-[101] transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${
+          hidden ? "-translate-y-[130%]" : "translate-y-0"
+        }`}
+      >
+        <div className="mx-auto max-w-[1600px] px-5 pt-5 sm:px-10 sm:pt-7 lg:px-16">
+          <span className="block h-8 w-8 rounded-full bg-[var(--cream)] p-[3px] shadow-[0_1px_6px_rgba(21,6,11,0.18)]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/cr-logo-128.png" alt="" className="h-full w-full" />
+          </span>
+        </div>
+      </div>
 
       {/* Staggered full-screen menu */}
       <div ref={menuRef} className="fixed inset-0 z-[95] invisible lg:hidden" aria-hidden={!open}>
