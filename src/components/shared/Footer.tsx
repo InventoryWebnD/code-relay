@@ -157,7 +157,7 @@ export default function Footer() {
                 ) : (
                   <span
                     key={i}
-                    className="inline-block transition-[transform,color] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-[6%] hover:text-[var(--sun)]"
+                    className="inline-block transition-[transform,color] duration-300 ease-[cubic-bezier(.34,1.56,.64,1)] hover:-translate-y-[18%] hover:-rotate-6 hover:text-[var(--crimson-hot)]"
                   >
                     {c}
                   </span>
