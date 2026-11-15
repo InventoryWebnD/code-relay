@@ -304,13 +304,20 @@ export interface GalleryItem {
 /** PLACEHOLDER: tiles without `src` render as illustrated placeholder cards. */
 export const GALLERY: GalleryItem[] = [
   { src: "/img/web2_win.jpg", caption: "CR 4.0 · Web2 champions", tone: "#991B3D" },
-  { caption: "Opening ceremony · drop photo", tone: "#0B1B4D" },
+  { src: "/img/3.o_participants1.jpg", caption: "CR 3.0 · Heads down, building", tone: "#0B1B4D" },
+  { src: "/img/3.o_oc1.jpg", caption: "CR 3.0 · The organising team", tone: "#5AA7A7" },
   { src: "/img/web3_win.jpg", caption: "CR 4.0 · Web3 champions", tone: "#5AA7A7" },
-  { caption: "3 AM debugging · drop photo", tone: "#F5B000" },
+  { src: "/img/3.o_participants2.jpg", caption: "CR 3.0 · Teams at work", tone: "#F5B000" },
+  { src: "/img/cr3_banner.jpg", caption: "CR 3.0 · The banner goes up", tone: "#620821" },
   { src: "/img/web2_ru.jpg", caption: "CR 4.0 · Web2 runners-up", tone: "#620821" },
-  { caption: "Mentor rounds · drop photo", tone: "#991B3D" },
+  { src: "/img/3.o_participants3.jpg", caption: "CR 3.0 · Mid-sprint", tone: "#991B3D" },
+  { src: "/img/3.o_oc2.jpg", caption: "CR 3.0 · Behind the scenes", tone: "#0B1B4D" },
   { src: "/img/web3_ru.jpg", caption: "CR 4.0 · Web3 runners-up", tone: "#0B1B4D" },
-  { caption: "Demo day · drop photo", tone: "#5AA7A7" },
+  { src: "/img/3.o_participants4.jpg", caption: "CR 3.0 · The hall, full", tone: "#5AA7A7" },
+  { src: "/img/cr_brand1.jpg", caption: "Code Relay · Lights on", tone: "#15060B" },
+  { src: "/img/3.o_oc3.jpg", caption: "CR 3.0 · Crew on the clock", tone: "#F5B000" },
+  { src: "/img/3.o_participants5.jpg", caption: "CR 3.0 · Ideas in motion", tone: "#991B3D" },
+  { src: "/img/3.o_oc4.jpg", caption: "CR 3.0 · The team behind it", tone: "#620821" },
 ];
 
 export interface Review {

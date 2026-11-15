@@ -10,11 +10,17 @@ import { useLenis } from "@/components/world/SmoothScroll";
 const COLS = 14;
 const ROWS = [-26, 0, 26];
 
-function Tile({ item }: { item: GalleryItem }) {
+function Tile({ item, fit = "cover" }: { item: GalleryItem; fit?: "cover" | "contain" }) {
   if (item.src) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
-      <img src={item.src} alt={item.caption} draggable={false} className="h-full w-full object-cover" />
+      <img
+        src={item.src}
+        alt={item.caption}
+        draggable={false}
+        decoding="async"
+        className={`h-full w-full ${fit === "contain" ? "object-contain" : "object-cover"}`}
+      />
     );
   }
   return (
@@ -211,8 +217,9 @@ export default function DomeGallery({
           data-cursor="Close"
         >
           <div ref={box} className="w-full max-w-3xl overflow-hidden rounded-[32px] bg-[var(--paper)] text-[var(--ink)]" onClick={(e) => e.stopPropagation()}>
-            <div className="aspect-[16/10] w-full overflow-hidden">
-              <Tile item={open} />
+            {/* the whole photo, letterboxed: portrait shots (banners) must not be cropped */}
+            <div className="aspect-[16/10] max-h-[70vh] w-full overflow-hidden bg-[var(--ink)]">
+              <Tile item={open} fit="contain" />
             </div>
             <div className="flex items-center justify-between gap-4 p-5">
               <span className="font-display text-lg !normal-case">{open.caption}</span>

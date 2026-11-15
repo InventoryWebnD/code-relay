@@ -175,7 +175,8 @@ export default function Director() {
     const focusU = teamU;
     frameAt(focusU, f);
     story.focus.copy(f.pos);
-    const narrow = size.width < 820;
+    // phones and any portrait viewport (tablets upright, split-screen windows)
+    const narrow = size.width < 820 || size.width / size.height < 0.85;
     const zoom = narrow ? 1.15 : 1;
     const pf = shotAt(p, 1) * zoom;
     const pu = shotAt(p, 2) * (narrow ? 1.2 : 1);

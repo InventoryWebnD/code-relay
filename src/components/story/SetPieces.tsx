@@ -144,6 +144,7 @@ function Web2Brain() {
     const m = nodes.current;
     if (!m || !group.current) return;
     group.current.visible = a > 0.001;
+    if (!group.current.visible) return;
     pts.forEach((p, i) => {
       o.position.copy(p);
       o.position.y += Math.sin(t * 1.3 + i) * 0.12;
@@ -195,6 +196,7 @@ function Web3Chain() {
     const a = appear();
     if (!group.current) return;
     group.current.visible = a > 0.001;
+    if (!group.current.visible) return;
     group.current.rotation.y = yawAt(u) - Math.PI / 2 + Math.sin(t * 0.25) * 0.12;
     coins.current.forEach((g, i) => {
       if (!g) return;
@@ -309,10 +311,16 @@ function Crowd() {
   const restMat = useMemo(() => toon("#8a6f7a"), []);
   const o = useMemo(() => new THREE.Object3D(), []);
   const c = chapter("pass");
+  const idle = useRef(false);
 
   useFrame(({ clock }) => {
     const t = clock.elapsedTime;
     const vis = range(story.p, c.from - 0.08, c.from - 0.02);
+    // 560 matrices a frame is real work on phones: skip it while the plaza is
+    // hidden (before) or far behind the camera (after)
+    const off = vis === 0 || story.p > c.to + 0.06;
+    if (off && idle.current) return;
+    idle.current = off;
     const cut = range(story.p, c.from + 0.01, c.from + 0.08);
     const cheer = range(story.p, c.from + 0.06, c.from + 0.1);
     chosenMat.emissiveIntensity = cheer * 1.6;
@@ -577,12 +585,15 @@ function Confetti() {
   const origin = useMemo(() => at(MARK.finish, 0, 6), []);
   const o = useMemo(() => new THREE.Object3D(), []);
   const colored = useRef(false);
+  const idle = useRef(false);
   const c = chapter("finish");
   useFrame(({ clock }) => {
     const m = ref.current;
     if (!m) return;
     // time since the burst, driven by scroll so it replays when you scroll back
     const T = range(story.p, c.from + 0.07, c.to) * 9;
+    if (T === 0 && idle.current) return; // not fired yet: nothing to move
+    idle.current = T === 0;
     const t = clock.elapsedTime;
     items.forEach((it, i) => {
       const tt = Math.max(T - it.d * 0.5, 0);
