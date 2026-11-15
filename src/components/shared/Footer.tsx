@@ -95,15 +95,6 @@ export default function Footer() {
                     <span className="block text-[var(--cream)]/80">Finale · {EVENT.hackHours} hours</span>
                     <span className="label text-[10px] text-[var(--cream)]/45">{r2.when}</span>
                   </li>
-                  <li className="space-y-3 pt-1">
-                    <a href={EVENT.brochures.sponsorship} target="_blank" rel="noreferrer" className={linkCls}>
-                      Sponsorship brochure&nbsp;↗
-                    </a>
-                    <br />
-                    <a href={EVENT.brochures.food} target="_blank" rel="noreferrer" className={linkCls}>
-                      F&amp;B brochure&nbsp;↗
-                    </a>
-                  </li>
                 </ul>
               </Reveal>
 
