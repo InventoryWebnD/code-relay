@@ -4,10 +4,20 @@ import Link from "next/link";
 import { Marquee, Magnetic, Reveal } from "@/components/world/motion";
 import SectionHead from "@/components/world/SectionHead";
 import { PAST_EDITIONS_SPONSORS } from "@/data/sponsorsData";
-import { EVENT } from "@/data/cr5";
+import { EVENT, PAST_PARTNERS } from "@/data/cr5";
 
 export default function SponsorWall({ cta = true }: { cta?: boolean }) {
-  const all = PAST_EDITIONS_SPONSORS.flatMap((e) => e.sponsors.map((s) => ({ ...s, edition: e.shortCode })));
+  const byEdition = PAST_EDITIONS_SPONSORS.flatMap((e) => e.sponsors.map((s) => ({ ...s, edition: e.shortCode, bg: undefined as string | undefined })));
+  // past partners not already listed under an edition (Myntra, Trends)
+  const others = PAST_PARTNERS.filter((p) => !byEdition.some((s) => s.name === p.name)).map((p) => ({
+    name: p.name,
+    website: p.website,
+    logoUrl: p.logo,
+    badge: p.role,
+    edition: "Past edition",
+    bg: p.bg,
+  }));
+  const all = [...byEdition, ...others];
 
   return (
     <section data-world="helix" data-world-x="0" className="relative overflow-hidden py-24 sm:py-28">
@@ -26,7 +36,7 @@ export default function SponsorWall({ cta = true }: { cta?: boolean }) {
               className="group mx-8 flex items-center gap-4"
               data-cursor="Visit"
             >
-              <span className="grid h-20 w-20 place-items-center overflow-hidden rounded-full bg-white p-4 ring-2 ring-[var(--ink)]/10 transition-transform duration-500 group-hover:rotate-[-12deg] group-hover:scale-110">
+              <span className="grid h-20 w-20 place-items-center overflow-hidden rounded-full p-4 ring-2 ring-[var(--ink)]/10 transition-transform duration-500 group-hover:rotate-[-12deg] group-hover:scale-110" style={{ background: s.bg ?? "#ffffff" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={s.logoUrl} alt={s.name} className="max-h-full max-w-full object-contain" loading="lazy" />
               </span>

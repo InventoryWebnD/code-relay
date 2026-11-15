@@ -559,15 +559,33 @@ export interface Partner {
   bg?: string;
   /** logo box height in px: small source files stay crisp by staying small */
   h?: number;
+  /** small line under the logo, e.g. "Powered by TrueFoundry" */
+  note?: string;
+  /** small mark shown beside the role */
+  mark?: string;
 }
 
+/** This edition's sponsors. */
 export const PARTNERS_CR5: Partner[] = [
-  { name: "TrueFoundry", role: "Title sponsor · Web2", logo: "/sponsors/truefoundrylogo1.png", website: "https://www.truefoundry.com", bg: "#030c28", h: 40 },
-  { name: "CSM Technologies", role: "Technology partner · Web2", logo: "/sponsors/csmlogo.png", website: "https://www.csm.tech", bg: "#231f20", h: 44 },
-  { name: "Hostinger", role: "Hosting partner", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 40 },
-  { name: "Red Bull", role: "Beverage partner", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 72 },
-  { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 64 },
-  { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 34 },
+  {
+    name: "TrueForge",
+    role: "Title sponsor",
+    note: "Powered by TrueFoundry",
+    logo: "/sponsors/trueforge-white.svg",
+    mark: "/sponsors/logomark-light%20bg.svg",
+    website: "https://www.truefoundry.com",
+    bg: "#05090E",
+    h: 44,
+  },
+  { name: "CSM Technologies", role: "Talent partner", logo: "/sponsors/csmlogo.png", website: "https://www.csm.tech", bg: "#231f20", h: 52 },
+];
+
+/** Brands that backed earlier editions. */
+export const PAST_PARTNERS: Partner[] = [
+  { name: "Hostinger", role: "Hosting partner", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 36 },
+  { name: "Red Bull", role: "Beverage partner", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 60 },
+  { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 54 },
+  { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 30 },
 ];
 
 /* ------------------------------------------------------------------ */
