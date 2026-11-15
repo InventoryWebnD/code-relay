@@ -22,6 +22,11 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const first = useRef(true);
 
   useEffect(() => {
+    // Every load starts at the top. Restoring the old scroll position dropped
+    // visitors mid-story, so the 3D run "started" when they scrolled back up.
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (!window.location.hash) window.scrollTo(0, 0);
+
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       document.documentElement.classList.add("reduced-motion");
