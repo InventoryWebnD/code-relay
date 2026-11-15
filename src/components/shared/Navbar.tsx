@@ -203,6 +203,9 @@ export default function Navbar() {
               <RegisterLink className="m-foot btn-chunky bg-[var(--crimson)] text-[var(--cream)] w-full">Register on Unstop ↗</RegisterLink>
             )}
             <div className="m-foot flex flex-wrap gap-2">
+              <a href={EVENT.contact.discordUrl} target="_blank" rel="noreferrer" className="label rounded-full border-2 border-[var(--ink)] bg-[var(--ink)] px-3 py-1.5 text-[var(--cream)]">
+                Discord
+              </a>
               <a href={EVENT.contact.instagramUrl} target="_blank" rel="noreferrer" className="label rounded-full border-2 border-[var(--ink)] px-3 py-1.5">
                 Instagram
               </a>

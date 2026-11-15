@@ -105,6 +105,10 @@ export const JUDGING_CRITERIA: JudgingCriterion[] = [
 
 export const FAQS: FaqItem[] = [
   {
+    q: "Where will we get updates?",
+    a: "Join the participants' Discord at discord.gg/y54wHSpVC. Announcements, shortlist news, Round 2 details and answers from the organisers are all posted there first.",
+  },
+  {
     q: "Who is eligible to participate in Code Relay 5.0?",
     a: "Any undergraduate or postgraduate student currently enrolled in a recognized university or institute in India is eligible. Teams may consist of 2 to 4 members. Inter-college and inter-branch teams are fully permitted.",
   },

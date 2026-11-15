@@ -53,6 +53,11 @@ export default function FinalCTA({
               Read the rules
             </Link>
           </Magnetic>
+          <Magnetic strength={0.25}>
+            <a href={EVENT.contact.discordUrl} target="_blank" rel="noreferrer" className="btn-ghost !text-base">
+              Join the Discord
+            </a>
+          </Magnetic>
         </div>
       </div>
     </section>

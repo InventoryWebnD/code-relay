@@ -77,6 +77,9 @@ export default function Footer() {
                     <Link href="/sponsors" className="btn-chunky !border-[var(--cream)]/50 bg-transparent text-[var(--cream)] before:!bg-[var(--cream)] hover:!text-[var(--ink)]">
                       Partner with us
                     </Link>
+                    <a href={EVENT.contact.discordUrl} target="_blank" rel="noreferrer" className="btn-ghost text-[var(--cream)]">
+                      Join the Discord
+                    </a>
                   </div>
                 </div>
 
@@ -141,6 +144,7 @@ export default function Footer() {
               <Heading>Follow the relay</Heading>
               <div className="flex flex-wrap gap-2">
                 {[
+                  { href: EVENT.contact.discordUrl, label: "Discord" },
                   { href: EVENT.contact.instagramUrl, label: EVENT.contact.instagram },
                   { href: EVENT.contact.webndInstagram, label: "@webnd.iitbbs" },
                   { href: EVENT.contact.linkedinUrl, label: "LinkedIn" },
