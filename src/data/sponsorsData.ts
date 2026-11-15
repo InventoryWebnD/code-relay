@@ -57,7 +57,7 @@ export const PAST_EDITIONS_SPONSORS: PastEditionSponsors[] = [
         badge: "FRAMEWORK PARTNER",
         website: "https://gofr.dev",
         tagline: "Opinionated Go Microservices Framework",
-        logoUrl: "https://avatars.githubusercontent.com/u/146108433?s=200&v=4"
+        logoUrl: "/sponsors/gofr.png"
       },
       {
         name: "InterviewBuddy",
@@ -66,7 +66,7 @@ export const PAST_EDITIONS_SPONSORS: PastEditionSponsors[] = [
         badge: "CAREER PARTNER",
         website: "https://interviewbuddy.net",
         tagline: "Virtual Mock Interview Platform",
-        logoUrl: "https://interviewbuddy.net/favicon.png"
+        logoUrl: "/sponsors/interviewbuddy.png"
       }
     ]
   },
@@ -84,7 +84,7 @@ export const PAST_EDITIONS_SPONSORS: PastEditionSponsors[] = [
         badge: "HOSTING PARTNER",
         website: "https://www.hostinger.com",
         tagline: "Cloud Web Hosting & VPS",
-        logoUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ee/Hostinger_logo.svg"
+        logoUrl: "/sponsors/hostinger.svg"
       },
       {
         name: "Red Bull",
@@ -93,7 +93,7 @@ export const PAST_EDITIONS_SPONSORS: PastEditionSponsors[] = [
         badge: "ENERGY PARTNER",
         website: "https://www.redbull.com",
         tagline: "Gives You Wings",
-        logoUrl: "https://upload.wikimedia.org/wikipedia/en/f/f5/RedBullEnergyDrink.svg"
+        logoUrl: "/sponsors/redbull.svg"
       },
       {
         name: "Unstop",
@@ -102,7 +102,7 @@ export const PAST_EDITIONS_SPONSORS: PastEditionSponsors[] = [
         badge: "PLATFORM PARTNER",
         website: "https://unstop.com",
         tagline: "Hackathon Platform & Community",
-        logoUrl: "https://d8it4huxumps7.cloudfront.net/uploads/images/unstop/svg/unstop-logo.svg"
+        logoUrl: "/sponsors/unstop.svg"
       }
     ]
   }
