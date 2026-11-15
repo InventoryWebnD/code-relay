@@ -6,12 +6,6 @@ import type { ProblemStatement } from "@/data/problemStatements";
 import PageHero from "@/components/world/PageHero";
 import { prefersReduced } from "@/components/world/motion";
 import { useLenis } from "@/components/world/SmoothScroll";
-import { TRACKS } from "@/data/cr5";
-
-/** what the Web2 / Web3 slots are called in each edition */
-const trackName = (edition: Edition, t: "Web2" | "Web3") =>
-  edition === "5.0" ? TRACKS[t === "Web2" ? 0 : 1].name : t;
-
 type Edition = "5.0" | "4.0" | "3.0";
 type TrackF = "ALL" | "Web2" | "Web3";
 
@@ -68,8 +62,8 @@ export function VaultFilters({
 }) {
   const tabs: { id: TrackF; label: string; n: number; bg: string }[] = [
     { id: "ALL", label: "All", n: totalCount, bg: "var(--ink)" },
-    { id: "Web2", label: trackName(selectedEdition, "Web2"), n: web2Count, bg: "var(--crimson)" },
-    { id: "Web3", label: trackName(selectedEdition, "Web3"), n: web3Count, bg: "var(--navy)" },
+    { id: "Web2", label: "Web2", n: web2Count, bg: "var(--crimson)" },
+    { id: "Web3", label: "Web3", n: web3Count, bg: "var(--navy)" },
   ];
   return (
     <div className="glass relative z-30 border-y border-[var(--ink)]/10">
@@ -174,7 +168,7 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
           </span>
           <h3 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{s.title}</h3>
           <p className="text-sm opacity-70 line-clamp-2 max-sm:hidden">{s.description}</p>
-          <span className="label hidden whitespace-nowrap rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.trackLabel ?? s.track}</span>
+          <span className="label hidden whitespace-nowrap rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.track}</span>
           <span className="text-2xl transition-transform duration-500 group-hover:-rotate-45">→</span>
         </button>
       ))}
@@ -185,19 +179,28 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
 /** Rows grouped under their track (each edition runs two: Web2 and Web3), numbered within the track. */
 export function TrackGroups({ statements, onExplore }: { statements: ProblemStatement[]; onExplore: (s: ProblemStatement) => void }) {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col gap-16 sm:gap-20">
       {(["Web2", "Web3"] as const).map((t) => {
         const rows = statements.filter((s) => s.track === t);
         if (!rows.length) return null;
+        // CR 5.0: domain → track → sub-tracks. Earlier editions: the domain was the track.
+        const trackTitle = rows[0].trackLabel;
         return (
           <div key={t}>
-            <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
-                {rows[0].trackLabel ?? t} track
-              </span>
-              <span className="label text-[var(--ink)]/55">
-                {rows.length} {rows.length === 1 ? "statement" : "statements"}
-              </span>
+            <div className="mb-6 flex flex-col gap-3 sm:mb-8">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
+                  {t} {trackTitle ? "domain" : "track"}
+                </span>
+                <span className="label text-[var(--ink)]/55">
+                  {rows.length} {trackTitle ? (rows.length === 1 ? "sub-track" : "sub-tracks") : rows.length === 1 ? "statement" : "statements"}
+                </span>
+              </div>
+              {trackTitle && (
+                <h3 className="font-display text-[clamp(26px,3.4vw,44px)] leading-none">
+                  {trackTitle} <span className="text-[var(--ink)]/35">track</span>
+                </h3>
+              )}
             </div>
             <StatementRows statements={rows} onExplore={onExplore} />
           </div>
@@ -242,7 +245,7 @@ export function VaultModal({
         <div className="flex items-start justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[statement.track] }}>
-              {statement.trackLabel ?? statement.track} · #{String(statement.number).padStart(2, "0")}
+              {statement.track}{statement.trackLabel ? ` · ${statement.trackLabel}` : ""} · #{String(statement.number).padStart(2, "0")}
             </span>
             <span className="label text-[var(--ink)]/55">{statement.editionLabel}</span>
           </div>
