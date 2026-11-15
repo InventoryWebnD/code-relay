@@ -338,3 +338,24 @@ export const REVIEWS: Review[] = [
   { quote: "The problem statements were real. It felt like shipping at a startup.", name: "Participant", meta: "Code Relay 4.0", color: "#F3D9A4" },
   { quote: "IIT Bhubaneswar campus at night with 100 teams hacking is a vibe.", name: "Participant", meta: "Code Relay 3.0", color: "#C7D2F2" },
 ];
+
+/* ------------------------------------------------------------------ */
+/* CR 5.0 partners (logos live in /public/sponsors)                     */
+/* ------------------------------------------------------------------ */
+export interface Partner {
+  name: string;
+  role: string;
+  logo: string;
+  website: string;
+  /** tile colour behind the logo (matches logos that ship with a background) */
+  bg?: string;
+  /** logo box height in px: small source files stay crisp by staying small */
+  h?: number;
+}
+
+export const PARTNERS_CR5: Partner[] = [
+  { name: "Hostinger", role: "Hosting partner", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 40 },
+  { name: "Red Bull", role: "Beverage partner", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 72 },
+  { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 64 },
+  { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 34 },
+];

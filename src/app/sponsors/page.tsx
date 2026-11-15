@@ -8,6 +8,7 @@ import {
   TierStack,
   WhySponsor,
 } from "@/components/sponsors/SponsorBlocks";
+import PartnerLogos from "@/components/world/blocks/PartnerLogos";
 import SponsorWall from "@/components/world/blocks/SponsorWall";
 
 export const metadata: Metadata = {
@@ -20,6 +21,7 @@ export default function SponsorsPage() {
   return (
     <>
       <SponsorsHero />
+      <PartnerLogos id="current-partners" />
       <ReachBlock />
       <TierStack />
       <PartnerOptions />

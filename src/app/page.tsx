@@ -5,6 +5,7 @@ import TracksShowcase from "@/components/world/blocks/TracksShowcase";
 import PrizeFlip from "@/components/world/blocks/PrizeFlip";
 import DomeGallery from "@/components/world/blocks/DomeGallery";
 import ReviewStack from "@/components/world/blocks/ReviewStack";
+import PartnerLogos from "@/components/world/blocks/PartnerLogos";
 import SponsorWall from "@/components/world/blocks/SponsorWall";
 import FaqBlock from "@/components/world/blocks/FaqBlock";
 import FinalCTA from "@/components/world/blocks/FinalCTA";
@@ -24,6 +25,7 @@ export default function Home() {
       <PrizeFlip />
       <DomeGallery />
       <ReviewStack />
+      <PartnerLogos />
       <SponsorWall />
       <FaqBlock />
       <FinalCTA />
