@@ -279,6 +279,7 @@ export default function RelayStory() {
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded-full" style={{ background: t.id === "web2" ? "#C2264F" : "#5AA7A7" }} />
                     <span className="font-display text-base leading-tight sm:text-lg">{t.name}</span>
+                    <span className="label ml-auto text-[9px] text-[var(--cream)]/50">{t.domain}</span>
                   </div>
                   <div className="mt-1 text-sm text-[var(--cream)]/70">with {t.partner}</div>
                   <ul className="mt-3 hidden space-y-1 text-xs text-[var(--cream)]/55 sm:block">

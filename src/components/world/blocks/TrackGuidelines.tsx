@@ -37,7 +37,7 @@ export default function TrackGuidelines({ id = "guidelines" }: { id?: string }) 
             <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: t.color }}>
               {t.name}
             </span>
-            <span className="label text-[var(--ink)]/55">with {t.partner}</span>
+            <span className="label text-[var(--ink)]/55">{t.domain} domain · with {t.partner}</span>
           </div>
 
           {/* overview + what to build | sub-tracks */}

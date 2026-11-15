@@ -107,6 +107,8 @@ export interface TrackGuide {
 export interface Track {
   /** internal id: kept as web2 / web3 because registrations are stored against WEB2 / WEB3 */
   id: "web2" | "web3";
+  /** the domain this track sits in (Web2 / Web3); each domain holds one track, each track its sub-tracks */
+  domain: "Web2" | "Web3";
   name: string;
   partner: string;
   tagline: string;
@@ -121,6 +123,7 @@ const FREE_TO_ENTER = "Free to enter. Round 1 needs no paid tools or API keys. U
 export const TRACKS: Track[] = [
   {
     id: "web2",
+    domain: "Web2",
     name: "AI & Automation",
     partner: "TrueFoundry",
     tagline: "Agents that take over real work, and still ask before anything they can't undo.",
@@ -181,6 +184,7 @@ export const TRACKS: Track[] = [
   },
   {
     id: "web3",
+    domain: "Web3",
     name: "AI for Bharat",
     partner: "CSM Technologies × TrueFoundry",
     tagline: "AI that fixes a real problem for the last user in the line, in India's languages, networks and scale.",

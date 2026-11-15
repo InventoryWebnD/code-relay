@@ -26,25 +26,37 @@ export default function TracksShowcase({ id = "tracks" }: { id?: string }) {
         />
 
         {/* switcher */}
-        <div className="mt-14 flex flex-wrap items-end justify-center gap-x-6 gap-y-4 sm:gap-x-12">
+        {/* domain → track. The inactive name is a solid, muted fill: the hollow
+            outline looked good large but broke apart into lines on small screens. */}
+        <div className="mt-14 flex flex-wrap items-end justify-center gap-x-8 gap-y-10 sm:gap-x-14">
           {TRACKS.map((tr, i) => (
             <button
               key={tr.id}
               onClick={() => setActive(i)}
               onPointerEnter={() => setActive(i)}
-              className="group relative font-display text-[clamp(30px,6.4vw,96px)] leading-[0.95] transition-[color,transform] duration-500"
-              style={{ color: active === i ? tr.color : "transparent", WebkitTextStroke: active === i ? "0" : "2px var(--ink)" }}
+              className="group relative flex flex-col items-center text-center"
               data-cursor={tr.name}
             >
-              {tr.name}
               <span
-                className="absolute -bottom-3 left-0 h-[6px] w-full origin-left rounded-full transition-transform duration-500"
+                className="label mb-2 transition-colors duration-500"
+                style={{ color: active === i ? tr.color : "color-mix(in srgb, var(--ink) 40%, transparent)" }}
+              >
+                {tr.domain} domain
+              </span>
+              <span
+                className="font-display text-[clamp(30px,6.4vw,96px)] leading-[0.95] transition-colors duration-500"
+                style={{ color: active === i ? tr.color : "color-mix(in srgb, var(--ink) 22%, transparent)" }}
+              >
+                {tr.name}
+              </span>
+              <span
+                className="absolute -bottom-4 left-0 h-[6px] w-full origin-left rounded-full transition-transform duration-500"
                 style={{ background: tr.color, transform: `scaleX(${active === i ? 1 : 0})` }}
               />
             </button>
           ))}
         </div>
-        <p className="label mt-8 text-center text-[var(--ink)]/55">with {t.partner}</p>
+        <p className="label mt-10 text-center text-[var(--ink)]/55">{t.domain} domain · with {t.partner}</p>
         <p className="mx-auto mt-3 max-w-2xl text-center text-lg font-semibold" style={{ color: t.color }}>
           {t.tagline}
         </p>
