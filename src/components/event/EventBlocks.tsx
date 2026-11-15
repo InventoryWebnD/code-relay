@@ -111,8 +111,8 @@ export function JudgingBlock() {
             const pct = parseInt(c.weight, 10);
             return (
               <div key={c.title} className="py-7">
-                <div className="grid items-end gap-4 sm:grid-cols-[200px_1fr]">
-                  <CountUp value={pct} suffix="%" className="font-display text-[clamp(56px,6vw,96px)] leading-none" />
+                <div className="grid items-end gap-3 sm:grid-cols-[auto_1fr] sm:gap-10">
+                  <CountUp value={pct} suffix="%" className="whitespace-nowrap font-display text-[clamp(56px,6vw,96px)] leading-none tabular-nums sm:w-[2.2em]" />
                   <div>
                     <h4 className="font-display text-xl !leading-[1.08] !normal-case tracking-tight sm:text-2xl">{c.title}</h4>
                     <p className="mt-1 text-[15px] text-[var(--ink)]/70">{c.desc}</p>
