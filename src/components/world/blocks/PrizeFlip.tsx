@@ -22,7 +22,7 @@ export default function PrizeFlip({ id = "prizes" }: { id?: string }) {
 
         <Reveal group variant="pop" className="mt-12 grid justify-items-center gap-8 sm:mt-16 sm:gap-12 md:grid-cols-3" stagger={0.14}>
           {PRIZES.map((p, i) => (
-            <div key={p.badge} className={`@container relative flex w-full justify-center ${i === 1 ? "" : "md:mt-12"}`}>
+            <div key={p.badge} className={`@container relative flex w-full items-start justify-center ${i === 1 ? "" : "md:mt-12"}`}>
               <div className="relative mt-[20cqw] aspect-square w-full max-w-[270px] sm:max-w-[340px]">
                 {/* embossed word pressed into the page behind the coin, which covers its lower edge */}
                 <span
@@ -61,9 +61,10 @@ export default function PrizeFlip({ id = "prizes" }: { id?: string }) {
                     {/* back */}
                     <div
                       className="backface-hidden absolute inset-0 flex flex-col items-center justify-center rounded-full bg-[var(--paper)] px-[14%] text-center text-[var(--ink)]"
-                      style={{ transform: "rotateY(180deg)", boxShadow: "inset 0 0 0 3px #15060B" }}
+                      style={{ transform: "rotateY(180deg) translateZ(20px)", boxShadow: "inset 0 0 0 3px #15060B" }}
                     >
-                      <p className="text-[13px] leading-snug sm:text-[15px] sm:leading-relaxed">{p.description}</p>
+                      <span className="label mb-3 text-[var(--ink)]/55">{p.badge}</span>
+                    <p className="text-[13px] leading-snug sm:text-[15px] sm:leading-relaxed">{p.description}</p>
                       <span className="label mt-4 text-[var(--crimson)]">{p.footerNote}</span>
                     </div>
                   </div>
