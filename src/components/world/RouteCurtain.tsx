@@ -61,8 +61,10 @@ export default function RouteCurtain() {
       const url = new URL(a.href, window.location.href);
       if (url.origin !== window.location.origin) return;
       if (url.pathname === window.location.pathname) return; // same page (hash/query) → let it be
+      // preventDefault alone stops Next's <Link> from navigating (it checks
+      // defaultPrevented). Propagation must continue: stopping it here swallowed
+      // the link's own onClick, e.g. the mobile menu never closed after a tap.
       e.preventDefault();
-      e.stopPropagation();
       if (busy.current) return;
       busy.current = true;
 

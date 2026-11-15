@@ -30,6 +30,12 @@ export default function Navbar() {
 
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
+  // Arriving on a new page always closes the menu, however the navigation happened.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing UI to the route
+    setOpen(false);
+  }, [pathname]);
+
   /* hide on scroll down, show on scroll up */
   useEffect(() => {
     let last = window.scrollY;
