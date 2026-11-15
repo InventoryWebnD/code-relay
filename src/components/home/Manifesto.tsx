@@ -57,7 +57,7 @@ export default function Manifesto() {
           <div className="relative lg:col-span-4 lg:pt-10">
             <Parallax speed={0.25}>
               <div className="relative mx-auto aspect-square w-full max-w-[380px]">
-                <div className="absolute inset-[6%] rounded-full bg-[var(--ink)]" />
+                <div className="absolute inset-[6%] rounded-full bg-[var(--crimson)]" />
                 <div className="absolute inset-[6%] rounded-full border-2 border-dashed border-[var(--sun)]/50 spin-slow" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="absolute bottom-[4%] left-1/2 w-[52%] -translate-x-1/2 bob" />
