@@ -99,38 +99,46 @@ export function RecentEditions() {
 }
 
 /* ------------------------------------------------------------------ */
-const POLAROID_TILT = [-6, 4, -3, 7];
+/* Hall of fame: the site's sticker cards (stk-sm + stk-lift) on the    */
+/* cream page, grouped by track with the same pills as the PS rows      */
+/* ------------------------------------------------------------------ */
+const TRACK_COLOR = { WEB2: "var(--crimson)", WEB3: "var(--navy)" } as const;
 
 export function HallOfFame() {
-  const winners = PAST_EDITIONS.flatMap((e) => (e.winners ?? []).map((w) => ({ ...w, edition: e.shortCode })));
+  const winners = PAST_EDITIONS.flatMap((e) => (e.winners ?? []).map((w) => ({ ...w, edition: e.edition })));
   if (!winners.length) return null;
   return (
-    <section data-world="podium" className="relative overflow-hidden rounded-[48px] bg-[var(--crimson)] py-24 text-[var(--cream)] sm:py-32">
+    <section data-world="podium" className="relative py-24 sm:py-32">
       <div className="relative mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
-        <SectionHead dark label="Hall of fame" title={"First across\nthe line"} sub="Champions and runners-up from Code Relay 3.0." />
-        <Reveal group variant="pop" className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4" stagger={0.12}>
-          {winners.map((w, i) => (
-            <figure
-              key={w.teamName + w.place}
-              className="group relative rounded-[6px] bg-[var(--paper)] p-3 pb-5 text-[var(--ink)] shadow-[0_30px_60px_-20px_rgba(0,0,0,0.5)] transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] hover:z-10 hover:-translate-y-3 hover:!rotate-0 hover:scale-105"
-              style={{ transform: `rotate(${POLAROID_TILT[i % 4]}deg)` }}
-              data-cursor="Legend"
-            >
-              <span className="absolute -top-3 left-1/2 h-6 w-24 -translate-x-1/2 rotate-[-4deg] bg-[var(--sun)]/80" />
-              <div className="aspect-[4/5] overflow-hidden">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={w.image} alt={w.teamName} className="h-full w-full object-cover grayscale-[30%] transition duration-500 group-hover:scale-110 group-hover:grayscale-0" />
-              </div>
-              <figcaption className="mt-4 px-1">
-                <span className="label text-[var(--crimson)]">{w.badge}</span>
-                <div className="mt-1 font-display text-lg !normal-case tracking-tight">{w.teamName}</div>
-                <div className="label mt-1 text-[var(--ink)]/60">
-                  {w.edition} · {w.place}
-                </div>
-              </figcaption>
-            </figure>
+        <SectionHead label="Hall of fame" title={"First across\nthe line"} sub="Champions and runners-up from Code Relay 3.0." />
+        <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-10">
+          {(["WEB2", "WEB3"] as const).map((t) => (
+            <div key={t}>
+              <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
+                {t === "WEB2" ? "Web2" : "Web3"} track
+              </span>
+              <Reveal group variant="pop" className="mt-5 grid grid-cols-2 gap-4 sm:gap-6" stagger={0.1}>
+                {winners
+                  .filter((w) => w.track === t)
+                  .map((w) => (
+                    <figure key={w.teamName + w.place} className="stk-sm stk-lift group overflow-hidden bg-[var(--paper)]">
+                      <div className="aspect-square overflow-hidden border-b-2 border-[var(--ink)]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={w.image} alt={w.teamName} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                      </div>
+                      <figcaption className="p-3 sm:p-4">
+                        <span className="label text-[10px]" style={{ color: TRACK_COLOR[t] }}>
+                          {w.place.startsWith("Winner") ? "Champion" : "Runner-up"}
+                        </span>
+                        <div className="mt-1 font-display text-base !normal-case tracking-tight sm:text-lg">{w.teamName}</div>
+                        <div className="label mt-1 text-[10px] text-[var(--ink)]/55">{w.edition}</div>
+                      </figcaption>
+                    </figure>
+                  ))}
+              </Reveal>
+            </div>
           ))}
-        </Reveal>
+        </div>
       </div>
     </section>
   );
