@@ -22,7 +22,7 @@
 
   --grid-line: rgba(21, 6, 11, 0.07);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-spring: cubic-bezier(0.3, 1.22, 0.6, 1); /* a hint of overshoot, never a wobble */
 
   /* legacy tokens still used by auth/profile forms */
   --text-primary: #f6f0e8;
@@ -221,7 +221,7 @@ body {
   color: var(--cream) !important;
 }
 .btn-chunky:active {
-  transform: scale(0.95);
+  transform: scale(0.97);
   transition-duration: 0.1s;
 }
 
@@ -258,7 +258,7 @@ body {
   transition: transform 0.4s var(--ease-spring);
 }
 .btn-ghost:hover::before {
-  transform: translateX(6px) rotate(-45deg);
+  transform: translateX(4px) rotate(-45deg);
 }
 
 /* Editorial row: a full-width line item that floods with colour on hover */

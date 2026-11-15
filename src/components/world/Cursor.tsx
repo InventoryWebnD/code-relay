@@ -28,6 +28,7 @@ export default function Cursor() {
     let lastX = 0;
     let lastY = 0;
     let hovering: Element | null = null;
+    let restScale = 1;
 
     const move = (e: PointerEvent) => {
       dx(e.clientX);
@@ -40,7 +41,7 @@ export default function Cursor() {
       lastX = e.clientX;
       lastY = e.clientY;
       if (!hovering) {
-        const speed = Math.min(Math.hypot(vx, vy) / 40, 0.45);
+        const speed = Math.min(Math.hypot(vx, vy) / 60, 0.22);
         const angle = (Math.atan2(vy, vx) * 180) / Math.PI;
         gsap.to(r, { scaleX: 1 + speed, scaleY: 1 - speed * 0.6, rotate: angle, duration: 0.2, overwrite: "auto" });
       }
@@ -50,28 +51,33 @@ export default function Cursor() {
       const t = (e.target as HTMLElement).closest("a, button, [data-cursor], input, textarea, select, label");
       if (t === hovering) return;
       hovering = t;
-      const label = t?.getAttribute("data-cursor") ?? "";
+      // Buttons and links already say what they do: the cursor only rings them,
+      // it never sits on top of their text. Labels are for surfaces with no
+      // text of their own (drag the dome, flip a coin).
+      const control = !!t?.matches("a, button");
+      const label = control ? "" : (t?.getAttribute("data-cursor") ?? "");
       if (text.current) text.current.textContent = label;
+      restScale = !t ? 1 : t.matches("input, textarea, select") ? 0.6 : label ? 2.6 : 1.6;
       if (t) {
-        const isField = t.matches("input, textarea, select");
         gsap.to(r, {
-          scale: isField ? 0.6 : label ? 2.6 : 1.8,
           rotate: 0,
-          scaleX: undefined,
-          backgroundColor: label ? "#991B3D" : "rgba(153,27,61,0.12)",
-          borderColor: label ? "#991B3D" : "#15060B",
-          duration: 0.35,
-          ease: "back.out(2)",
+          scaleX: restScale,
+          scaleY: restScale,
+          backgroundColor: label ? "#991B3D" : "rgba(153,27,61,0.08)",
+          borderColor: label ? "#991B3D" : "rgba(21,6,11,0.55)",
+          duration: 0.4,
+          ease: "power3.out",
+          overwrite: "auto",
         });
-        gsap.to(d, { scale: label ? 0 : 0.6, duration: 0.25 });
+        gsap.to(d, { scale: label ? 0 : 0.5, duration: 0.3, ease: "power3.out" });
       } else {
-        gsap.to(r, { scale: 1, backgroundColor: "rgba(0,0,0,0)", borderColor: "#15060B", duration: 0.35, ease: "power3" });
-        gsap.to(d, { scale: 1, duration: 0.25 });
+        gsap.to(r, { scaleX: 1, scaleY: 1, backgroundColor: "rgba(0,0,0,0)", borderColor: "#15060B", duration: 0.4, ease: "power3.out", overwrite: "auto" });
+        gsap.to(d, { scale: 1, duration: 0.3, ease: "power3.out" });
       }
     };
 
-    const down = () => gsap.to(r, { scale: "-=0.35", duration: 0.12 });
-    const up = () => gsap.to(r, { scale: hovering ? (text.current?.textContent ? 2.6 : 1.8) : 1, duration: 0.4, ease: "back.out(3)" });
+    const down = () => gsap.to(r, { scale: restScale * 0.85, duration: 0.15, ease: "power2.out", overwrite: "auto" });
+    const up = () => gsap.to(r, { scale: restScale, duration: 0.35, ease: "power3.out", overwrite: "auto" });
     const leave = () => gsap.to([d, r], { autoAlpha: 0, duration: 0.2 });
     const enter = () => gsap.to([d, r], { autoAlpha: 1, duration: 0.2 });
 

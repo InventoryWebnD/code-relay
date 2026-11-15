@@ -185,8 +185,8 @@ export function Reveal({
           scale: 1,
           rotate: 0,
           rotateX: 0,
-          duration: variant === "pop" ? 0.9 : 1.1,
-          ease: variant === "pop" ? "back.out(1.8)" : "expo.out",
+          duration: variant === "pop" ? 0.8 : 1.1,
+          ease: variant === "pop" ? "back.out(1.15)" : "expo.out",
           stagger,
           delay,
         }),
@@ -218,33 +218,42 @@ export function Magnetic({
   strength?: number;
   className?: string;
 }) {
+  const zone = useRef<HTMLDivElement>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const hit = zone.current;
     const el = ref.current;
-    if (!el || prefersReduced() || window.matchMedia("(pointer: coarse)").matches) return;
-    const xTo = gsap.quickTo(el, "x", { duration: 0.6, ease: "elastic.out(1, 0.4)" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.6, ease: "elastic.out(1, 0.4)" });
+    if (!hit || !el || prefersReduced() || window.matchMedia("(pointer: coarse)").matches) return;
+    // The pointer is read from a static outer zone while only the inner layer moves.
+    // Measuring the moving element itself made it slide out from under the cursor,
+    // fire pointerleave, snap back and re-enter: a visible jitter at the edges.
+    const xTo = gsap.quickTo(el, "x", { duration: 0.45, ease: "power3.out" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.45, ease: "power3.out" });
+    const MAX = 10;
+    const clampPx = (v: number) => Math.max(-MAX, Math.min(MAX, v));
     const move = (e: PointerEvent) => {
-      const r = el.getBoundingClientRect();
-      xTo((e.clientX - (r.left + r.width / 2)) * strength);
-      yTo((e.clientY - (r.top + r.height / 2)) * strength);
+      const r = hit.getBoundingClientRect();
+      xTo(clampPx((e.clientX - (r.left + r.width / 2)) * strength));
+      yTo(clampPx((e.clientY - (r.top + r.height / 2)) * strength));
     };
     const leave = () => {
       xTo(0);
       yTo(0);
     };
-    el.addEventListener("pointermove", move);
-    el.addEventListener("pointerleave", leave);
+    hit.addEventListener("pointermove", move);
+    hit.addEventListener("pointerleave", leave);
     return () => {
-      el.removeEventListener("pointermove", move);
-      el.removeEventListener("pointerleave", leave);
+      hit.removeEventListener("pointermove", move);
+      hit.removeEventListener("pointerleave", leave);
     };
   }, [strength]);
 
   return (
-    <div ref={ref} className={`inline-block ${className}`}>
-      {children}
+    <div ref={zone} className={`inline-block ${className}`}>
+      <div ref={ref} className="inline-block will-change-transform">
+        {children}
+      </div>
     </div>
   );
 }
