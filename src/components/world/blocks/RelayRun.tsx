@@ -108,7 +108,7 @@ export default function RelayRun({ id = "relay" }: { id?: string }) {
         ))}
 
         <div className="rr-lap flex shrink-0 flex-col items-start justify-center min-[900px]:w-[38vw] min-[900px]:pr-[6vw]">
-          <div className="rr-pop grid h-36 w-36 place-items-center rounded-full bg-[var(--crimson)] text-[var(--cream)] spin-slow">
+          <div className="rr-pop grid h-36 w-36 place-items-center rounded-full bg-[var(--crimson)] text-[var(--cream)] spin-slow [animation-duration:6s]">
             <span className="text-center font-display text-lg leading-tight">
               FINISH
               <br />
