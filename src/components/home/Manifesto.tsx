@@ -60,11 +60,12 @@ export default function Manifesto() {
                 <div className="absolute inset-[6%] rounded-full bg-[var(--ink)]" />
                 <div className="absolute inset-[6%] rounded-full border-2 border-dashed border-[var(--sun)]/50 spin-slow" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="absolute bottom-[4%] left-1/2 w-[58%] -translate-x-1/2 bob" />
-                <div className="absolute left-1/2 top-[14%] flex -translate-x-1/2 items-center gap-2">
+                <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="absolute bottom-[4%] left-1/2 w-[52%] -translate-x-1/2 bob" />
+                {/* reads top-down: who → their mark → their mascot */}
+                <div className="absolute left-1/2 top-[13%] flex -translate-x-1/2 flex-col items-center gap-2.5">
+                  <span className="label whitespace-nowrap text-[10px] text-[var(--cream)]/70">Organised by</span>
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/brand/webnd-mark.png" alt="WebnD" className="h-7 w-auto" />
-                  <span className="label text-[var(--cream)]">Organised by</span>
+                  <img src="/brand/webnd-mark.png" alt="WebnD" className="h-9 w-auto" />
                 </div>
               </div>
             </Parallax>
