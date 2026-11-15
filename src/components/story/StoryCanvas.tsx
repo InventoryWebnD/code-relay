@@ -33,6 +33,7 @@ const DPR: Record<Tier, [number, number]> = { high: [1, 1.75], low: [1, 1.5] };
 
 export default function StoryCanvas({ active, onReady }: { active: boolean; onReady?: () => void }) {
   const [fx, setFx] = useState(false);
+  const [glr, setGlr] = useState<THREE.WebGLRenderer | null>(null);
   const [tier, setTier] = useState<Tier>(initialTier);
   const [dpr, setDpr] = useState<[number, number] | number>(() => DPR[tier]);
 
@@ -44,6 +45,7 @@ export default function StoryCanvas({ active, onReady }: { active: boolean; onRe
       gl={{ antialias: false, powerPreference: "high-performance", stencil: false }}
       style={{ touchAction: "pan-y" }}
       onCreated={({ gl }) => {
+        setGlr(gl);
         gl.toneMapping = THREE.NoToneMapping;
         const canvas = gl.domElement;
         canvas.addEventListener("webglcontextlost", (e) => {
@@ -70,7 +72,9 @@ export default function StoryCanvas({ active, onReady }: { active: boolean; onRe
       <Environment />
       <SetPieces />
       <Director />
-      {fx && (
+      {/* re-checked every render: the composer is rebuilt on tier changes, and the
+          context can be lost between the lost-event and that rebuild */}
+      {fx && glr && contextAlive(glr) && (
         <EffectComposer multisampling={tier === "high" ? 4 : 0}>
           <Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={1.15} radius={0.75} />
           <Vignette offset={0.25} darkness={0.65} />
