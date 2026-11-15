@@ -168,7 +168,7 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
             {String(s.number).padStart(2, "0")}
           </span>
           <h3 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{s.title}</h3>
-          <p className="hidden text-sm opacity-70 line-clamp-2 sm:block">{s.description}</p>
+          <p className="text-sm opacity-70 line-clamp-2 max-sm:hidden">{s.description}</p>
           <span className="label hidden rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.track}</span>
           <span className="text-2xl transition-transform duration-500 group-hover:-rotate-45">→</span>
         </button>

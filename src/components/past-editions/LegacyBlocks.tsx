@@ -1,14 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import PageHero from "@/components/world/PageHero";
 import SectionHead from "@/components/world/SectionHead";
 import { prefersReduced, Reveal } from "@/components/world/motion";
 import { PAST_EDITIONS } from "@/data/pastEditionsData";
-
-const EDITION_COLOR = ["var(--crimson)", "var(--navy)", "var(--teal)", "#b88400"];
+import { PROBLEM_STATEMENTS, type ProblemStatement } from "@/data/problemStatements";
+import { TrackGroups, VaultModal } from "@/components/problem-statements/Vault";
 
 export function LegacyHero() {
   return (
@@ -27,14 +27,22 @@ export function LegacyHero() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Edition explorer: giant year switcher, open editorial layout        */
+/* Recent previous editions: the problem statements of each edition,   */
+/* under its two tracks. Same switcher and rows as the rest of the site */
 /* ------------------------------------------------------------------ */
-export function EditionExplorer() {
+const RECENT = [
+  { edition: "4.0" as const, color: "var(--crimson)" },
+  { edition: "3.0" as const, color: "var(--navy)" },
+];
+
+export function RecentEditions() {
   const [idx, setIdx] = useState(0);
+  const [active, setActive] = useState<ProblemStatement | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
   const body = useRef<HTMLDivElement>(null);
   const first = useRef(true);
-  const ed = PAST_EDITIONS[idx];
-  const color = EDITION_COLOR[idx];
+  const ed = RECENT[idx];
+  const statements = PROBLEM_STATEMENTS.filter((p) => p.edition === ed.edition);
 
   useEffect(() => {
     if (first.current) {
@@ -46,88 +54,46 @@ export function EditionExplorer() {
     gsap.fromTo(el.querySelectorAll(".ed-pop"), { y: 50, opacity: 0, rotate: 1 }, { y: 0, opacity: 1, rotate: 0, stagger: 0.05, duration: 0.8, ease: "expo.out" });
   }, [idx]);
 
+  const copyCitation = (st: ProblemStatement) => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(`${st.title} — ${st.editionLabel} (${st.track} Track)`);
+    setCopiedId(st.id);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+  const close = useCallback(() => setActive(null), []);
+
   return (
     <section id="editions" data-world="cube" data-world-x="9" data-world-y="2" data-world-fade="0.45" className="relative py-24 sm:py-32">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
-        <SectionHead label="Edition explorer" title={"Pick a\nyear"} />
+        <SectionHead label="Past problem statements" title={"Recent previous\neditions"} />
 
         <div className="mt-12 flex flex-wrap items-end gap-x-8 gap-y-2">
-          {PAST_EDITIONS.map((e, i) => (
-            <button key={e.edition} onClick={() => setIdx(i)} className="group relative text-left" data-cursor={e.shortCode}>
-              <span className={`label block transition-colors ${idx === i ? "" : "text-[var(--ink)]/40"}`} style={idx === i ? { color: EDITION_COLOR[i] } : undefined}>
-                {e.shortCode}
+          {RECENT.map((e, i) => (
+            <button key={e.edition} onClick={() => setIdx(i)} className="group relative text-left" data-cursor={`CR ${e.edition}`}>
+              <span className={`label block transition-colors ${idx === i ? "" : "text-[var(--ink)]/40"}`} style={idx === i ? { color: e.color } : undefined}>
+                Code Relay
               </span>
               <span
                 className="font-display text-[clamp(44px,7vw,112px)] leading-none transition-all duration-500"
-                style={{ color: idx === i ? EDITION_COLOR[i] : "transparent", WebkitTextStroke: idx === i ? "0" : "2px var(--ink)" }}
+                style={{ color: idx === i ? e.color : "transparent", WebkitTextStroke: idx === i ? "0" : "2px var(--ink)" }}
               >
-                {e.year}
+                {e.edition}
               </span>
             </button>
           ))}
         </div>
 
-        <div ref={body} key={idx} className="mt-14 grid gap-14 border-t-2 border-[var(--ink)] pt-10 lg:grid-cols-[1.1fr_1fr]">
-          <div>
-            <span className="ed-pop label rounded-full px-3 py-1.5 text-[var(--cream)]" style={{ background: color }}>
-              {ed.tag}
-            </span>
-            <h3 className="ed-pop mt-6 font-display text-[clamp(40px,5vw,84px)]">{ed.edition}</h3>
-            <p className="ed-pop mt-3 font-display text-lg !normal-case tracking-tight" style={{ color }}>
-              {ed.theme}
-            </p>
-            <p className="ed-pop mt-5 max-w-xl text-[var(--ink)]/80">{ed.description}</p>
-            {ed.stats && (
-              <div className="mt-10 grid grid-cols-2 gap-y-6">
-                {ed.stats.map((s, k) => (
-                  <div key={s.label} className={`ed-pop ${k % 2 ? "border-l-2 border-[var(--ink)]/15 pl-6" : ""}`}>
-                    <div className="font-display text-3xl sm:text-4xl">{s.value}</div>
-                    <div className="label mt-1 text-[var(--ink)]/60">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            )}
+        <div ref={body} key={idx} className="mt-14 border-t-2 border-[var(--ink)] pt-10">
+          <div className="ed-pop">
+            <TrackGroups statements={statements} onExplore={setActive} />
           </div>
-
-          <div>
-            <span className="ed-pop label text-[var(--ink)]/55">Highlights</span>
-            <ul className="mt-3">
-              {ed.highlights.map((h) => (
-                <li key={h} className="ed-pop flex gap-3 border-b-2 border-[var(--ink)]/10 py-3">
-                  <span className="font-display" style={{ color }}>
-                    ✦
-                  </span>
-                  {h}
-                </li>
-              ))}
-            </ul>
-            {ed.winningProjects && (
-              <>
-                <span className="ed-pop label mt-10 block text-[var(--ink)]/55">Winning builds</span>
-                {ed.winningProjects.map((w) => (
-                  <div key={w.title} className="ed-pop group mt-5">
-                    <div className="label" style={{ color }}>
-                      {w.place}
-                    </div>
-                    <div className="mt-1 font-display text-2xl !normal-case tracking-tight">{w.title}</div>
-                    <p className="mt-1 text-[15px] text-[var(--ink)]/75">{w.summary}</p>
-                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                      {w.stack.map((t) => (
-                        <span key={t} className="label text-[10px] text-[var(--ink)]/55">
-                          #{t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </>
-            )}
-            <Link href="/problem-statements" className="ed-pop btn-ghost mt-8">
-              {ed.shortCode} problem statements
-            </Link>
-          </div>
+          <Link href="/problem-statements" className="ed-pop btn-ghost mt-8">
+            Open the PS vault
+          </Link>
         </div>
       </div>
+
+      <VaultModal statement={active} onClose={close} copiedId={copiedId} onCopyCitation={copyCitation} />
     </section>
   );
 }
@@ -141,7 +107,7 @@ export function HallOfFame() {
   return (
     <section data-world="podium" className="relative overflow-hidden rounded-[48px] bg-[var(--crimson)] py-24 text-[var(--cream)] sm:py-32">
       <div className="relative mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
-        <SectionHead dark label="Hall of fame" title={"First across\nthe line"} sub="Champions and runners-up from Code Relay 4.0." />
+        <SectionHead dark label="Hall of fame" title={"First across\nthe line"} sub="Champions and runners-up from Code Relay 3.0." />
         <Reveal group variant="pop" className="mt-16 grid gap-10 sm:grid-cols-2 lg:grid-cols-4" stagger={0.12}>
           {winners.map((w, i) => (
             <figure

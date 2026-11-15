@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { EditionExplorer, HallOfFame, LegacyHero } from "@/components/past-editions/LegacyBlocks";
+import { HallOfFame, LegacyHero, RecentEditions } from "@/components/past-editions/LegacyBlocks";
 import DomeGallery from "@/components/world/blocks/DomeGallery";
 import ReviewStack from "@/components/world/blocks/ReviewStack";
 import SponsorWall from "@/components/world/blocks/SponsorWall";
@@ -14,7 +14,7 @@ export default function PastEditionsPage() {
   return (
     <>
       <LegacyHero />
-      <EditionExplorer />
+      <RecentEditions />
       <HallOfFame />
       <DomeGallery title={"The\narchive"} label="Gallery" />
       <ReviewStack />
