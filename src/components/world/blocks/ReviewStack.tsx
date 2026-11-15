@@ -51,28 +51,40 @@ export default function ReviewStack({ reviews = REVIEWS }: { reviews?: Review[] 
       <div className="mx-auto max-w-[1200px] px-5 sm:px-10">
         <SectionHead align="center" label="Participant voices" title={"Heard at the\nfinish line"} />
 
-        <div className="relative mt-14 text-center">
-          <span className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 font-display text-[180px] leading-none text-[var(--crimson)]/20" aria-hidden>
-            “
-          </span>
-          <p ref={quote} className="relative mx-auto max-w-4xl font-display text-[clamp(26px,3.6vw,54px)] !normal-case !leading-[1.08] tracking-tight">
-            {r.quote.split(" ").map((w, i) => (
-              <span key={`${idx}-${i}`} className="inline-block overflow-hidden align-bottom">
-                <span className="qw inline-block pr-[0.25em]">{w}</span>
-              </span>
-            ))}
-          </p>
-          <div className="label mt-8 flex items-center justify-center gap-3 text-[var(--ink)]/60">
-            <span className="h-px w-8 bg-current" />
-            {r.name} · {r.meta}
-            <span className="h-px w-8 bg-current" />
+        {/* the quote sits in a speech bubble that points at who said it */}
+        <div className="mt-16 flex flex-col items-center">
+          <div className="stk relative w-full max-w-4xl bg-[var(--paper)] px-6 pb-10 pt-12 text-center sm:px-14 sm:pb-14 sm:pt-16">
+            <span
+              className="absolute -top-7 left-6 grid h-14 w-14 place-items-center rounded-full border-[3px] border-[var(--ink)] bg-[var(--crimson)] pt-4 font-display text-5xl leading-none text-[var(--cream)] sm:left-10"
+              aria-hidden
+            >
+              “
+            </span>
+            <p ref={quote} className="relative font-display text-[clamp(24px,3.2vw,48px)] !normal-case !leading-[1.08] tracking-tight">
+              {r.quote.split(" ").map((w, i) => (
+                <span key={`${idx}-${i}`} className="inline-block overflow-hidden align-bottom">
+                  <span className="qw inline-block pr-[0.25em]">{w}</span>
+                </span>
+              ))}
+            </p>
+            {/* tail */}
+            <span
+              className="absolute -bottom-[15px] left-1/2 h-7 w-7 -translate-x-1/2 rotate-45 border-b-[3px] border-r-[3px] border-[var(--ink)] bg-[var(--paper)]"
+              aria-hidden
+            />
           </div>
+          <span
+            className="label mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[var(--ink)] px-4 py-2 text-[var(--ink)] transition-colors duration-500"
+            style={{ background: r.color }}
+          >
+            {r.name} · {r.meta}
+          </span>
         </div>
 
-        <div className="mt-12 flex items-center justify-center gap-3">
+        <div className="mt-12 flex items-center justify-center gap-2 sm:gap-3">
           <button
             onClick={() => go(idx - 1)}
-            className="grid h-12 w-12 place-items-center rounded-full border-2 border-[var(--ink)] text-lg transition-colors hover:bg-[var(--ink)] hover:text-[var(--cream)]"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full sm:h-12 sm:w-12 border-2 border-[var(--ink)] text-lg transition-colors hover:bg-[var(--ink)] hover:text-[var(--cream)]"
             aria-label="Previous review"
           >
             ←
@@ -82,7 +94,7 @@ export default function ReviewStack({ reviews = REVIEWS }: { reviews?: Review[] 
               key={i}
               onClick={() => go(i)}
               aria-label={`Review ${i + 1}`}
-              className="grid h-12 w-12 place-items-center rounded-full font-display text-xs transition-all duration-500"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-full sm:h-12 sm:w-12 font-display text-xs transition-all duration-500"
               style={{
                 background: i === idx ? "var(--ink)" : rv.color,
                 color: i === idx ? "var(--cream)" : "var(--ink)",
@@ -94,7 +106,7 @@ export default function ReviewStack({ reviews = REVIEWS }: { reviews?: Review[] 
           ))}
           <button
             onClick={() => go(idx + 1)}
-            className="grid h-12 w-12 place-items-center rounded-full border-2 border-[var(--ink)] text-lg transition-colors hover:bg-[var(--ink)] hover:text-[var(--cream)]"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full sm:h-12 sm:w-12 border-2 border-[var(--ink)] text-lg transition-colors hover:bg-[var(--ink)] hover:text-[var(--cream)]"
             aria-label="Next review"
           >
             →
