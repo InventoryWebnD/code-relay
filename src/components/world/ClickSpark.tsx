@@ -13,7 +13,10 @@ export default function ClickSpark() {
     const c = canvas.current!;
     const ctx = c.getContext("2d")!;
     let raf = 0;
-    type Spark = { x: number; y: number; a: number; t: number; color: string; len: number };
+    // Timed in milliseconds, not frames: on heavy pages (the 3D story) frames
+    // come slower and a per-frame step made each burst linger for over a second.
+    const LIFE = 320;
+    type Spark = { x: number; y: number; a: number; t: number; born: number; color: string; len: number };
     let sparks: Spark[] = [];
 
     const resize = () => {
@@ -29,16 +32,17 @@ export default function ClickSpark() {
       ctx.clearRect(0, 0, c.width, c.height);
       // advance first, then drop finished sparks, so the last frame never paints
       // a past-the-end stub (t > 1 flipped the easing and drew a stray dash)
-      for (const s of sparks) s.t = Math.min(s.t + 0.045, 1);
+      const now = performance.now();
+      for (const s of sparks) s.t = Math.min((now - s.born) / LIFE, 1);
       sparks = sparks.filter((s) => s.t < 1);
       for (const s of sparks) {
         const e = 1 - Math.pow(1 - s.t, 3);
-        const d = 10 + e * 38;
+        const d = 8 + e * 26;
         const l = s.len * (1 - e);
         const x1 = s.x + Math.cos(s.a) * d;
         const y1 = s.y + Math.sin(s.a) * d;
         ctx.strokeStyle = s.color;
-        ctx.lineWidth = 3.5;
+        ctx.lineWidth = 2.5;
         ctx.lineCap = "round";
         ctx.beginPath();
         ctx.moveTo(x1, y1);
@@ -52,7 +56,7 @@ export default function ClickSpark() {
       const n = 9;
       const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       for (let i = 0; i < n; i++) {
-        sparks.push({ x: e.clientX, y: e.clientY, a: (i / n) * Math.PI * 2, t: 0, color, len: 16 });
+        sparks.push({ x: e.clientX, y: e.clientY, a: (i / n) * Math.PI * 2, t: 0, born: performance.now(), color, len: 12 });
       }
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(draw);
