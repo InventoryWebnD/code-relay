@@ -194,7 +194,7 @@ export const PRIZES: PrizeCard[] = [
     badge: "TOTAL PRIZE POOL",
     badgeBg: "bg-[#F6F0E8]",
     badgeTextColor: "text-[#620821]",
-    amount: "₹2,00,000+",
+    amount: "₹2,50,000+",
     amountSubtitle: "INCLUDING IN-KIND REWARDS",
     description: "Cash prizes for both track winners, plus runners-up awards and in-kind rewards from our partners.",
     cardBg: "bg-[#22020A]",
