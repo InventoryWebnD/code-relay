@@ -27,9 +27,11 @@ export default function ClickSpark() {
 
     const draw = () => {
       ctx.clearRect(0, 0, c.width, c.height);
+      // advance first, then drop finished sparks, so the last frame never paints
+      // a past-the-end stub (t > 1 flipped the easing and drew a stray dash)
+      for (const s of sparks) s.t = Math.min(s.t + 0.045, 1);
       sparks = sparks.filter((s) => s.t < 1);
       for (const s of sparks) {
-        s.t += 0.045;
         const e = 1 - Math.pow(1 - s.t, 3);
         const d = 10 + e * 38;
         const l = s.len * (1 - e);

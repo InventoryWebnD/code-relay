@@ -18,7 +18,10 @@ export default function Cursor() {
     const d = dot.current!;
     const r = ring.current!;
     document.documentElement.classList.add("has-cursor");
-    gsap.set([d, r], { xPercent: -50, yPercent: -50, autoAlpha: 1 });
+    // Hidden until the mouse actually moves: showing it at mount parked the ring
+    // at (0,0), a stray circle in the top-left corner that never went away.
+    gsap.set([d, r], { xPercent: -50, yPercent: -50, autoAlpha: 0 });
+    let shown = false;
 
     const dx = gsap.quickTo(d, "x", { duration: 0.08, ease: "power3" });
     const dy = gsap.quickTo(d, "y", { duration: 0.08, ease: "power3" });
@@ -31,6 +34,13 @@ export default function Cursor() {
     let restScale = 1;
 
     const move = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse") return; // pen/touch on hybrid laptops: no follower
+      if (!shown) {
+        // appear right under the pointer, not sliding in from the corner
+        shown = true;
+        gsap.set([d, r], { x: e.clientX, y: e.clientY });
+        gsap.to([d, r], { autoAlpha: 1, duration: 0.25, ease: "power2.out" });
+      }
       dx(e.clientX);
       dy(e.clientY);
       rx(e.clientX);
@@ -78,15 +88,23 @@ export default function Cursor() {
 
     const down = () => gsap.to(r, { scale: restScale * 0.85, duration: 0.15, ease: "power2.out", overwrite: "auto" });
     const up = () => gsap.to(r, { scale: restScale, duration: 0.35, ease: "power3.out", overwrite: "auto" });
-    const leave = () => gsap.to([d, r], { autoAlpha: 0, duration: 0.2 });
-    const enter = () => gsap.to([d, r], { autoAlpha: 1, duration: 0.2 });
+    // Leaving the window: pointerleave on <html> doesn't fire reliably, so watch
+    // for a mouseout with no destination, and hide on tab/window blur as well.
+    // The next pointermove brings it back under the pointer.
+    const hide = () => {
+      shown = false;
+      gsap.to([d, r], { autoAlpha: 0, duration: 0.2, overwrite: "auto" });
+    };
+    const out = (e: MouseEvent) => {
+      if (!e.relatedTarget) hide();
+    };
 
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerover", over);
     window.addEventListener("pointerdown", down);
     window.addEventListener("pointerup", up);
-    document.documentElement.addEventListener("pointerleave", leave);
-    document.documentElement.addEventListener("pointerenter", enter);
+    document.addEventListener("mouseout", out);
+    window.addEventListener("blur", hide);
 
     return () => {
       document.documentElement.classList.remove("has-cursor");
@@ -94,8 +112,8 @@ export default function Cursor() {
       window.removeEventListener("pointerover", over);
       window.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
-      document.documentElement.removeEventListener("pointerleave", leave);
-      document.documentElement.removeEventListener("pointerenter", enter);
+      document.removeEventListener("mouseout", out);
+      window.removeEventListener("blur", hide);
     };
   }, []);
 
