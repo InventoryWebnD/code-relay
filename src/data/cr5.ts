@@ -297,27 +297,30 @@ export const FOOD_MODELS = [
 
 export interface GalleryItem {
   src?: string;
+  /** intrinsic size, so the photo wall reserves space before the image arrives */
+  w?: number;
+  h?: number;
   caption: string;
   tone: string;
 }
 
 /** PLACEHOLDER: tiles without `src` render as illustrated placeholder cards. */
 export const GALLERY: GalleryItem[] = [
-  { src: "/img/web2_win.jpg", caption: "CR 4.0 · Web2 champions", tone: "#991B3D" },
-  { src: "/img/3.o_participants1.jpg", caption: "CR 3.0 · Heads down, building", tone: "#0B1B4D" },
-  { src: "/img/3.o_oc1.jpg", caption: "CR 3.0 · The organising team", tone: "#5AA7A7" },
-  { src: "/img/web3_win.jpg", caption: "CR 4.0 · Web3 champions", tone: "#5AA7A7" },
-  { src: "/img/3.o_participants2.jpg", caption: "CR 3.0 · Teams at work", tone: "#F5B000" },
-  { src: "/img/cr3_banner.jpg", caption: "CR 3.0 · The banner goes up", tone: "#620821" },
-  { src: "/img/web2_ru.jpg", caption: "CR 4.0 · Web2 runners-up", tone: "#620821" },
-  { src: "/img/3.o_participants3.jpg", caption: "CR 3.0 · Mid-sprint", tone: "#991B3D" },
-  { src: "/img/3.o_oc2.jpg", caption: "CR 3.0 · Behind the scenes", tone: "#0B1B4D" },
-  { src: "/img/web3_ru.jpg", caption: "CR 4.0 · Web3 runners-up", tone: "#0B1B4D" },
-  { src: "/img/3.o_participants4.jpg", caption: "CR 3.0 · The hall, full", tone: "#5AA7A7" },
-  { src: "/img/cr_brand1.jpg", caption: "Code Relay · Lights on", tone: "#15060B" },
-  { src: "/img/3.o_oc3.jpg", caption: "CR 3.0 · Crew on the clock", tone: "#F5B000" },
-  { src: "/img/3.o_participants5.jpg", caption: "CR 3.0 · Ideas in motion", tone: "#991B3D" },
-  { src: "/img/3.o_oc4.jpg", caption: "CR 3.0 · The team behind it", tone: "#620821" },
+  { src: "/img/web2_win.jpg", w: 1080, h: 1080, caption: "CR 4.0 · Web2 champions", tone: "#991B3D" },
+  { src: "/img/3.o_participants1.jpg", w: 1159, h: 869, caption: "CR 3.0 · Heads down, building", tone: "#0B1B4D" },
+  { src: "/img/3.o_oc1.jpg", w: 1545, h: 869, caption: "CR 3.0 · The organising team", tone: "#5AA7A7" },
+  { src: "/img/web3_win.jpg", w: 1080, h: 1080, caption: "CR 4.0 · Web3 champions", tone: "#5AA7A7" },
+  { src: "/img/3.o_participants2.jpg", w: 1159, h: 869, caption: "CR 3.0 · Kick-off", tone: "#F5B000" },
+  { src: "/img/cr3_banner.jpg", w: 1085, h: 1449, caption: "CR 3.0 · The banner goes up", tone: "#620821" },
+  { src: "/img/web2_ru.jpg", w: 1080, h: 1080, caption: "CR 4.0 · Web2 runners-up", tone: "#620821" },
+  { src: "/img/3.o_participants3.jpg", w: 1159, h: 869, caption: "CR 3.0 · Mid-sprint", tone: "#991B3D" },
+  { src: "/img/3.o_oc2.jpg", w: 1152, h: 864, caption: "CR 3.0 · Debugging together", tone: "#0B1B4D" },
+  { src: "/img/web3_ru.jpg", w: 1080, h: 1080, caption: "CR 4.0 · Web3 runners-up", tone: "#0B1B4D" },
+  { src: "/img/3.o_participants4.jpg", w: 1544, h: 869, caption: "CR 3.0 · Presenting the build", tone: "#5AA7A7" },
+  { src: "/img/cr_brand1.jpg", w: 1159, h: 869, caption: "Code Relay · Lights on", tone: "#15060B" },
+  { src: "/img/3.o_oc3.jpg", w: 1159, h: 869, caption: "CR 3.0 · The crew, fuelled up", tone: "#F5B000" },
+  { src: "/img/3.o_participants5.jpg", w: 1544, h: 869, caption: "CR 3.0 · Pitching to the judges", tone: "#991B3D" },
+  { src: "/img/3.o_oc4.jpg", w: 1000, h: 666, caption: "CR 3.0 · The crew, all smiles", tone: "#620821" },
 ];
 
 export interface Review {
