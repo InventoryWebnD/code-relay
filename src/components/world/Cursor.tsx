@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 /**
- * Mascot cursor: the WebnD mascot trails the pointer and leans into the
+ * Mascot cursor: Webby (the WebnD mascot) trails the pointer and leans into the
  * movement, while a small crimson dot marks the exact click point. Add
  * `data-cursor="Label"` to a surface (not a link/button) to show a word
  * beside the mascot.

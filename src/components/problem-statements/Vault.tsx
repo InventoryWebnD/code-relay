@@ -134,9 +134,9 @@ export function VaultGrid({
         {statements.length === 0 ? (
           <div className="mx-auto max-w-lg py-16 text-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/brand/webnd-mascot-stand.webp" alt="" className="mx-auto w-28 wiggle-hover" />
+            <img src="/brand/webnd-mascot-stand.webp" alt="Webby" className="mx-auto w-28 wiggle-hover" />
             <h3 className="mt-4 font-display text-3xl">Nothing here</h3>
-            <p className="mt-2 text-[var(--ink)]/70">No statements match that search. Try another keyword.</p>
+            <p className="mt-2 text-[var(--ink)]/70">Webby looked everywhere but found nothing for that search. Try another keyword.</p>
             <button onClick={onResetFilters} className="btn-chunky mt-6 bg-[var(--sun)] text-[var(--ink)]">
               Reset filters
             </button>

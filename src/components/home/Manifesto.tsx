@@ -60,7 +60,7 @@ export default function Manifesto() {
                 <div className="absolute inset-[6%] rounded-full bg-[var(--crimson)]" />
                 <div className="absolute inset-[6%] rounded-full border-2 border-dashed border-[var(--sun)]/50 spin-slow" />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="absolute bottom-[4%] left-1/2 w-[52%] -translate-x-1/2 bob" />
+                <img src="/brand/webnd-mascot-stand.webp" alt="Webby, the WebnD mascot" className="absolute bottom-[4%] left-1/2 w-[52%] -translate-x-1/2 bob" />
                 {/* reads top-down: who → their mark → their mascot */}
                 <div className="absolute left-1/2 top-[13%] flex -translate-x-1/2 flex-col items-center gap-2.5">
                   <span className="label whitespace-nowrap text-[10px] text-[var(--cream)]/70">Organised by</span>
@@ -72,6 +72,7 @@ export default function Manifesto() {
             <Reveal className="mt-6">
               <h3 className="font-display text-2xl">Web &amp; Design Society</h3>
               <p className="mt-3 text-[var(--ink)]/75 leading-relaxed">{ABOUT_WEBND}</p>
+              <p className="label mt-4 text-[var(--crimson)]">Psst: the one in the cape is Webby, our mascot.</p>
             </Reveal>
           </div>
         </div>

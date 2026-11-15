@@ -266,7 +266,7 @@ export function ContactDesk() {
                 <h3 className="mt-2 font-display text-[clamp(28px,3vw,40px)] leading-none">{EVENT.contact.name}</h3>
               </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="-mt-2 w-20 shrink-0 bob sm:w-24" />
+              <img src="/brand/webnd-mascot-stand.webp" alt="Webby, the WebnD mascot" className="-mt-2 w-20 shrink-0 bob sm:w-24" />
             </div>
             <ul className="mt-6 border-b-2 border-[var(--ink)]/15">
               {[

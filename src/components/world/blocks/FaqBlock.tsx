@@ -14,7 +14,8 @@ export default function FaqBlock({ id = "faq" }: { id?: string }) {
         <div className="lg:sticky lg:top-32 lg:self-start">
           <SectionHead label="FAQ" title={"Got\nquestions?"} sub="Everything you need before you grab the baton." />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/webnd-mascot-stand.webp" alt="" className="mt-10 hidden w-44 -rotate-6 lg:block wiggle-hover" />
+          <img src="/brand/webnd-mascot-stand.webp" alt="Webby, the WebnD mascot" className="mt-10 hidden w-44 -rotate-6 lg:block wiggle-hover" />
+          <p className="label mt-3 hidden text-[var(--ink)]/55 lg:block">Webby has answers</p>
         </div>
 
         <Reveal group className="border-b-2 border-[var(--ink)]/15" stagger={0.06}>
