@@ -277,21 +277,23 @@ export default function RelayStory() {
           )}
         </div>
 
-        {/* loading: Webby runs the track until the 3D world is ready */}
+        {/* loading status: sits exactly where the scroll cue will appear, then
+            hands that spot over to it once the 3D world is ready */}
         <div
-          className={`pointer-events-none absolute inset-x-0 top-[22%] flex justify-center transition-opacity duration-700 sm:top-[28%] ${ready ? "opacity-0" : "opacity-100"}`}
-          aria-hidden={ready}
           role="status"
+          aria-hidden={ready}
+          className={`pointer-events-none absolute bottom-5 left-5 z-20 flex items-center gap-3 rounded-full border border-[var(--cream)]/20 bg-[#0b0618]/60 py-1.5 pl-1.5 pr-4 text-[var(--cream)] backdrop-blur-md transition-[opacity,translate] duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] sm:bottom-7 sm:left-1/2 sm:-translate-x-1/2 ${
+            ready ? "translate-y-3 opacity-0" : "translate-y-0 opacity-100"
+          }`}
         >
-          <div className="flex flex-col items-center gap-4">
-            <div className="relative h-16 w-60">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/webnd-mascot-fly.webp" alt="" className="story-runner absolute bottom-1.5 left-0 h-12 w-12 -scale-x-100 object-contain" />
-              <span className="absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-[var(--cream)]/15" />
-              <span className="story-loading absolute bottom-0 left-0 h-[2px] w-1/3 rounded-full bg-[var(--sun)]" />
-            </div>
-            <div className="label text-[var(--cream)]/75">Building the track</div>
-          </div>
+          <span className="relative grid h-9 w-9 shrink-0 place-items-center">
+            <span className="absolute inset-0 rounded-full border-2 border-[var(--cream)]/15" />
+            <span className="absolute inset-0 animate-spin rounded-full border-2 border-transparent border-t-[var(--sun)] [animation-duration:900ms]" />
+          </span>
+          <span className="flex flex-col leading-tight">
+            <span className="label text-[9px] text-[var(--cream)]/55">Loading the 3D world</span>
+            <span className="mt-0.5 text-sm font-semibold">Building the track…</span>
+          </span>
         </div>
 
         {/* legibility gradients */}
