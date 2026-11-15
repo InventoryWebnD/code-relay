@@ -118,7 +118,7 @@ export interface Track {
   guide: TrackGuide;
 }
 
-const FREE_TO_ENTER = "Free to enter. Round 1 needs no paid tools or API keys. Use any provider with a free tier, an open-source model or a local model.";
+const FREE_TO_ENTER = "Round 1 is free to enter and needs no paid tools or API keys: use any provider with a free tier, an open-source model or a local model. Only teams selected for Round 2 pay a registration fee; on-campus accommodation is optional.";
 
 export const TRACKS: Track[] = [
   {

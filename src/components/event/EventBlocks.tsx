@@ -11,7 +11,7 @@ import { EVENT } from "@/data/cr5";
 export function FactsRibbon() {
   const facts = [
     `Teams of ${EVENT.teamSize}`,
-    "Free to enter",
+    "Round 01 is free",
     "Open to all of India",
     `${EVENT.hackHours}-hour final`,
     `${EVENT.shortlist} teams on campus`,

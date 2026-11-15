@@ -110,23 +110,23 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "Is there any registration or entry fee?",
-    a: "No! Code Relay is 100% free for all participants. The Web and Design Society (WebnD) and our partners provide full event access, mentorship, and platform resources at no cost.",
+    a: "Round 1 is free for everyone. Only teams selected for Round 2, the 30-hour final on campus at IIT Bhubaneswar, pay a registration fee to confirm their place. Accommodation on campus is optional and charged separately. Selected teams get the exact amounts along with their shortlist confirmation.",
   },
   {
     q: "What is the hybrid format and venue location?",
     a: "Participants can register online for round 1 and submit their ideas. If qualified for round 2, they will have to attend it on-campus at the IIT Bhubaneswar permanent campus (Argul, Jatni).",
   },
   {
-    q: "Can I participate in both Web2 and Web3 tracks?",
-    a: "Each team selects one primary track (either Web2 or Web3) when submitting their final project. However, solutions that bridge Web2 frontends with Web3 backend protocols are strongly encouraged and eligible for cross-category bounties.",
+    q: "How are the tracks organised, and can we pick more than one?",
+    a: "Code Relay 5.0 has two domains. The Web2 domain holds the AI & Automation track and the Web3 domain holds the AI for Bharat track. Each track has four sub-tracks, which are idea areas for Round 1. Each team picks one track and one sub-track.",
   },
   {
     q: "What are the rules regarding pre-existing code?",
     a: "All code submitted for judging must be written during the 30-hour hackathon duration. You may utilize public open-source libraries, packages, frameworks, and APIs, but the core project logic, contracts, and interfaces must be original work created during the event.",
   },
   {
-    q: "When will the official problem statements be released?",
-    a: "Official Code Relay 5.0 problem statements will be revealed during the Opening Ceremony on Day 1. In the meantime, you can explore the archive of past edition problem statements on our Past Problem Statements page.",
+    q: "Where can I read the problem statements?",
+    a: "The Code Relay 5.0 tracks, sub-tracks and Round 1 guidelines are live on the Event page and in the PS Vault. The vault also has the problem statements from Code Relay 4.0 and 3.0.",
   },
 ];
 

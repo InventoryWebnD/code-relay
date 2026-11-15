@@ -9,7 +9,7 @@ import { EVENT } from "@/data/cr5";
 /** Finale: a big closing call to register. */
 export default function FinalCTA({
   title = "Pass the baton",
-  sub = `Round 01 is online and open to every college in India. ${EVENT.teamSize} per team. Free to enter.`,
+  sub = `Round 01 is online and open to every college in India. ${EVENT.teamSize} per team. Round 01 is free.`,
 }: {
   title?: string;
   sub?: string;

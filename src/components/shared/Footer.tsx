@@ -57,7 +57,7 @@ export default function Footer() {
                 <span className="text-[var(--sun)]">Ship the future.</span>
               </h3>
               <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-[var(--cream)]/65">
-                {EVENT.name} {EVENT.edition} by the {EVENT.org}, {EVENT.institute}. Free to enter, teams of {EVENT.teamSize}.
+                {EVENT.name} {EVENT.edition} by the {EVENT.org}, {EVENT.institute}. Round 01 is free, teams of {EVENT.teamSize}.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link href="/register" className="btn-chunky border-[var(--crimson)] bg-[var(--crimson)] text-[var(--cream)]">
