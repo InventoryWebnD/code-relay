@@ -559,11 +559,12 @@ html.has-cursor * {
 }
 
 /* story: scroll cue */
+/* wheel dot rolls forward (up), the way a finger pushes the wheel to scroll on */
 @keyframes hint-wheel {
-  0% { transform: translate(-50%, 0); opacity: 0; }
+  0% { transform: translate(-50%, 7px); opacity: 0; }
   20% { opacity: 1; }
-  70% { transform: translate(-50%, 7px); opacity: 0; }
-  100% { transform: translate(-50%, 7px); opacity: 0; }
+  70% { transform: translate(-50%, 0); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 0; }
 }
 @keyframes hint-swipe {
   0% { transform: translateY(4px); opacity: 0; }
