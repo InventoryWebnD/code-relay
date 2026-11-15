@@ -1,13 +1,17 @@
 export interface ProblemStatement {
   id: string;
-  edition: "4.0" | "3.0";
+  edition: "5.0" | "4.0" | "3.0";
   editionLabel: string;
   editionType: string;
   track: "Web2" | "Web3";
+  /** display name when the track isn't literally Web2/Web3 (CR 5.0) */
+  trackLabel?: string;
   number: number;
   title: string;
   description: string;
 }
+
+import { TRACKS } from "./cr5";
 
 type Entry = Pick<ProblemStatement, "title" | "description">;
 
@@ -15,7 +19,9 @@ const CR4 = { edition: "4.0", editionLabel: "Code Relay 4.0", editionType: "Onli
 const CR3 = { edition: "3.0", editionLabel: "Code Relay 3.0", editionType: "On-site Hackathon" } as const;
 
 /** numbered per track: each edition runs two tracks, Web2 and Web3 */
-function track(meta: typeof CR4 | typeof CR3, trackName: "Web2" | "Web3", prefix: string, entries: Entry[]): ProblemStatement[] {
+const CR5 = { edition: "5.0", editionLabel: "Code Relay 5.0", editionType: "Round 01 · Online" } as const;
+
+function track(meta: typeof CR5 | typeof CR4 | typeof CR3, trackName: "Web2" | "Web3", prefix: string, entries: Entry[]): ProblemStatement[] {
   return entries.map((e, i) => ({
     id: `${prefix}-${trackName === "Web2" ? "w2" : "w3"}-${String(i + 1).padStart(2, "0")}`,
     ...meta,
@@ -26,6 +32,13 @@ function track(meta: typeof CR4 | typeof CR3, trackName: "Web2" | "Web3", prefix
 }
 
 export const PROBLEM_STATEMENTS: ProblemStatement[] = [
+  // ==========================================
+  // CODE RELAY 5.0 — from the live track data, so the vault never drifts
+  // ==========================================
+  ...TRACKS.flatMap((t) =>
+    track(CR5, t.id === "web2" ? "Web2" : "Web3", "cr5", t.items.map((it) => ({ title: it.title, description: it.body }))).map((p) => ({ ...p, trackLabel: t.name }))
+  ),
+
   // ==========================================
   // CODE RELAY 4.0
   // ==========================================

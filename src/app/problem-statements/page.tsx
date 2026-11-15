@@ -9,14 +9,14 @@ export default function ProblemStatementsPage() {
     document.title = "Problem Statements Vault | Code Relay 5.0";
   }, []);
 
-  const [selectedEdition, setSelectedEdition] = useState<"4.0" | "3.0">("4.0");
+  const [selectedEdition, setSelectedEdition] = useState<"5.0" | "4.0" | "3.0">("5.0");
   const [selectedTrack, setSelectedTrack] = useState<"ALL" | "Web2" | "Web3">("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeStatement, setActiveStatement] = useState<ProblemStatement | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   // Switch edition and reset track filter
-  const handleEditionChange = (edition: "4.0" | "3.0") => {
+  const handleEditionChange = (edition: "5.0" | "4.0" | "3.0") => {
     setSelectedEdition(edition);
     setSelectedTrack("ALL");
     setSearchQuery("");
@@ -55,7 +55,7 @@ export default function ProblemStatementsPage() {
   }, [editionStatements, selectedTrack, searchQuery]);
 
   const handleCopyCitation = (statement: ProblemStatement) => {
-    const text = `${statement.title} — ${statement.editionLabel} (${statement.track} Track)`;
+    const text = `${statement.title} — ${statement.editionLabel} (${statement.trackLabel ?? statement.track} Track)`;
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text);
       setCopiedId(statement.id);

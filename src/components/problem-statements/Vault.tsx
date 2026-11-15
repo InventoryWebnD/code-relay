@@ -6,8 +6,13 @@ import type { ProblemStatement } from "@/data/problemStatements";
 import PageHero from "@/components/world/PageHero";
 import { prefersReduced } from "@/components/world/motion";
 import { useLenis } from "@/components/world/SmoothScroll";
+import { TRACKS } from "@/data/cr5";
 
-type Edition = "4.0" | "3.0";
+/** what the Web2 / Web3 slots are called in each edition */
+const trackName = (edition: Edition, t: "Web2" | "Web3") =>
+  edition === "5.0" ? TRACKS[t === "Web2" ? 0 : 1].name : t;
+
+type Edition = "5.0" | "4.0" | "3.0";
 type TrackF = "ALL" | "Web2" | "Web3";
 
 const TRACK_COLOR = { Web2: "var(--crimson)", Web3: "var(--navy)" } as const;
@@ -17,12 +22,12 @@ export function VaultHero({ selectedEdition, onEditionChange }: { selectedEditio
     <PageHero
       label="Problem statement vault"
       title={"Crack\nthe vault"}
-      sub="The challenges that shaped previous editions of Code Relay across Web2 and Web3. Use them to warm up before Round 01."
+      sub="This year's tracks, plus the challenges that shaped previous editions of Code Relay. Read them before Round 01."
       world="cube"
       worldX={6.4}
     >
-      <div className="mt-10 inline-flex gap-1 rounded-full bg-[var(--ink)] p-1.5">
-        {(["4.0", "3.0"] as Edition[]).map((e) => (
+      <div className="mt-10 inline-flex flex-wrap gap-1 rounded-full bg-[var(--ink)] p-1.5">
+        {(["5.0", "4.0", "3.0"] as Edition[]).map((e) => (
           <button
             key={e}
             onClick={() => onEditionChange(e)}
@@ -63,8 +68,8 @@ export function VaultFilters({
 }) {
   const tabs: { id: TrackF; label: string; n: number; bg: string }[] = [
     { id: "ALL", label: "All", n: totalCount, bg: "var(--ink)" },
-    { id: "Web2", label: "Web2", n: web2Count, bg: "var(--crimson)" },
-    { id: "Web3", label: "Web3", n: web3Count, bg: "var(--navy)" },
+    { id: "Web2", label: trackName(selectedEdition, "Web2"), n: web2Count, bg: "var(--crimson)" },
+    { id: "Web3", label: trackName(selectedEdition, "Web3"), n: web3Count, bg: "var(--navy)" },
   ];
   return (
     <div className="glass relative z-30 border-y border-[var(--ink)]/10">
@@ -160,7 +165,7 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
         <button
           key={s.id}
           onClick={() => onExplore(s)}
-          className="row-flood group grid w-full grid-cols-[56px_1fr_auto] items-center gap-4 px-2 py-6 text-left sm:grid-cols-[90px_1.2fr_1.4fr_100px_40px] sm:gap-8 sm:px-4"
+          className="row-flood group grid w-full grid-cols-[56px_1fr_auto] items-center gap-4 px-2 py-6 text-left sm:grid-cols-[90px_1.2fr_1.4fr_auto_40px] sm:gap-8 sm:px-4"
           style={{ ["--flood" as string]: TRACK_COLOR[s.track] }}
           data-cursor="Open"
         >
@@ -169,7 +174,7 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
           </span>
           <h3 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{s.title}</h3>
           <p className="text-sm opacity-70 line-clamp-2 max-sm:hidden">{s.description}</p>
-          <span className="label hidden rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.track}</span>
+          <span className="label hidden whitespace-nowrap rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.trackLabel ?? s.track}</span>
           <span className="text-2xl transition-transform duration-500 group-hover:-rotate-45">→</span>
         </button>
       ))}
@@ -188,7 +193,7 @@ export function TrackGroups({ statements, onExplore }: { statements: ProblemStat
           <div key={t}>
             <div className="mb-4 flex flex-wrap items-center gap-2">
               <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
-                {t} track
+                {rows[0].trackLabel ?? t} track
               </span>
               <span className="label text-[var(--ink)]/55">
                 {rows.length} {rows.length === 1 ? "statement" : "statements"}
@@ -237,7 +242,7 @@ export function VaultModal({
         <div className="flex items-start justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2">
             <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[statement.track] }}>
-              {statement.track} · #{String(statement.number).padStart(2, "0")}
+              {statement.trackLabel ?? statement.track} · #{String(statement.number).padStart(2, "0")}
             </span>
             <span className="label text-[var(--ink)]/55">{statement.editionLabel}</span>
           </div>
