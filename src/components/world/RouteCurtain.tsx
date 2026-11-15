@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
+import PixelTransition from "./PixelTransition";
 
 const LABELS: Record<string, string> = {
   "/": "Home",
@@ -15,37 +16,45 @@ const LABELS: Record<string, string> = {
   "/profile": "Profile",
 };
 
-const COLS = ["#991B3D", "#15060B", "#0B1B4D", "#15060B", "#991B3D"];
-const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
+type Phase = "cover" | "reveal" | "idle";
 
-function revealCurtain(el: HTMLDivElement | null, busy: { current: boolean }) {
-  if (!el) return;
-  const q = gsap.utils.selector(el);
-  gsap
-    .timeline({
-      delay: 0.15,
-      onComplete: () => {
-        busy.current = false;
-        gsap.set(el, { autoAlpha: 0 });
-      },
-    })
-    .to(q(".rc-label"), { yPercent: -120, duration: 0.4, ease: "expo.in" })
-    .to(q(".rc-col"), { yPercent: -100, duration: 0.75, ease: "expo.inOut", stagger: 0.045 }, "-=0.1");
-}
+/** A calm pass of the pixel transition: night-sky navies with a hint of maroon,
+ *  no bright tiles, no flash, no twinkle, and quicker in and out. */
+const SUBTLE = {
+  coverMs: 560,
+  revealMs: 520,
+  tileMs: 260,
+  twinkle: false,
+  base: "#0a1136",
+  flash: "#1a2668",
+  palette: { deep: "#0c1642", navy: "#101d52", maroon: "#2a1446", hot: "#3c1a4e", cream: "#14215c" },
+};
+const useIso = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 function labelFor(path: string) {
   const base = "/" + (path.split("/")[1] ?? "");
   return LABELS[base] ?? "Code Relay";
 }
 
+/**
+ * Page transition: pixel tiles cover the screen from the edges in, the
+ * destination's name slides in, we navigate, then the tiles clear from the
+ * centre out on arrival.
+ */
 export default function RouteCurtain() {
   const router = useRouter();
   const pathname = usePathname();
-  const root = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const busy = useRef(false);
-  const pending = useRef<string | null>(null);
+  const dest = useRef<string | null>(null);
   const first = useRef(true);
+  const safety = useRef<number | undefined>(undefined);
   const [label, setLabel] = useState("");
+  const [phase, setPhase] = useState<Phase>("idle");
+
+  useIso(() => {
+    if (labelRef.current) gsap.set(labelRef.current, { yPercent: 30, autoAlpha: 0 });
+  }, []);
 
   // Intercept internal link clicks → cover → navigate.
   useEffect(() => {
@@ -68,56 +77,58 @@ export default function RouteCurtain() {
       if (busy.current) return;
       busy.current = true;
 
-      const dest = url.pathname + url.search + url.hash;
-      pending.current = url.pathname;
+      dest.current = url.pathname + url.search + url.hash;
       setLabel(labelFor(url.pathname));
-      router.prefetch(dest);
-
-      const el = root.current!;
-      const q = gsap.utils.selector(el);
-      gsap.set(el, { autoAlpha: 1 });
-      gsap.set(q(".rc-col"), { yPercent: 100 });
-      gsap.set(q(".rc-label"), { yPercent: 120 });
-      gsap
-        .timeline({
-          onComplete: () => {
-            router.push(dest);
-            // Safety net: never leave the screen covered if navigation stalls.
-            window.setTimeout(() => {
-              if (busy.current) revealCurtain(root.current, busy);
-            }, 4000);
-          },
-        })
-        .to(q(".rc-col"), { yPercent: 0, duration: 0.55, ease: "expo.inOut", stagger: 0.045 })
-        .to(q(".rc-label"), { yPercent: 0, duration: 0.5, ease: "expo.out" }, "-=0.2");
+      router.prefetch(dest.current);
+      setPhase("cover");
     };
 
     window.addEventListener("click", onClick, true);
     return () => window.removeEventListener("click", onClick, true);
   }, [router]);
 
-  // On arrival → reveal.
+  const reveal = () => {
+    window.clearTimeout(safety.current);
+    const el = labelRef.current;
+    if (!el) return setPhase("reveal");
+    // overwrite: the slide-in may still be running on a fast arrival; it must not win
+    gsap.to(el, { yPercent: -30, autoAlpha: 0, duration: 0.3, ease: "power2.in", overwrite: true, onComplete: () => setPhase("reveal") });
+  };
+
+  // Tiles are down: show where we're going, then go.
+  const onCovered = () => {
+    const el = labelRef.current;
+    if (el) gsap.fromTo(el, { yPercent: 30, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: "power3.out" });
+    if (dest.current) router.push(dest.current);
+    // Safety net: never leave the screen covered if navigation stalls.
+    safety.current = window.setTimeout(() => {
+      if (busy.current) reveal();
+    }, 4000);
+  };
+
+  const onRevealed = () => {
+    busy.current = false;
+    setPhase("idle");
+  };
+
+  // On arrival → clear the tiles.
   useIso(() => {
     if (first.current) {
       first.current = false;
       return;
     }
     if (!busy.current) return;
-    revealCurtain(root.current, busy);
+    reveal();
   }, [pathname]);
 
   return (
-    <div ref={root} className="pointer-events-none fixed inset-0 z-[150] invisible" aria-hidden>
-      <div className="absolute inset-0 flex">
-        {COLS.map((c, i) => (
-          <div key={i} className="rc-col h-full flex-1" style={{ background: c }} />
-        ))}
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-        <div className="rc-label flex items-center gap-4">
+    <div className="pointer-events-none fixed inset-0 z-[150]" aria-hidden>
+      <PixelTransition phase={phase} onCovered={onCovered} onRevealed={onRevealed} options={SUBTLE} />
+      <div className="absolute inset-0 z-[52] flex items-center justify-center overflow-hidden">
+        <div ref={labelRef} className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/webnd-mascot-fly.webp" alt="" className="h-16 w-16 sm:h-24 sm:w-24 object-contain -scale-x-100" />
-          <span className="font-display text-[clamp(40px,9vw,140px)] text-[var(--cream)]">{label}</span>
+          <img src="/brand/webnd-mascot-fly.webp" alt="" className="h-10 w-10 sm:h-14 sm:w-14 object-contain -scale-x-100" />
+          <span className="font-display text-[clamp(26px,4vw,56px)] text-[var(--cream)]">{label}</span>
         </div>
       </div>
     </div>
