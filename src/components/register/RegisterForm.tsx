@@ -167,7 +167,7 @@ export default function RegisterForm() {
                   Dual Track Architecture
                 </h4>
                 <p className="text-xs text-[#D6C6CC] mt-0.5 leading-relaxed">
-                  Compete in AI &amp; Automation (agents that take over real work) or AI for Bharat (AI that works for every Indian).
+                  Compete in Web2 (AI &amp; Automation, AI for Bharat) or Web3 (Onchain Payments, AI × Web3).
                 </p>
               </div>
             </div>

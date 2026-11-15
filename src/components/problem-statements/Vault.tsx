@@ -6,6 +6,7 @@ import type { ProblemStatement } from "@/data/problemStatements";
 import PageHero from "@/components/world/PageHero";
 import { prefersReduced } from "@/components/world/motion";
 import { useLenis } from "@/components/world/SmoothScroll";
+import { TRACKS } from "@/data/cr5";
 type Edition = "5.0" | "4.0" | "3.0";
 type TrackF = "ALL" | "Web2" | "Web3";
 
@@ -176,33 +177,50 @@ export function StatementRows({ statements, onExplore }: { statements: ProblemSt
   );
 }
 
-/** Rows grouped under their track (each edition runs two: Web2 and Web3), numbered within the track. */
+/**
+ * Rows grouped by domain. CR 5.0 nests domain → track → sub-tracks / ideas;
+ * earlier editions had one track per domain, so the domain is the group.
+ */
 export function TrackGroups({ statements, onExplore }: { statements: ProblemStatement[]; onExplore: (s: ProblemStatement) => void }) {
   return (
     <div className="flex flex-col gap-16 sm:gap-20">
-      {(["Web2", "Web3"] as const).map((t) => {
-        const rows = statements.filter((s) => s.track === t);
+      {(["Web2", "Web3"] as const).map((d) => {
+        const rows = statements.filter((s) => s.track === d);
         if (!rows.length) return null;
-        // CR 5.0: domain → track → sub-tracks. Earlier editions: the domain was the track.
-        const trackTitle = rows[0].trackLabel;
+        const trackNames = [...new Set(rows.map((r) => r.trackLabel).filter(Boolean))] as string[];
         return (
-          <div key={t}>
-            <div className="mb-6 flex flex-col gap-3 sm:mb-8">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
-                  {t} {trackTitle ? "domain" : "track"}
-                </span>
-                <span className="label text-[var(--ink)]/55">
-                  {rows.length} {trackTitle ? (rows.length === 1 ? "sub-track" : "sub-tracks") : rows.length === 1 ? "statement" : "statements"}
-                </span>
-              </div>
-              {trackTitle && (
-                <h3 className="font-display text-[clamp(26px,3.4vw,44px)] leading-none">
-                  {trackTitle} <span className="text-[var(--ink)]/35">track</span>
-                </h3>
-              )}
+          <div key={d}>
+            <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8">
+              <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[d] }}>
+                {d} {trackNames.length ? "domain" : "track"}
+              </span>
+              <span className="label text-[var(--ink)]/55">
+                {trackNames.length ? `${trackNames.length} tracks · ` : ""}
+                {rows.length} {rows.length === 1 ? "statement" : "statements"}
+              </span>
             </div>
-            <StatementRows statements={rows} onExplore={onExplore} />
+            {trackNames.length ? (
+              <div className="flex flex-col gap-12 sm:gap-14">
+                {trackNames.map((name) => {
+                  const meta = TRACKS.find((t) => t.name === name);
+                  return (
+                    <div key={name}>
+                      <span className="label" style={{ color: meta?.color }}>
+                        Track {String(meta?.order ?? 1).padStart(2, "0")}
+                        {meta?.partner ? ` · with ${meta.partner}` : ""}
+                      </span>
+                      <h3 className="mt-1 font-display text-[clamp(26px,3.4vw,44px)] leading-none">{name}</h3>
+                      {meta && <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-[var(--ink)]/70">{meta.problem ?? meta.tagline}</p>}
+                      <div className="mt-5">
+                        <StatementRows statements={rows.filter((r) => r.trackLabel === name)} onExplore={onExplore} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <StatementRows statements={rows} onExplore={onExplore} />
+            )}
           </div>
         );
       })}

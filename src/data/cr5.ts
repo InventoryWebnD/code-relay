@@ -109,26 +109,40 @@ export interface TrackGuide {
   notAccepted: string;
 }
 
+/**
+ * CR 5.0 structure: two domains (Web2, Web3; registrations are stored against
+ * WEB2 / WEB3), each holding two tracks, each track with sub-tracks / ideas.
+ */
+export type Domain = "Web2" | "Web3";
+
 export interface Track {
-  /** internal id: kept as web2 / web3 because registrations are stored against WEB2 / WEB3 */
-  id: "web2" | "web3";
-  /** the domain this track sits in (Web2 / Web3); each domain holds one track, each track its sub-tracks */
-  domain: "Web2" | "Web3";
+  id: string;
+  domain: Domain;
+  /** position inside its domain: Track 01 / Track 02 */
+  order: number;
   name: string;
-  partner: string;
+  /** who brings the track (omitted when open) */
+  partner?: string;
   tagline: string;
+  /** full problem statement, where the track has one */
+  problem?: string;
+  /** label for the items list: sub-tracks (Web2) or starting ideas (Web3) */
+  itemsLabel: string;
   color: string;
   ink: string;
   items: SubTrack[];
-  guide: TrackGuide;
+  /** Round 1 guidelines; Web3 tracks share WEB3_GUIDE */
+  guide?: TrackGuide;
 }
 
 const FREE_TO_ENTER = "Round 1 is free to enter and needs no paid tools or API keys: use any provider with a free tier, an open-source model or a local model. Only teams selected for Round 2 pay a registration fee; on-campus accommodation is optional.";
 
 export const TRACKS: Track[] = [
   {
-    id: "web2",
+    id: "ai-automation",
     domain: "Web2",
+    order: 1,
+    itemsLabel: "Sub-tracks",
     name: "AI & Automation",
     partner: "TrueFoundry",
     tagline: "Agents that take over real work, and still ask before anything they can't undo.",
@@ -188,12 +202,14 @@ export const TRACKS: Track[] = [
     },
   },
   {
-    id: "web3",
-    domain: "Web3",
+    id: "ai-bharat",
+    domain: "Web2",
+    order: 2,
+    itemsLabel: "Sub-tracks",
     name: "AI for Bharat",
     partner: "CSM Technologies × TrueFoundry",
     tagline: "AI that fixes a real problem for the last user in the line, in India's languages, networks and scale.",
-    color: "#0B1B4D",
+    color: "#C2264F",
     ink: "#F6F0E8",
     items: [
       {
@@ -248,9 +264,73 @@ export const TRACKS: Track[] = [
         "Generic Q&A chatbots, “chat with your PDF”, plain RAG over notes, resume screeners and study buddies, and apps that only put an existing form online, unless they clearly redesign the process and meet the pillars. Never commit API keys; use synthetic, anonymized or open data only.",
     },
   },
+  {
+    id: "onchain-payments",
+    domain: "Web3",
+    order: 1,
+    itemsLabel: "Ideas to get you started",
+    name: "Onchain Payments",
+    tagline: "Onchain payments simple enough for a first-time user.",
+    problem:
+      "Billions of people use digital payments every day, but onchain payments are still hard for most of them. Wallets are confusing, fees and network choices are unclear, and a single wrong step can lose funds. Design an onchain payment solution simple enough for a first-time user, which solves a real payment problem better than existing options.",
+    color: "#0B1B4D",
+    ink: "#F6F0E8",
+    items: [
+      { title: "Stablecoin checkout", body: "A plug-in for small online stores to accept stablecoin payments as easily as UPI." },
+      { title: "Cross-border transfers", body: "Low-cost, fast payments for students, freelancers or families sending money abroad." },
+      { title: "Walletless onboarding", body: "Payments where users sign in with an email or phone number and never see a seed phrase." },
+      { title: "Split and recurring payments", body: "Subscriptions, rent splitting or payroll handled onchain." },
+      { title: "Merchant settlement", body: "Instant onchain settlement and records for small businesses." },
+    ],
+  },
+  {
+    id: "ai-web3",
+    domain: "Web3",
+    order: 2,
+    itemsLabel: "Ideas to get you started",
+    name: "AI × Web3",
+    tagline: "AI and blockchain doing together what neither could do alone.",
+    problem:
+      "AI agents are starting to act on their own, but they can't easily hold money, pay for what they use or prove what they did. Blockchains can give them wallets, payments and a verifiable record. Design a solution where AI and blockchain work together to do something neither could do alone.",
+    color: "#24398A",
+    ink: "#F6F0E8",
+    items: [
+      { title: "Agents with wallets", body: "AI agents that pay for APIs, data or compute on their own, within spending limits." },
+      { title: "Verifiable AI", body: "Recording an AI's decisions or outputs onchain so anyone can check them." },
+      { title: "Data marketplaces", body: "People sharing or selling data for AI training, and getting paid fairly onchain." },
+      { title: "Onchain assistants", body: "AI that explains, simulates and safely carries out transactions for users new to Web3." },
+      { title: "Fraud and risk detection", body: "AI that flags scams, risky contracts or suspicious wallets before users interact." },
+    ],
+  },
 ];
 
 export const TRACK_FREE_NOTE = FREE_TO_ENTER;
+
+export const DOMAINS: { id: Domain; color: string; blurb: string }[] = [
+  { id: "Web2", color: "#991B3D", blurb: "AI that takes over real work, and AI that works for every Indian." },
+  { id: "Web3", color: "#0B1B4D", blurb: "Onchain money for first-time users, and AI that can pay and prove what it did." },
+];
+export const tracksIn = (d: Domain) => TRACKS.filter((t) => t.domain === d);
+
+/** Round 1 rules shared by both Web3 tracks (open to any blockchain for now) */
+export const WEB3_GUIDE = {
+  submission: "Submit one PPT using the provided template, covering:",
+  checklist: [
+    "The problem and who faces it",
+    "Your solution and how it works",
+    "Why it needs blockchain (and AI, for AI × Web3)",
+    "Architecture: the chain, smart contracts and key tools you plan to use",
+    "How you'll build it in 30 hours at Round 2",
+  ],
+  bonus: "A working prototype attached with your PPT earns bonus points.",
+  judging: [
+    { label: "Real problem", body: "A clear user and a problem worth solving." },
+    { label: "Essential use of Web3", body: "Blockchain is central to the solution, not added on top." },
+    { label: "Usability", body: "Simple enough for someone new to Web3." },
+    { label: "Feasibility", body: "A realistic plan to build a working version in 30 hours." },
+  ],
+  chains: "Both tracks are open to any blockchain.",
+};
 
 export const EXTRA_TRACKS = [
   { title: "Open Innovation", body: "Build anything. If it's bold and it works, it belongs here." },

@@ -122,7 +122,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     q: "How are the tracks organised, and can we pick more than one?",
-    a: "Code Relay 5.0 has two domains. The Web2 domain holds the AI & Automation track and the Web3 domain holds the AI for Bharat track. Each track has four sub-tracks, which are idea areas for Round 1. Each team picks one track and one sub-track.",
+    a: "Code Relay 5.0 has two domains with two tracks each. Web2: AI & Automation (with TrueFoundry) and AI for Bharat (with CSM Technologies × TrueFoundry), each with four sub-tracks. Web3: Onchain Payments and AI × Web3, each with a problem statement and starting ideas, open to any blockchain. Each team picks one track.",
   },
   {
     q: "What are the rules regarding pre-existing code?",

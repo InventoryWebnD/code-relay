@@ -4,16 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/world/motion";
 import SectionHead from "@/components/world/SectionHead";
-import { EXTRA_TRACKS, TRACKS } from "@/data/cr5";
+import { DOMAINS, EXTRA_TRACKS, tracksIn } from "@/data/cr5";
 
 /**
- * Tracks as an editorial switcher: two huge track names toggle the list of
- * sub-tracks. Rows flood with the track colour on hover. The cube world
- * builds two towers (crimson AI & Automation, navy AI for Bharat) on either side.
+ * Two domains, two tracks each. The big names switch the domain; underneath,
+ * each track lists its sub-tracks / starting ideas as rows that flood with the
+ * track colour on hover. The cube world builds two towers behind.
  */
 export default function TracksShowcase({ id = "tracks" }: { id?: string }) {
   const [active, setActive] = useState(0);
-  const t = TRACKS[active];
+  const d = DOMAINS[active];
+  const tracks = tracksIn(d.id);
 
   return (
     <section id={id} data-world="towers" className="relative py-24 sm:py-32">
@@ -21,63 +22,72 @@ export default function TracksShowcase({ id = "tracks" }: { id?: string }) {
         <SectionHead
           align="center"
           label="Choose your lane"
-          title={"Two tracks.\nOne baton."}
-          sub="Every team picks one track and one sub-track. Build agents that take over real work, or AI that works for every Indian."
+          title={"Two domains.\nFour tracks."}
+          sub="Pick a domain, then one track inside it. Build agents and AI for Bharat in Web2, or onchain payments and AI × Web3 in Web3."
         />
 
-        {/* switcher */}
-        {/* domain → track. The inactive name is a solid, muted fill: the hollow
-            outline looked good large but broke apart into lines on small screens. */}
-        <div className="mt-14 flex flex-wrap items-end justify-center gap-x-8 gap-y-10 sm:gap-x-14">
-          {TRACKS.map((tr, i) => (
+        {/* domain switcher. Inactive name is a solid, muted fill: the hollow
+            outline looked good large but broke apart on small screens. */}
+        <div className="mt-14 flex items-end justify-center gap-6 sm:gap-14">
+          {DOMAINS.map((dm, i) => (
             <button
-              key={tr.id}
+              key={dm.id}
               onClick={() => setActive(i)}
               onPointerEnter={() => setActive(i)}
-              className="group relative flex flex-col items-center text-center"
-              data-cursor={tr.name}
+              className="group relative font-display text-[clamp(44px,11vw,150px)] leading-none transition-colors duration-500"
+              style={{ color: active === i ? dm.color : "color-mix(in srgb, var(--ink) 22%, transparent)" }}
+              data-cursor={dm.id}
             >
+              {dm.id.toUpperCase()}
               <span
-                className="label mb-2 transition-colors duration-500"
-                style={{ color: active === i ? tr.color : "color-mix(in srgb, var(--ink) 40%, transparent)" }}
-              >
-                {tr.domain} domain
-              </span>
-              <span
-                className="font-display text-[clamp(30px,6.4vw,96px)] leading-[0.95] transition-colors duration-500"
-                style={{ color: active === i ? tr.color : "color-mix(in srgb, var(--ink) 22%, transparent)" }}
-              >
-                {tr.name}
-              </span>
-              <span
-                className="absolute -bottom-4 left-0 h-[6px] w-full origin-left rounded-full transition-transform duration-500"
-                style={{ background: tr.color, transform: `scaleX(${active === i ? 1 : 0})` }}
+                className="absolute -bottom-3 left-0 h-[6px] w-full origin-left rounded-full transition-transform duration-500"
+                style={{ background: dm.color, transform: `scaleX(${active === i ? 1 : 0})` }}
               />
             </button>
           ))}
         </div>
-        <p className="label mt-10 text-center text-[var(--ink)]/55">{t.domain} domain · with {t.partner}</p>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-lg font-semibold" style={{ color: t.color }}>
-          {t.tagline}
+        <p className="mx-auto mt-8 max-w-2xl text-center text-lg font-semibold" style={{ color: d.color }}>
+          {d.blurb}
         </p>
 
-        {/* rows */}
-        <div key={t.id} className="mt-10 border-b-2 border-[var(--ink)]/15">
-          {t.items.map((it, i) => (
-            <div
-              key={it.title}
-              className="row-flood group grid cursor-default grid-cols-[48px_1fr] items-start gap-4 px-2 py-6 sm:grid-cols-[80px_0.9fr_1.4fr] sm:gap-8 sm:px-4"
-              style={{ ["--flood" as string]: t.color, animation: `rowIn 0.6s ${i * 0.08}s both cubic-bezier(.22,1,.36,1)` }}
-            >
-              <span className="font-display text-xl text-[var(--crimson)] transition-colors group-hover:text-[var(--sun)]">0{i + 1}</span>
-              <h3 className="font-display text-xl !normal-case tracking-tight sm:text-3xl">{it.title}</h3>
-              <p className="col-span-2 text-[15px] opacity-75 sm:col-span-1">{it.body}</p>
+        {/* the domain's two tracks */}
+        <div key={d.id} className="mt-12 flex flex-col gap-16">
+          {tracks.map((t) => (
+            <div key={t.id} style={{ animation: "rowIn 0.6s both cubic-bezier(.22,1,.36,1)" }}>
+              <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+                <div>
+                  <span className="label" style={{ color: t.color }}>
+                    {d.id} · Track {String(t.order).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-1 font-display text-[clamp(28px,4vw,52px)] leading-[0.95]">{t.name}</h3>
+                </div>
+                {t.partner && <span className="label text-[var(--ink)]/55">with {t.partner}</span>}
+              </div>
+              <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-[var(--ink)]/75">{t.problem ?? t.tagline}</p>
+
+              <span className="label mt-6 block text-[var(--ink)]/45">{t.itemsLabel}</span>
+              <div className="mt-3 border-b-2 border-[var(--ink)]/15">
+                {t.items.map((it, i) => (
+                  <div
+                    key={it.title}
+                    className="row-flood group grid cursor-default grid-cols-[48px_1fr] items-start gap-4 px-2 py-5 sm:grid-cols-[80px_0.9fr_1.4fr] sm:gap-8 sm:px-4"
+                    style={{ ["--flood" as string]: t.color, animation: `rowIn 0.6s ${i * 0.06}s both cubic-bezier(.22,1,.36,1)` }}
+                  >
+                    <span className="font-display text-xl text-[var(--crimson)] transition-colors group-hover:text-[var(--sun)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h4 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{it.title}</h4>
+                    <p className="col-span-2 text-[15px] opacity-75 sm:col-span-1">{it.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
-        <div className="mt-8 text-center">
+
+        <div className="mt-10 text-center">
           <Link href="/event#guidelines" className="btn-ghost">
-            {t.name}: full guidelines
+            Round 01 guidelines
           </Link>
         </div>
 

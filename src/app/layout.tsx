@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     template: "%s",
   },
   description:
-    "Code Relay 5.0 is the flagship nationwide hackathon of the Web & Design Society, IIT Bhubaneswar. AI & Automation and AI for Bharat tracks, an online idea round, and a 30-hour on-campus final.",
-  keywords: ["Code Relay", "Code Relay 5.0", "WebnD", "IIT Bhubaneswar", "Hackathon", "AI & Automation", "AI for Bharat", "Agentic AI", "TrueFoundry"],
+    "Code Relay 5.0 is the flagship nationwide hackathon of the Web & Design Society, IIT Bhubaneswar. Web2 and Web3 domains with four tracks, an online idea round, and a 30-hour on-campus final.",
+  keywords: ["Code Relay", "Code Relay 5.0", "WebnD", "IIT Bhubaneswar", "Hackathon", "Web2", "Web3", "AI & Automation", "AI for Bharat", "Onchain Payments", "AI x Web3", "TrueFoundry"],
   icons: {
     icon: [{ url: "/assets/cr_logo.png" }, { url: "/icon.png" }, { url: "/favicon.ico" }],
     apple: [{ url: "/assets/cr_logo.png" }, { url: "/apple-icon.png" }],

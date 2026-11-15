@@ -36,7 +36,7 @@ export const PROBLEM_STATEMENTS: ProblemStatement[] = [
   // CODE RELAY 5.0 — from the live track data, so the vault never drifts
   // ==========================================
   ...TRACKS.flatMap((t) =>
-    track(CR5, t.id === "web2" ? "Web2" : "Web3", "cr5", t.items.map((it) => ({ title: it.title, description: it.body }))).map((p) => ({ ...p, trackLabel: t.name }))
+    track(CR5, t.domain, `cr5-${t.id}`, t.items.map((it) => ({ title: it.title, description: it.body }))).map((p) => ({ ...p, trackLabel: t.name }))
   ),
 
   // ==========================================

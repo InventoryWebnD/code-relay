@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { CHAPTERS, clamp, story } from "./store";
-import { EVENT, ROUNDS, TRACKS } from "@/data/cr5";
+import { DOMAINS, EVENT, ROUNDS, tracksIn } from "@/data/cr5";
 import { useLenis } from "@/components/world/SmoothScroll";
 import { onIntroDone } from "@/components/world/motion";
 import type { Score } from "./sound";
@@ -270,20 +270,21 @@ export default function RelayStory() {
             </p>
           </Chapter>
 
-          <Chapter n={2} label="Two tracks · one road">
+          <Chapter n={2} label="Two domains · four tracks">
             <h2 className="mt-5 font-display text-[clamp(28px,5vw,76px)] leading-[0.95] tracking-[-0.03em]">Pick your path.</h2>
             <div className="mt-6 grid max-w-xl grid-cols-2 gap-4">
-              {TRACKS.map((t) => (
-                <div key={t.id} className="story-glass rounded-2xl border border-[var(--cream)]/15 p-3.5 sm:p-4">
+              {DOMAINS.map((d) => (
+                <div key={d.id} className="story-glass rounded-2xl border border-[var(--cream)]/15 p-3.5 sm:p-4">
                   <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full" style={{ background: t.id === "web2" ? "#C2264F" : "#5AA7A7" }} />
-                    <span className="font-display text-base leading-tight sm:text-lg">{t.name}</span>
-                    <span className="label ml-auto text-[9px] text-[var(--cream)]/50">{t.domain}</span>
+                    <span className="h-2.5 w-2.5 rounded-full" style={{ background: d.id === "Web2" ? "#C2264F" : "#5AA7A7" }} />
+                    <span className="font-display text-lg">{d.id}</span>
                   </div>
-                  <div className="mt-1 text-sm text-[var(--cream)]/70">with {t.partner}</div>
-                  <ul className="mt-3 hidden space-y-1 text-xs text-[var(--cream)]/55 sm:block">
-                    {t.items.map((it) => (
-                      <li key={it.title}>— {it.title}</li>
+                  <ul className="mt-2 space-y-1">
+                    {tracksIn(d.id).map((t) => (
+                      <li key={t.id} className="text-sm leading-snug text-[var(--cream)]/75">
+                        <span className="text-[var(--cream)]/40">{String(t.order).padStart(2, "0")} </span>
+                        {t.name}
+                      </li>
                     ))}
                   </ul>
                 </div>
