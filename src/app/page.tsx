@@ -9,6 +9,7 @@ import PartnerLogos from "@/components/world/blocks/PartnerLogos";
 import SponsorWall from "@/components/world/blocks/SponsorWall";
 import FaqBlock from "@/components/world/blocks/FaqBlock";
 import FinalCTA from "@/components/world/blocks/FinalCTA";
+import OrganisingCommittee from "@/components/world/blocks/OrganisingCommittee";
 
 export const metadata: Metadata = {
   title: "Code Relay 5.0 | Sprint to Innovation — WebnD IIT Bhubaneswar",
@@ -28,6 +29,7 @@ export default function Home() {
       <PartnerLogos />
       <SponsorWall />
       <FaqBlock />
+      <OrganisingCommittee />
       <FinalCTA />
     </>
   );

@@ -360,3 +360,12 @@ export const PARTNERS_CR5: Partner[] = [
   { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 64 },
   { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 34 },
 ];
+
+/* ------------------------------------------------------------------ */
+/* CR 5.0 organising committee                                          */
+/* ------------------------------------------------------------------ */
+export const OC_CR5: { role: string; people: string[] }[] = [
+  { role: "Developers", people: ["Shruti", "Shriya", "Rajesh"] },
+  { role: "Convenors", people: ["Kshitij", "Aarush"] },
+  { role: "Media heads", people: ["Nikhil", "Lakshya"] },
+];
