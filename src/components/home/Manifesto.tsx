@@ -86,12 +86,13 @@ export default function Manifesto() {
             {CR4_HIGHLIGHTS.map((s, i) => (
               <div
                 key={s.label}
-                className={`group relative border-t-2 border-[var(--ink)] py-6 pr-4 lg:border-l-2 lg:border-t-0 lg:py-2 lg:pl-6 ${i === 0 ? "lg:border-l-0 lg:pl-0" : ""}`}
+                className={`group relative border-t-2 border-[var(--ink)] py-6 pr-4 [container-type:inline-size] lg:border-l-2 lg:border-t-0 lg:py-2 lg:pl-6 ${i === 0 ? "lg:border-l-0 lg:pl-0" : ""}`}
               >
+                {/* sized to its own column (cqw), not the viewport, so "2,000+" can never run into its neighbour */}
                 <CountUp
                   value={s.value}
                   suffix={s.suffix}
-                  className="block font-display text-[clamp(30px,9vw,84px)] lg:text-[clamp(40px,5vw,84px)] transition-colors duration-300 group-hover:text-[var(--crimson)]"
+                  className="block whitespace-nowrap font-display text-[min(22cqw,84px)] tabular-nums transition-colors duration-300 group-hover:text-[var(--crimson)]"
                 />
                 <span className="label mt-3 block text-[var(--ink)]/65">{s.label}</span>
               </div>
