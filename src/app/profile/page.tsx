@@ -1,12 +1,14 @@
 import { Metadata } from "next";
+import { pageMetadata } from "@/data/seo";
 import ProfileView from "@/components/profile/ProfileView";
 import ControlRoom from "@/components/world/ControlRoom";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Participant Profile | Code Relay 5.0",
-  description:
-    "Manage your Code Relay 5.0 hacker profile, track submissions, team memberships, and credentials.",
-};
+  description: "Your Code Relay 5.0 participant profile.",
+  path: "/profile",
+  noindex: true,
+});
 
 export default function ProfilePage() {
   return (

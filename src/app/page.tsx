@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { eventLd, faqLd, pageMetadata } from "@/data/seo";
+import JsonLd from "@/components/seo/JsonLd";
 import RelayStory from "@/components/story/RelayStory";
 import Manifesto from "@/components/home/Manifesto";
 import TracksShowcase from "@/components/world/blocks/TracksShowcase";
@@ -11,15 +13,16 @@ import FaqBlock from "@/components/world/blocks/FaqBlock";
 import FinalCTA from "@/components/world/blocks/FinalCTA";
 import OrganisingCommittee from "@/components/world/blocks/OrganisingCommittee";
 
-export const metadata: Metadata = {
-  title: "Code Relay 5.0 | Sprint to Innovation — WebnD IIT Bhubaneswar",
-  description:
-    "Code Relay 5.0: WebnD IIT Bhubaneswar's flagship nationwide hackathon. Web2 and Web3 domains with four tracks, an online idea round and a 30-hour on-campus final.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Code Relay 5.0 | National Hackathon at IIT Bhubaneswar · Web2 × Web3",
+  description: "Code Relay 5.0 by WebnD, IIT Bhubaneswar: a national student hackathon with Web2 (AI & Automation, AI for Bharat) and Web3 (Onchain Payments, AI × Web3) tracks, ₹2.5 lakh+ in prizes and a 30-hour on-campus final. Round 1 is free. Register on Unstop.",
+  path: "/",
+});
 
 export default function Home() {
   return (
     <>
+      <JsonLd data={[eventLd, faqLd]} />
       <RelayStory />
       <Manifesto />
       <TracksShowcase />

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Unbounded, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { RegisterModalProvider } from "@/context/RegisterModalContext";
@@ -10,6 +10,8 @@ import IntroLoader from "@/components/world/IntroLoader";
 import RouteCurtain from "@/components/world/RouteCurtain";
 import Cursor from "@/components/world/Cursor";
 import ClickSpark from "@/components/world/ClickSpark";
+import JsonLd from "@/components/seo/JsonLd";
+import { KEYWORDS, SITE_DESCRIPTION, SITE_NAME, SITE_URL, organizationLd, websiteLd } from "@/data/seo";
 
 const unbounded = Unbounded({
   variable: "--font-unbounded",
@@ -30,31 +32,55 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://code-relay.vercel.app"),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "Code Relay 5.0 | Sprint to Innovation — WebnD IIT Bhubaneswar",
+    default: "Code Relay 5.0 | National Hackathon at IIT Bhubaneswar · Web2 × Web3",
     template: "%s",
   },
-  description:
-    "Code Relay 5.0 is the flagship nationwide hackathon of the Web & Design Society, IIT Bhubaneswar. Web2 and Web3 domains with four tracks, an online idea round, and a 30-hour on-campus final.",
-  keywords: ["Code Relay", "Code Relay 5.0", "WebnD", "IIT Bhubaneswar", "Hackathon", "Web2", "Web3", "AI & Automation", "AI for Bharat", "Onchain Payments", "AI x Web3", "TrueFoundry"],
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: KEYWORDS,
+  authors: [{ name: "WebnD, IIT Bhubaneswar", url: SITE_URL }],
+  creator: "WebnD, IIT Bhubaneswar",
+  publisher: "WebnD, IIT Bhubaneswar",
+  category: "Hackathon",
+  alternates: { canonical: "/" },
+  formatDetection: { telephone: false, email: false, address: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
   icons: {
     icon: [{ url: "/assets/cr_logo.png" }, { url: "/icon.png" }, { url: "/favicon.ico" }],
     apple: [{ url: "/assets/cr_logo.png" }, { url: "/apple-icon.png" }],
     shortcut: "/assets/cr_logo.png",
   },
   openGraph: {
-    title: "Code Relay 5.0 — Sprint to Innovation",
-    description: "Two tracks. One relay. 30 hours at IIT Bhubaneswar. Organised by the Web & Design Society.",
+    title: "Code Relay 5.0: National Hackathon at IIT Bhubaneswar",
+    description: "Web2 × Web3, four tracks, ₹2.5 lakh+ in prizes and a 30-hour final at IIT Bhubaneswar. Round 1 is free. Registrations open on Unstop.",
+    url: "/",
+    siteName: SITE_NAME,
+    locale: "en_IN",
     type: "website",
-    images: [{ url: "/brand/webnd-mascot.png", width: 766, height: 800, alt: "Webby, the WebnD mascot, Code Relay 5.0" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Code Relay 5.0: National Hackathon at IIT Bhubaneswar",
+    description: "Web2 × Web3, four tracks, ₹2.5 lakh+ in prizes, a 30-hour final. Round 1 is free. Register on Unstop.",
+  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } } : {}),
+};
+
+export const viewport: Viewport = {
+  themeColor: "#991B3D",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${unbounded.variable} ${grotesk.variable} ${jetbrains.variable} h-full antialiased`}>
+    <html lang="en-IN" className={`${unbounded.variable} ${grotesk.variable} ${jetbrains.variable} h-full antialiased`}>
       <body className="grain min-h-full flex flex-col bg-[var(--cream)] text-[var(--ink)]">
+        <JsonLd data={[organizationLd, websiteLd]} />
         <SessionProvider>
           <RegisterModalProvider>
             <SmoothScroll>

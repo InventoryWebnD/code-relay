@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import { breadcrumbLd, eventLd, faqLd, pageMetadata } from "@/data/seo";
+import JsonLd from "@/components/seo/JsonLd";
 import EventHero from "@/components/event/EventHero";
 import { FactsRibbon, JudgingBlock, RulesBento, ScheduleBlock } from "@/components/event/EventBlocks";
 import RelayRun from "@/components/world/blocks/RelayRun";
@@ -8,15 +10,16 @@ import PrizeFlip from "@/components/world/blocks/PrizeFlip";
 import FaqBlock from "@/components/world/blocks/FaqBlock";
 import FinalCTA from "@/components/world/blocks/FinalCTA";
 
-export const metadata: Metadata = {
-  title: "The Event | Code Relay 5.0",
-  description:
-    "Format, tracks, schedule, judging and prizes for Code Relay 5.0: an online idea round followed by a 30-hour on-campus final at IIT Bhubaneswar.",
-};
+export const metadata: Metadata = pageMetadata({
+  title: "Tracks, Rounds, Prizes & Rules | Code Relay 5.0 Hackathon",
+  description: "Everything about Code Relay 5.0: Web2 and Web3 tracks with sub-tracks, the free online idea round, the 30-hour final at IIT Bhubaneswar, judging criteria, ₹2.5 lakh+ prizes and FAQs.",
+  path: "/event",
+});
 
 export default function EventPage() {
   return (
     <>
+      <JsonLd data={[eventLd, faqLd, breadcrumbLd([{ name: "The Event", path: "/event" }])]} />
       <EventHero />
       <FactsRibbon />
       <RelayRun id="format" />
