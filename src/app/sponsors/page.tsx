@@ -9,7 +9,6 @@ import {
   WhySponsor,
 } from "@/components/sponsors/SponsorBlocks";
 import PartnerLogos from "@/components/world/blocks/PartnerLogos";
-import SponsorWall from "@/components/world/blocks/SponsorWall";
 
 export const metadata: Metadata = {
   title: "Sponsors & Partners | Code Relay 5.0",
@@ -27,7 +26,6 @@ export default function SponsorsPage() {
       <PartnerOptions />
       <FoodBlock />
       <WhySponsor />
-      <SponsorWall cta={false} />
       <ContactDesk />
     </>
   );

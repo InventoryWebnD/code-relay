@@ -27,7 +27,7 @@ export default function Home() {
       <DomeGallery />
       <ReviewStack />
       <PartnerLogos />
-      <SponsorWall />
+      <SponsorWall wall={false} />
       <FaqBlock />
       <OrganisingCommittee />
       <FinalCTA />

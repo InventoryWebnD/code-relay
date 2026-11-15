@@ -3,56 +3,46 @@
 import Link from "next/link";
 import { Marquee, Magnetic, Reveal } from "@/components/world/motion";
 import SectionHead from "@/components/world/SectionHead";
-import { PAST_EDITIONS_SPONSORS } from "@/data/sponsorsData";
 import { EVENT, PAST_PARTNERS } from "@/data/cr5";
 
-export default function SponsorWall({ cta = true }: { cta?: boolean }) {
-  const byEdition = PAST_EDITIONS_SPONSORS.flatMap((e) => e.sponsors.map((s) => ({ ...s, edition: e.shortCode, bg: undefined as string | undefined })));
-  // past partners not already listed under an edition (Myntra, Trends)
-  const others = PAST_PARTNERS.filter((p) => !byEdition.some((s) => s.name === p.name)).map((p) => ({
-    name: p.name,
-    website: p.website,
-    logoUrl: p.logo,
-    badge: p.role,
-    edition: "Past edition",
-    bg: p.bg,
-  }));
-  const all = [...byEdition, ...others];
-
+/** Past partners as a big marquee (`wall`), and/or the "Fuel the next relay" pitch (`cta`). */
+export default function SponsorWall({ cta = true, wall = true }: { cta?: boolean; wall?: boolean }) {
   return (
     <section data-world="helix" data-world-x="0" className="relative overflow-hidden py-24 sm:py-28">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
-        <SectionHead label="Past partners" title={"Brands that\nran with us"} />
-      </div>
+      {wall && (
+        <>
+          <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
+            <SectionHead label="Past partners" title={"Brands that\nran with us"} />
+          </div>
 
-      <div className="mt-14">
-        <Marquee speed={34}>
-          {all.map((s) => (
-            <a
-              key={s.name}
-              href={s.website}
-              target="_blank"
-              rel="noreferrer"
-              className="group mx-8 flex items-center gap-4"
-              data-cursor="Visit"
-            >
-              <span className="grid h-20 w-20 place-items-center overflow-hidden rounded-full p-4 ring-2 ring-[var(--ink)]/10 transition-transform duration-500 group-hover:rotate-[-12deg] group-hover:scale-110" style={{ background: s.bg ?? "#ffffff" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={s.logoUrl} alt={s.name} className="max-h-full max-w-full object-contain" loading="lazy" />
-              </span>
-              <span>
-                <span className="block font-display text-3xl !normal-case tracking-tight transition-colors group-hover:text-[var(--crimson)]">{s.name}</span>
-                <span className="label text-[var(--ink)]/55">
-                  {s.edition} · {s.badge}
-                </span>
-              </span>
-            </a>
-          ))}
-        </Marquee>
-      </div>
+          <div className="mt-14">
+            <Marquee speed={34}>
+              {PAST_PARTNERS.map((s) => (
+                <a key={s.name} href={s.website} target="_blank" rel="noreferrer" className="group mx-8 flex items-center gap-4" data-cursor="Visit">
+                  <span
+                    className="grid h-20 w-20 place-items-center overflow-hidden rounded-full p-4 ring-2 ring-[var(--ink)]/10 transition-transform duration-500 group-hover:rotate-[-12deg] group-hover:scale-110"
+                    style={{ background: s.bg ?? "#ffffff" }}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={s.logo} alt={s.name} className="max-h-full max-w-full object-contain" loading="lazy" />
+                  </span>
+                  <span>
+                    <span className="block font-display text-3xl !normal-case tracking-tight transition-colors group-hover:text-[var(--crimson)]">
+                      {s.name}
+                    </span>
+                    <span className="label text-[var(--ink)]/55">
+                      {s.edition ?? "Past edition"} · {s.role}
+                    </span>
+                  </span>
+                </a>
+              ))}
+            </Marquee>
+          </div>
+        </>
+      )}
 
       {cta && (
-        <div className="mx-auto mt-24 max-w-[1500px] px-5 sm:px-10 lg:px-16">
+        <div className={`mx-auto max-w-[1500px]${wall ? " mt-24" : ""} px-5 sm:px-10 lg:px-16`}>
           <Reveal className="grid items-end gap-8 border-t-2 border-[var(--ink)] pt-10 lg:grid-cols-[1.4fr_1fr]">
             <div>
               <span className="label text-[var(--crimson)]">For brands</span>

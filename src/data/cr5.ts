@@ -559,33 +559,50 @@ export interface Partner {
   bg?: string;
   /** logo box height in px: small source files stay crisp by staying small */
   h?: number;
-  /** small line under the logo, e.g. "Powered by TrueFoundry" */
+  /** one line about what the partner does this edition */
   note?: string;
-  /** small mark shown beside the role */
-  mark?: string;
 }
 
-/** This edition's sponsors. */
-export const PARTNERS_CR5: Partner[] = [
-  {
+/** CR 5.0 title sponsor, and its open-source agent harness. */
+export const TITLE_SPONSOR = {
+  name: "TrueFoundry",
+  role: "Title sponsor",
+  logo: "/sponsors/truefoundrylogo1.png",
+  website: "https://www.truefoundry.com",
+  /** the logo file ships on this navy */
+  bg: "#030c28",
+  harness: {
     name: "TrueForge",
-    role: "Title sponsor",
-    note: "Powered by TrueFoundry",
     logo: "/sponsors/trueforge-white.svg",
     mark: "/sponsors/logomark-light%20bg.svg",
-    website: "https://www.truefoundry.com",
+    website: "https://www.truefoundry.com/blog/engineering/trueforge-open-source-agent-harness/",
     bg: "#05090E",
-    h: 44,
+    facts: ["Open source · MIT", "Agent harness", "Web2 · AI & Automation"],
   },
-  { name: "CSM Technologies", role: "Talent partner", logo: "/sponsors/csmlogo.png", website: "https://www.csm.tech", bg: "#231f20", h: 52 },
+};
+
+/** CR 5.0 partners below the title sponsor. */
+export const PARTNERS_CR5: Partner[] = [
+  {
+    name: "CSM Technologies",
+    role: "Technology partner",
+    note: "Co-presents Web2 Track 02, AI for Bharat, with TrueFoundry.",
+    logo: "/sponsors/csmlogo.png",
+    website: "https://www.csm.tech",
+    bg: "#231f20",
+    h: 52,
+  },
 ];
 
-/** Brands that backed earlier editions. */
-export const PAST_PARTNERS: Partner[] = [
-  { name: "Hostinger", role: "Hosting partner", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 36 },
-  { name: "Red Bull", role: "Beverage partner", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 60 },
-  { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 54 },
-  { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 30 },
+/** Brands that backed earlier editions (cards and the marquee both read this). */
+export const PAST_PARTNERS: (Partner & { edition?: string })[] = [
+  { name: "GoFr", role: "Framework partner", edition: "CR 4.0", logo: "/sponsors/gofr.png", website: "https://gofr.dev", h: 64 },
+  { name: "InterviewBuddy", role: "Career partner", edition: "CR 4.0", logo: "/sponsors/interviewbuddy.png", website: "https://interviewbuddy.net", h: 64 },
+  { name: "Hostinger", role: "Hosting partner", edition: "CR 3.0", logo: "/sponsors/hostinger.svg", website: "https://www.hostinger.in", h: 30 },
+  { name: "Red Bull", role: "Energy partner", edition: "CR 3.0", logo: "/sponsors/redbull.svg", website: "https://www.redbull.com/in-en", h: 56 },
+  { name: "Unstop", role: "Platform partner", edition: "CR 3.0", logo: "/sponsors/unstop.svg", website: "https://unstop.com", h: 34 },
+  { name: "Myntra", role: "In-kind partner", logo: "/sponsors/myntra.png", website: "https://www.myntra.com", h: 48 },
+  { name: "Trends", role: "In-kind partner", logo: "/sponsors/trends.png", website: "https://www.ajio.com/shop/trends", bg: "#4d5055", h: 24 },
 ];
 
 /* ------------------------------------------------------------------ */
