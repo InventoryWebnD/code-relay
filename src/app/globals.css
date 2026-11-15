@@ -435,6 +435,16 @@ html.has-cursor * {
   border: 2px solid var(--cream);
   border-radius: 999px;
 }
+/* large screens: no visible scrollbar, pages run the full width
+   (wheel, trackpad and keyboard scrolling are unaffected) */
+@media (min-width: 1024px) {
+  html {
+    scrollbar-width: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .marquee-track,
