@@ -141,42 +141,48 @@ export default function IntroLoader() {
           <div className="absolute right-5 top-5 sm:right-8 sm:top-7 label text-[var(--ink)]/70">5th Edition</div>
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center px-4">
-          <div className="wordmark relative">
-            <div className="peek-wrap absolute -top-[clamp(64px,11vw,140px)] left-[8%] h-[clamp(72px,12vw,150px)] w-[clamp(80px,13vw,170px)] overflow-hidden">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/brand/webnd-mascot-stand.webp" alt="" className="peek absolute bottom-[-30%] left-0 w-full" />
-            </div>
-            <div className="flex flex-col items-start gap-[0.12em] text-[clamp(44px,10vw,136px)]">
-              <Word text="CODE" portal />
-              <span className="text-[var(--crimson)]">
-                <Word text="RELAY" />
-              </span>
+        {/* one centred column: mascot peeks over the wordmark, then a tidy
+            stamp + tagline row — nothing overlaps the letters */}
+        <div className="absolute inset-0 flex items-center justify-center px-5 pb-24">
+          <div className="flex flex-col items-center">
+            <div className="wordmark relative">
+              <div className="peek-wrap absolute bottom-full left-[6%] h-[clamp(52px,8vw,112px)] w-[clamp(60px,9vw,128px)] overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/brand/webnd-mascot-stand.webp" alt="" className="peek absolute bottom-[-38%] left-0 w-full" />
+              </div>
+              <div className="flex flex-col items-start gap-[0.12em] text-[clamp(44px,10vw,136px)]">
+                <Word text="CODE" portal />
+                <span className="text-[var(--crimson)]">
+                  <Word text="RELAY" />
+                </span>
+              </div>
             </div>
 
-            <div className="stamp absolute -top-9 -right-4 sm:top-auto sm:-bottom-[clamp(18px,3vw,36px)] sm:-right-[clamp(22px,5vw,70px)] grid place-items-center rounded-full border-[3px] border-[var(--ink)] bg-[var(--crimson)] text-[var(--cream)] h-[clamp(68px,11vw,150px)] w-[clamp(68px,11vw,150px)]">
-              <div className="text-center">
-                <div className="font-display text-[clamp(22px,4.2vw,56px)]">5.0</div>
-                <div className="label text-[clamp(7px,0.8vw,10px)] -mt-1">edition</div>
+            <div className="mt-[clamp(20px,3vw,36px)] flex items-center gap-4 sm:gap-6">
+              <div className="stamp relative grid shrink-0 place-items-center rounded-full border-[3px] border-[var(--ink)] bg-[var(--crimson)] text-[var(--cream)] h-[clamp(58px,7vw,92px)] w-[clamp(58px,7vw,92px)]">
+                <div className="text-center">
+                  <div className="font-display text-[clamp(18px,2.4vw,32px)] leading-none">5.0</div>
+                  <div className="label mt-0.5 text-[clamp(7px,0.7vw,9px)]">edition</div>
+                </div>
+                {Array.from({ length: 10 }).map((_, i) => (
+                  <span key={i} className="spark absolute left-1/2 top-1/2 h-[4px] w-[34%] origin-left rounded-full bg-[var(--sun)]" style={{ transform: `rotate(${i * 36}deg) translateX(120%)` }} />
+                ))}
               </div>
-              {Array.from({ length: 10 }).map((_, i) => (
-                <span key={i} className="spark absolute left-1/2 top-1/2 h-[6px] w-[34%] origin-left rounded-full bg-[var(--sun)]" style={{ transform: `rotate(${i * 36}deg) translateX(120%)` }} />
-              ))}
+              <div className="hud font-mono text-sm font-bold text-[var(--crimson)] sm:text-base">
+                {Array.from(tagline).map((c, i) => (
+                  <span key={i} className="tagline-char inline-block">
+                    {c}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="hud absolute bottom-[22%] left-0 right-0 text-center font-mono text-sm sm:text-base font-bold text-[var(--crimson)]">
-          {Array.from(tagline).map((c, i) => (
-            <span key={i} className="tagline-char inline-block">
-              {c}
-            </span>
-          ))}
-        </div>
-
-        <div className="hud absolute bottom-8 left-5 right-5 sm:left-8 sm:right-8">
-          <div className="mb-3 flex items-end justify-between">
-            <span ref={counter} className="font-display text-[clamp(48px,8vw,110px)] text-outline leading-none">
+        <div className="hud absolute bottom-7 left-5 right-5 sm:bottom-8 sm:left-8 sm:right-8">
+          {/* room above the bar for the running mascot, so it never sits on the counter */}
+          <div className="mb-[60px] flex items-end justify-between gap-4">
+            <span ref={counter} className="font-display text-[clamp(34px,5vw,72px)] text-outline leading-none">
               000
             </span>
             <button onClick={skip} className="label rounded-full border-2 border-[var(--ink)] bg-[var(--paper)] px-4 py-2 transition-colors hover:bg-[var(--ink)] hover:text-[var(--cream)]">
