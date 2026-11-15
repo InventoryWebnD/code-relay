@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import gsap from "gsap";
 import { useLenis } from "@/components/world/SmoothScroll";
 import { EVENT } from "@/data/cr5";
+import RegisterLink from "@/components/world/RegisterLink";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -135,12 +136,15 @@ export default function Navbar() {
                 <span className="opacity-60"> ]</span>
               </Link>
             ) : (
-              <Link href="/register" className="group hidden sm:inline-flex items-center gap-1 font-display text-[12px] leading-[1.15]" data-cursor="Go!">
+              <RegisterLink
+                className="group hidden sm:inline-flex items-center gap-1 font-display text-[12px] leading-[1.15]"
+                soon={<span className="opacity-70">[ Registrations soon ]</span>}
+              >
                 <span className="opacity-60 transition-transform duration-300 group-hover:-translate-x-1">[</span>
                 Register
                 <span className="inline-block transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
                 <span className="opacity-60 transition-transform duration-300 group-hover:translate-x-1">]</span>
-              </Link>
+              </RegisterLink>
             )}
 
             <button
@@ -191,13 +195,13 @@ export default function Navbar() {
           />
 
           <div className="flex flex-col gap-4">
-            <Link
-              href={authed ? "/profile" : "/register"}
-              onClick={() => setOpen(false)}
-              className="m-foot btn-chunky bg-[var(--crimson)] text-[var(--cream)] w-full"
-            >
-              {authed ? "My Profile" : "Register for 5.0"} →
-            </Link>
+            {authed ? (
+              <Link href="/profile" onClick={() => setOpen(false)} className="m-foot btn-chunky bg-[var(--crimson)] text-[var(--cream)] w-full">
+                My Profile →
+              </Link>
+            ) : (
+              <RegisterLink className="m-foot btn-chunky bg-[var(--crimson)] text-[var(--cream)] w-full">Register on Unstop ↗</RegisterLink>
+            )}
             <div className="m-foot flex flex-wrap gap-2">
               <a href={EVENT.contact.instagramUrl} target="_blank" rel="noreferrer" className="label rounded-full border-2 border-[var(--ink)] px-3 py-1.5">
                 Instagram

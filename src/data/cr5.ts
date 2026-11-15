@@ -6,6 +6,9 @@
  * assets (gallery photos, student reviews, etc). Swap freely.
  */
 
+/** Registration lives on Unstop. Set NEXT_PUBLIC_REGISTER_URL to the Unstop page when it goes live. */
+export const REGISTER_URL = process.env.NEXT_PUBLIC_REGISTER_URL ?? "";
+
 export const EVENT = {
   name: "Code Relay",
   edition: "5.0",

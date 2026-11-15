@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import RegisterLink from "@/components/world/RegisterLink";
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -70,14 +70,10 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
           </div>
 
           <div className="space-y-3">
-            <Link
-              href="/register"
-              onClick={onClose}
-              className="btn-pill-primary w-full py-3.5 text-center text-xs sm:text-sm font-bold uppercase tracking-wider block"
-            >
-              <span>Go to Full Registration Form</span>
-              <span className="ml-2">→</span>
-            </Link>
+            <RegisterLink className="btn-pill-primary w-full py-3.5 text-center text-xs sm:text-sm font-bold uppercase tracking-wider block">
+              <span>Register on Unstop</span>
+              <span className="ml-2">↗</span>
+            </RegisterLink>
 
             <button
               type="button"

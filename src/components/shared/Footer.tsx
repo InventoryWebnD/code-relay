@@ -6,6 +6,7 @@ import { Marquee, Reveal } from "@/components/world/motion";
 import { useLenis } from "@/components/world/SmoothScroll";
 import { EVENT, ROUNDS } from "@/data/cr5";
 import { PRIZES } from "@/data/eventData";
+import RegisterLink from "@/components/world/RegisterLink";
 
 /** Same destinations, same order as the navbar and the mobile menu. */
 const EXPLORE = [
@@ -14,7 +15,6 @@ const EXPLORE = [
   { href: "/past-editions", label: "Past Editions" },
   { href: "/sponsors", label: "Sponsors" },
   { href: "/problem-statements", label: "PS Vault" },
-  { href: "/register", label: "Register" },
 ];
 
 const r1 = ROUNDS.find((r) => r.id === "r1")!;
@@ -73,9 +73,7 @@ export default function Footer() {
                     {EVENT.name} {EVENT.edition} by the {EVENT.org}, {EVENT.institute}. Round 01 is free, teams of {EVENT.teamSize}.
                   </p>
                   <div className="mt-8 flex flex-wrap gap-3">
-                    <Link href="/register" className="btn-chunky !border-[var(--ink)] bg-[var(--sun)] text-[var(--ink)]">
-                      Register now ↗
-                    </Link>
+                    <RegisterLink className="btn-chunky !border-[var(--ink)] bg-[var(--sun)] text-[var(--ink)]">Register now ↗</RegisterLink>
                     <Link href="/sponsors" className="btn-chunky !border-[var(--cream)]/50 bg-transparent text-[var(--cream)] before:!bg-[var(--cream)] hover:!text-[var(--ink)]">
                       Partner with us
                     </Link>

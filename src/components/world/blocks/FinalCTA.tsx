@@ -5,6 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { Magnetic, prefersReduced } from "@/components/world/motion";
 import { EVENT } from "@/data/cr5";
+import RegisterLink from "@/components/world/RegisterLink";
 
 /** Finale: a big closing call to register. */
 export default function FinalCTA({
@@ -45,9 +46,7 @@ export default function FinalCTA({
         <p className="mt-6 max-w-xl text-lg text-[var(--ink)]/75">{sub}</p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <Magnetic strength={0.25}>
-            <Link href="/register" className="btn-chunky bg-[var(--crimson)] !px-9 !py-5 !text-base text-[var(--cream)]" data-cursor="Go!">
-              Register your team ↗
-            </Link>
+            <RegisterLink className="btn-chunky bg-[var(--crimson)] !px-9 !py-5 !text-base text-[var(--cream)]">Register your team ↗</RegisterLink>
           </Magnetic>
           <Magnetic strength={0.25}>
             <Link href="/event" className="btn-ghost !text-base">

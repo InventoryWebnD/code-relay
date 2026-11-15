@@ -8,6 +8,7 @@ import { EVENT, ROUNDS, TRACKS } from "@/data/cr5";
 import { useLenis } from "@/components/world/SmoothScroll";
 import { onIntroDone } from "@/components/world/motion";
 import type { Score } from "./sound";
+import RegisterLink from "@/components/world/RegisterLink";
 
 const StoryCanvas = dynamic(() => import("./StoryCanvas"), { ssr: false, loading: () => null });
 
@@ -253,9 +254,7 @@ export default function RelayStory() {
               make Webby jump.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href="/register" className="btn-chunky border-[var(--sun)] bg-[var(--sun)] text-[var(--ink)]" data-cursor="Go!">
-                Register now ↗
-              </Link>
+              <RegisterLink className="btn-chunky border-[var(--sun)] bg-[var(--sun)] text-[var(--ink)]">Register on Unstop ↗</RegisterLink>
               <button onClick={() => jumpTo(1)} className="btn-ghost text-[var(--cream)]">
                 Start the run
               </button>
@@ -334,9 +333,7 @@ export default function RelayStory() {
             </h2>
             <p className="mt-5 max-w-md text-[var(--cream)]/80">Round 01 is online, free and open to every college in India.</p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link href="/register" className="btn-chunky border-[var(--sun)] bg-[var(--sun)] text-[var(--ink)]" data-cursor="Go!">
-                Register your team ↗
-              </Link>
+              <RegisterLink className="btn-chunky border-[var(--sun)] bg-[var(--sun)] text-[var(--ink)]">Register your team ↗</RegisterLink>
               <Link href="/event" className="btn-ghost text-[var(--cream)]">
                 Read the rules
               </Link>

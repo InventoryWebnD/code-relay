@@ -1,6 +1,7 @@
 "use client";
 
 import PageHero from "@/components/world/PageHero";
+import { REGISTER_URL } from "@/data/cr5";
 
 export default function EventHero() {
   return (
@@ -11,7 +12,9 @@ export default function EventHero() {
       world="stairs"
       worldX={5}
       actions={[
-        { href: "/register", label: "Register now ↗", primary: true },
+        REGISTER_URL
+          ? { href: REGISTER_URL, label: "Register on Unstop ↗", primary: true, external: true }
+          : { href: "#guidelines", label: "Read the guidelines", primary: true },
         { href: "#format", label: "See the format" },
       ]}
     />
