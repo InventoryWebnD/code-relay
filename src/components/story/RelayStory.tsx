@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import { CHAPTERS, clamp, story } from "./store";
 import { DOMAINS, EVENT, ROUNDS, tracksIn } from "@/data/cr5";
 import { useLenis } from "@/components/world/SmoothScroll";
@@ -11,6 +11,30 @@ import type { Score } from "./sound";
 import RegisterLink from "@/components/world/RegisterLink";
 
 const StoryCanvas = dynamic(() => import("./StoryCanvas"), { ssr: false, loading: () => null });
+
+/** no WebGL (old hardware, GPU disabled, locked-down browsers): skip the 3D world */
+function hasWebGL() {
+  try {
+    const c = document.createElement("canvas");
+    return !!(c.getContext("webgl2") || c.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
+/** if the 3D world fails anyway, drop it and keep the page (painted sky + copy) */
+class WorldBoundary extends Component<{ onFail: () => void; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {
+    this.props.onFail();
+  }
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
 
 const CHAPTER_NAMES = ["Start", "Ideas", "Tracks", "Baton", "Sprint", "Finish"];
 
@@ -59,6 +83,7 @@ export default function RelayStory() {
   const [active, setActive] = useState(true);
   const activeRef = useRef(true);
   const [ready, setReady] = useState(false);
+  const [noWorld, setNoWorld] = useState(false);
   const [introDone, setIntroDone] = useState(false);
   const [touch, setTouch] = useState(false);
   const [hint, setHint] = useState<HintState>("waiting");
@@ -76,6 +101,10 @@ export default function RelayStory() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- device capability is only known client-side
     setTouch(window.matchMedia("(pointer: coarse)").matches);
+    if (!hasWebGL()) {
+      setNoWorld(true);
+      setReady(true);
+    }
     return onIntroDone(() => setIntroDone(true));
   }, []);
 
@@ -216,6 +245,19 @@ export default function RelayStory() {
   return (
     <section ref={section} className="story relative h-[1100vh] w-full bg-[#0b0618] text-[var(--cream)]" aria-label="The Code Relay story">
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
+        {/* painted sky: the same sunset as the 3D world's first frame, so the
+            page never sits on a black void while the scene loads */}
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 38% at 39% 44%, rgba(255,106,61,0.45) 0%, rgba(255,106,61,0) 70%), linear-gradient(to bottom, #0e0824 0%, #2b0f33 34%, #6e1838 58%, #3a0d24 68%, #12061a 100%)",
+          }}
+        >
+          <span className="absolute left-[39%] top-[42%] h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#ffb48a]/70 blur-[2px] sm:h-24 sm:w-24" />
+        </div>
+
         {/* the world */}
         <div
           className="absolute inset-0 transition-opacity duration-[1400ms]"
@@ -223,17 +265,32 @@ export default function RelayStory() {
           // click, not pointerdown: a swipe to scroll must never count as a tap
           onClick={() => (story.jumpAt = performance.now() / 1000)}
         >
-          <StoryCanvas active={active} onReady={() => setReady(true)} />
+          {!noWorld && (
+            <WorldBoundary
+              onFail={() => {
+                setNoWorld(true);
+                setReady(true);
+              }}
+            >
+              <StoryCanvas active={active} onReady={() => setReady(true)} />
+            </WorldBoundary>
+          )}
         </div>
+
+        {/* loading: Webby runs the track until the 3D world is ready */}
         <div
-          className={`pointer-events-none absolute inset-0 grid place-items-center transition-opacity duration-700 ${ready ? "opacity-0" : "opacity-100"}`}
+          className={`pointer-events-none absolute inset-x-0 top-[22%] flex justify-center transition-opacity duration-700 sm:top-[28%] ${ready ? "opacity-0" : "opacity-100"}`}
           aria-hidden={ready}
+          role="status"
         >
           <div className="flex flex-col items-center gap-4">
-            <div className="label text-[var(--cream)]/60">Building the track</div>
-            <div className="relative h-px w-40 overflow-hidden bg-[var(--cream)]/15">
-              <span className="story-loading absolute inset-y-0 left-0 w-1/3 bg-[var(--sun)]" />
+            <div className="relative h-16 w-60">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/webnd-mascot-fly.webp" alt="" className="story-runner absolute bottom-1.5 left-0 h-12 w-12 -scale-x-100 object-contain" />
+              <span className="absolute inset-x-0 bottom-0 h-[2px] rounded-full bg-[var(--cream)]/15" />
+              <span className="story-loading absolute bottom-0 left-0 h-[2px] w-1/3 rounded-full bg-[var(--sun)]" />
             </div>
+            <div className="label text-[var(--cream)]/75">Building the track</div>
           </div>
         </div>
 

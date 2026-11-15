@@ -558,6 +558,23 @@ html.has-cursor * {
   animation: story-loading 1.3s cubic-bezier(0.65, 0, 0.35, 1) infinite;
 }
 
+/* story: Webby runs the loading track */
+@keyframes story-runner {
+  0% { transform: translateX(-12px) translateY(0); opacity: 0; }
+  12% { opacity: 1; }
+  25% { transform: translateX(48px) translateY(-4px); }
+  50% { transform: translateX(108px) translateY(0); }
+  75% { transform: translateX(168px) translateY(-4px); }
+  88% { opacity: 1; }
+  100% { transform: translateX(204px) translateY(0); opacity: 0; }
+}
+.story-runner {
+  animation: story-runner 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-runner { animation: none; transform: translateX(96px); }
+}
+
 /* story: scroll cue */
 /* wheel dot rolls forward (up), the way a finger pushes the wheel to scroll on */
 @keyframes hint-wheel {
