@@ -35,7 +35,7 @@ export const EVENT = {
 } as const;
 
 export const ABOUT_WEBND =
-  "The Web and Design Society is the student society at IIT Bhubaneswar that builds and maintains the institute's websites. We turn members into creative professionals, and we run workshops, events and competitions where students learn, share their work and build together.";
+  "The Web and Design Society (WebnD) is a tech society under the Student Technical Council (STC), IIT Bhubaneswar. Our members design and code, from interfaces and brand work to full-stack builds, and we run workshops, events and competitions where students learn, share their work and build together.";
 
 export const ABOUT_CR =
   "Code Relay is WebnD's flagship annual hackathon, open to students from colleges across India. Budding builders converge to show what they can ship, learn from industry experts and meet people who build like them. Edition five is the biggest relay yet.";
