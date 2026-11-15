@@ -67,7 +67,7 @@ export function VaultFilters({
     { id: "Web3", label: "Web3", n: web3Count, bg: "var(--navy)" },
   ];
   return (
-    <div className="glass sticky top-[84px] z-30 border-y border-[var(--ink)]/10">
+    <div className="glass relative z-30 border-y border-[var(--ink)]/10">
       <div className="mx-auto flex max-w-[1500px] flex-col gap-3 px-5 py-4 sm:px-10 lg:flex-row lg:items-center lg:justify-between lg:px-16">
         <div className="flex flex-wrap gap-2">
           {tabs.map((t) => (
@@ -143,28 +143,62 @@ export function VaultGrid({
             </button>
           </div>
         ) : (
-          <div ref={ref} className="border-b-2 border-[var(--ink)]/15">
-            {statements.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => onExplore(s)}
-                className="row-flood group grid w-full grid-cols-[56px_1fr_auto] items-center gap-4 px-2 py-6 text-left sm:grid-cols-[90px_1.2fr_1.4fr_100px_40px] sm:gap-8 sm:px-4"
-                style={{ ["--flood" as string]: TRACK_COLOR[s.track] }}
-                data-cursor="Open"
-              >
-                <span className="font-display text-2xl text-[var(--ink)]/30 transition-colors group-hover:text-[var(--sun)] sm:text-4xl">
-                  {String(s.number).padStart(2, "0")}
-                </span>
-                <h3 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{s.title}</h3>
-                <p className="hidden text-sm opacity-70 line-clamp-2 sm:block">{s.description}</p>
-                <span className="label hidden rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.track}</span>
-                <span className="text-2xl transition-transform duration-500 group-hover:-rotate-45">→</span>
-              </button>
-            ))}
+          <div ref={ref}>
+            <TrackGroups statements={statements} onExplore={onExplore} />
           </div>
         )}
       </div>
     </section>
+  );
+}
+
+/** The vault's statement rows (also used on the past-editions page). */
+export function StatementRows({ statements, onExplore }: { statements: ProblemStatement[]; onExplore: (s: ProblemStatement) => void }) {
+  return (
+    <div className="border-b-2 border-[var(--ink)]/15">
+      {statements.map((s) => (
+        <button
+          key={s.id}
+          onClick={() => onExplore(s)}
+          className="row-flood group grid w-full grid-cols-[56px_1fr_auto] items-center gap-4 px-2 py-6 text-left sm:grid-cols-[90px_1.2fr_1.4fr_100px_40px] sm:gap-8 sm:px-4"
+          style={{ ["--flood" as string]: TRACK_COLOR[s.track] }}
+          data-cursor="Open"
+        >
+          <span className="font-display text-2xl text-[var(--ink)]/30 transition-colors group-hover:text-[var(--sun)] sm:text-4xl">
+            {String(s.number).padStart(2, "0")}
+          </span>
+          <h3 className="font-display text-lg !normal-case tracking-tight sm:text-2xl">{s.title}</h3>
+          <p className="hidden text-sm opacity-70 line-clamp-2 sm:block">{s.description}</p>
+          <span className="label hidden rounded-full border-2 border-current px-3 py-1 text-center sm:block">{s.track}</span>
+          <span className="text-2xl transition-transform duration-500 group-hover:-rotate-45">→</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Rows grouped under their track (each edition runs two: Web2 and Web3), numbered within the track. */
+export function TrackGroups({ statements, onExplore }: { statements: ProblemStatement[]; onExplore: (s: ProblemStatement) => void }) {
+  return (
+    <div className="flex flex-col gap-12">
+      {(["Web2", "Web3"] as const).map((t) => {
+        const rows = statements.filter((s) => s.track === t);
+        if (!rows.length) return null;
+        return (
+          <div key={t}>
+            <div className="mb-4 flex flex-wrap items-center gap-2">
+              <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: TRACK_COLOR[t] }}>
+                {t} track
+              </span>
+              <span className="label text-[var(--ink)]/55">
+                {rows.length} {rows.length === 1 ? "statement" : "statements"}
+              </span>
+            </div>
+            <StatementRows statements={rows} onExplore={onExplore} />
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
