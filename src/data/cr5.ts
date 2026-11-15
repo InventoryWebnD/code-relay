@@ -7,7 +7,8 @@
  */
 
 /** Registration lives on Unstop. Set NEXT_PUBLIC_REGISTER_URL to the Unstop page when it goes live. */
-export const REGISTER_URL = process.env.NEXT_PUBLIC_REGISTER_URL ?? "";
+/** Registrations are live on Unstop; NEXT_PUBLIC_REGISTER_URL can override it. */
+export const REGISTER_URL = process.env.NEXT_PUBLIC_REGISTER_URL || "https://unstop.com/p/code-relay-50-indian-institute-of-technology-iit-bhubaneswar-1810370";
 
 export const EVENT = {
   name: "Code Relay",
