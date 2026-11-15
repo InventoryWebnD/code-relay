@@ -144,8 +144,9 @@ export const CR4_HIGHLIGHTS: Stat[] = [
 ];
 
 export const CR3_HIGHLIGHTS: Stat[] = [
-  { value: 1500, suffix: "+", label: "Student registrations" },
-  { value: 600, suffix: "+", label: "Team registrations" },
+  { value: 3000, suffix: "+", label: "Student registrations" },
+  { value: 1500, suffix: "+", label: "Team registrations" },
+  { value: 600, suffix: "+", label: "Project submissions" },
 ];
 
 export const WHY_SPONSOR = [
