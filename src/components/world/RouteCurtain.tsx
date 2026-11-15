@@ -100,13 +100,16 @@ export default function RouteCurtain() {
     const el = labelRef.current;
     if (el) gsap.fromTo(el, { yPercent: 30, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.45, ease: "power3.out" });
     if (dest.current) router.push(dest.current);
-    // Safety net: never leave the screen covered if navigation stalls.
+    // Safety net: never leave the screen covered if navigation truly stalls.
+    // Generous on purpose: revealing early (e.g. while a route is still being
+    // compiled in dev) shows the old page and makes the click look ignored.
     safety.current = window.setTimeout(() => {
       if (busy.current) reveal();
-    }, 4000);
+    }, 12000);
   };
 
   const onRevealed = () => {
+    if (labelRef.current) gsap.set(labelRef.current, { autoAlpha: 0, yPercent: 30, overwrite: true });
     busy.current = false;
     setPhase("idle");
   };
@@ -124,7 +127,12 @@ export default function RouteCurtain() {
   return (
     <div className="pointer-events-none fixed inset-0 z-[150]" aria-hidden>
       <PixelTransition phase={phase} onCovered={onCovered} onRevealed={onRevealed} options={SUBTLE} />
-      <div className="absolute inset-0 z-[52] flex items-center justify-center overflow-hidden">
+      {/* the label (text + mascot) only exists while a transition runs: once the
+          tiles have cleared it is hidden outright, whatever any tween is doing */}
+      <div
+        className="absolute inset-0 z-[52] flex items-center justify-center overflow-hidden"
+        style={{ visibility: phase === "idle" ? "hidden" : undefined }}
+      >
         <div ref={labelRef} className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/brand/webnd-mascot-fly.webp" alt="" className="h-10 w-10 sm:h-14 sm:w-14 object-contain -scale-x-100" />
