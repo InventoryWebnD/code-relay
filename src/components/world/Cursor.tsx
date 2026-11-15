@@ -121,7 +121,7 @@ export default function Cursor() {
           src="/brand/webnd-mascot-fly.webp"
           alt=""
           draggable={false}
-          className="h-auto w-9 origin-top-left select-none [filter:drop-shadow(0_0_1px_rgba(246,240,232,0.9))_drop-shadow(0_2px_6px_rgba(21,6,11,0.25))]"
+          className="h-auto w-9 origin-top-left select-none"
         />
         <span ref={pill} className="label invisible mt-1 whitespace-nowrap rounded-full bg-[var(--crimson)] px-2.5 py-1 text-[10px] text-[var(--cream)]" />
       </div>
