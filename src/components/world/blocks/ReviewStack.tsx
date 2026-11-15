@@ -49,7 +49,7 @@ export default function ReviewStack({ reviews = REVIEWS }: { reviews?: Review[] 
   return (
     <section data-world="ring" className="relative overflow-hidden py-28 sm:py-36">
       <div className="mx-auto max-w-[1200px] px-5 sm:px-10">
-        <SectionHead align="center" label="Student reviews" title={"Heard at the\nfinish line"} />
+        <SectionHead align="center" label="Participant voices" title={"Heard at the\nfinish line"} />
 
         <div className="relative mt-14 text-center">
           <span className="pointer-events-none absolute -top-16 left-1/2 -translate-x-1/2 font-display text-[180px] leading-none text-[var(--crimson)]/20" aria-hidden>
@@ -62,9 +62,10 @@ export default function ReviewStack({ reviews = REVIEWS }: { reviews?: Review[] 
               </span>
             ))}
           </p>
-          <div className="mt-8">
-            <div className="font-bold">{r.name}</div>
-            <div className="label mt-1 text-[var(--ink)]/60">{r.meta}</div>
+          <div className="label mt-8 flex items-center justify-center gap-3 text-[var(--ink)]/60">
+            <span className="h-px w-8 bg-current" />
+            {r.name} · {r.meta}
+            <span className="h-px w-8 bg-current" />
           </div>
         </div>
 

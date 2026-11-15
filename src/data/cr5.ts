@@ -330,11 +330,11 @@ export interface Review {
   color: string;
 }
 
-/** PLACEHOLDER: replace with real student reviews. */
+/** Anonymous for now: CR 5.0 will collect feedback with names and colleges. */
 export const REVIEWS: Review[] = [
-  { quote: "Thirty hours, zero sleep, one working demo. Best weekend of my degree.", name: "Student name", meta: "CR 4.0 · college", color: "#F5B000" },
-  { quote: "The mentors actually sat with us at 2 AM and helped debug our contract.", name: "Student name", meta: "CR 4.0 · college", color: "#5AA7A7" },
-  { quote: "We came for the prize and left with a team we still build with.", name: "Student name", meta: "CR 3.0 · college", color: "#F2B8C6" },
-  { quote: "The problem statements were real. It felt like shipping at a startup.", name: "Student name", meta: "CR 4.0 · college", color: "#F6F0E8" },
-  { quote: "IIT Bhubaneswar campus at night with 100 teams hacking is a vibe.", name: "Student name", meta: "CR 3.0 · college", color: "#C7D2F2" },
+  { quote: "Thirty hours, zero sleep, one working demo. Best weekend of my degree.", name: "Participant", meta: "Code Relay 4.0", color: "#F5B000" },
+  { quote: "The mentors actually sat with us at 2 AM and helped debug our contract.", name: "Participant", meta: "Code Relay 4.0", color: "#5AA7A7" },
+  { quote: "We came for the prize and left with a team we still build with.", name: "Participant", meta: "Code Relay 3.0", color: "#F2B8C6" },
+  { quote: "The problem statements were real. It felt like shipping at a startup.", name: "Participant", meta: "Code Relay 4.0", color: "#F3D9A4" },
+  { quote: "IIT Bhubaneswar campus at night with 100 teams hacking is a vibe.", name: "Participant", meta: "Code Relay 3.0", color: "#C7D2F2" },
 ];

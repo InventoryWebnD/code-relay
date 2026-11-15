@@ -233,18 +233,18 @@ export const PAST_EDITIONS: PastEdition[] = [
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote: "Code Relay pushed our team to think about real distributed system constraints rather than just superficial toy apps. The 36-hour sprint format and mentor review at IIT Bhubaneswar gave our team the engineering confidence to launch our dev-tools startup.",
-    author: "Rohan S.",
-    role: "CR 4.0 Track Winner · IIT Bombay Alumnus",
+    author: "Participant",
+    role: "Code Relay 4.0",
   },
   {
     quote: "The relay baton structure was the most refreshing hackathon format we've experienced. You can't just hack messy spaghetti code; your architectural interfaces have to be clean and modular for your teammates to build upon.",
-    author: "Aditi M.",
-    role: "CR 3.0 Finalist · NIT Rourkela",
+    author: "Participant",
+    role: "Code Relay 3.0",
   },
   {
     quote: "Evaluating Code Relay submissions showed collegiate engineering at its absolute finest. The depth of the zero-knowledge circuits and CRDT implementations matched production-level quality.",
-    author: "Vikram N.",
-    role: "Staff Engineer · Industry Mentor & Judge",
+    author: "Mentor",
+    role: "Industry mentor & judge",
   },
 ];
 
