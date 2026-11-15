@@ -3,7 +3,7 @@
 import { useState } from "react";
 import PageHero from "@/components/world/PageHero";
 import SectionHead from "@/components/world/SectionHead";
-import { CountUp, Magnetic, Reveal } from "@/components/world/motion";
+import { CountUp, Reveal } from "@/components/world/motion";
 import {
   CR3_HIGHLIGHTS,
   CR4_HIGHLIGHTS,
@@ -42,11 +42,12 @@ export function ReachBlock() {
     <section data-world="scatter" className="relative overflow-hidden rounded-t-[48px] bg-[var(--ink)] py-24 text-[var(--cream)] sm:py-32">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
         <SectionHead dark label="Your reach" title={"The crowd\nyou'll meet"} sub="Highlights from the last two editions of Code Relay." />
-        <Reveal group className="mt-16 grid grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+        <Reveal group className="mt-16 grid grid-cols-2 [container-type:inline-size] lg:grid-cols-4" stagger={0.1}>
           {CR4_HIGHLIGHTS.map((s, i) => (
             <div key={s.label} className={`py-6 pr-4 ${i ? "lg:border-l-2 lg:border-[var(--cream)]/15 lg:pl-8" : ""}`}>
               <span className="label text-[var(--sun)]">CR 4.0</span>
-              <CountUp value={s.value} suffix={s.suffix} className="mt-3 block font-display text-[clamp(30px,9vw,84px)] lg:text-[clamp(44px,5vw,84px)]" />
+              {/* sized from the row width (cqw): every number the same size, none can collide */}
+              <CountUp value={s.value} suffix={s.suffix} className="mt-3 block whitespace-nowrap font-display text-[min(10cqw,84px)] tabular-nums lg:text-[min(4.6cqw,84px)]" />
               <span className="label mt-3 block text-[var(--cream)]/60">{s.label}</span>
             </div>
           ))}
@@ -151,59 +152,60 @@ export function PartnerOptions() {
 }
 
 /* ------------------------------------------------------------------ */
-const FOOD_COLORS = ["var(--crimson)", "var(--navy)", "var(--teal)", "var(--ink)"];
-
+/* Food & beverage: same editorial language as the rest of the page —   */
+/* section head, numbered row-flood rows, quiet supporting columns       */
 export function FoodBlock() {
   return (
-    <section id="food" data-world="scatter" className="relative overflow-hidden rounded-[48px] bg-[var(--sun)] py-24 sm:py-32">
-      <div className="mx-auto max-w-[1500px] px-5 sm:px-10 lg:px-16">
-        <div className="grid items-end gap-10 lg:grid-cols-[1.3fr_1fr]">
+    <section id="food" data-world="scatter" data-world-fade="0.5" className="relative py-24 sm:py-32">
+      <div className="mx-auto max-w-[1300px] px-5 sm:px-10 lg:px-16">
+        <div className="grid items-end gap-10 lg:grid-cols-[1.2fr_1fr]">
           <SectionHead label="Food & beverage partners" title={"Feed the\nbuilders"} />
-          <Reveal variant="pop">
-            <p className="font-display text-[clamp(20px,2vw,30px)] !normal-case !leading-tight tracking-tight">“{FOOD_PITCH}”</p>
+          <Reveal>
+            <p className="max-w-md text-lg leading-relaxed text-[var(--ink)]/75">{FOOD_PITCH}</p>
+            <div className="mt-8 flex gap-10">
+              {FOOD_STATS.map((s) => (
+                <div key={s.label}>
+                  <div className="font-display text-3xl text-[var(--crimson)] sm:text-4xl">{s.value}</div>
+                  <div className="label mt-1 text-[var(--ink)]/55">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </Reveal>
         </div>
 
-        <Reveal className="mt-10 flex flex-wrap gap-x-6 gap-y-2">
-          {[...FOOD_NEEDS, ...FOOD_STATS.map((s) => `${s.value} ${s.label}`)].map((n) => (
-            <span key={n} className="label flex items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-[var(--ink)]" />
-              {n}
-            </span>
-          ))}
-        </Reveal>
-
-        <Reveal group variant="pop" className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+        <div className="mt-14 border-b-2 border-[var(--ink)]/15">
           {FOOD_PARTNERS.map((f, i) => (
-            <div key={f.name} className="group flex flex-col items-start">
-              <span
-                className="grid h-36 w-36 place-items-center rounded-full text-6xl transition-transform duration-700 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-rotate-12 group-hover:scale-110"
-                style={{ background: FOOD_COLORS[i] }}
+            <Reveal key={f.name} delay={i * 0.05}>
+              <div
+                className="row-flood group grid grid-cols-[56px_1fr] items-baseline gap-4 px-2 py-6 sm:grid-cols-[90px_1fr_1.4fr] sm:gap-8 sm:px-4"
+                style={{ ["--flood" as string]: "var(--ink)" }}
               >
-                {f.emoji}
-              </span>
-              <span className="label mt-6 text-[var(--ink)]/60">0{i + 1}</span>
-              <h3 className="mt-1 font-display text-2xl">{f.name}</h3>
-              <p className="mt-2 text-[15px] text-[var(--ink)]/80">{f.body}</p>
-            </div>
-          ))}
-        </Reveal>
-
-        <div className="mt-16 grid items-end gap-8 border-t-2 border-[var(--ink)]/20 pt-8 lg:grid-cols-[1fr_1fr_1fr_auto]">
-          {FOOD_MODELS.map((m) => (
-            <Reveal key={m.title}>
-              <h4 className="font-display text-lg">{m.title}</h4>
-              <p className="mt-1 text-sm text-[var(--ink)]/80">{m.body}</p>
+                <span className="font-display text-2xl text-[var(--crimson)] transition-colors group-hover:text-[var(--sun)] sm:text-3xl">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display text-xl !normal-case tracking-tight sm:text-2xl">{f.name}</h3>
+                <p className="col-start-2 text-[15px] opacity-75 sm:col-start-auto">{f.body}</p>
+              </div>
             </Reveal>
           ))}
-          <Reveal>
-            <Magnetic>
-              <a href={EVENT.brochures.food} target="_blank" rel="noreferrer" className="btn-chunky bg-[var(--ink)] text-[var(--cream)]" data-cursor="PDF">
-                Food brochure ↓
-              </a>
-            </Magnetic>
-          </Reveal>
         </div>
+
+        <div className="mt-12 grid gap-8 sm:grid-cols-3">
+          {FOOD_MODELS.map((m, i) => (
+            <Reveal key={m.title} delay={i * 0.06}>
+              <span className="label text-[var(--ink)]/45">{String(i + 1).padStart(2, "0")}</span>
+              <h4 className="mt-1 font-display text-lg">{m.title}</h4>
+              <p className="mt-1 text-[15px] text-[var(--ink)]/70">{m.body}</p>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal className="mt-12 flex flex-col gap-4 border-t-2 border-[var(--ink)]/15 pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <span className="label text-[var(--ink)]/55">Covers {FOOD_NEEDS.join(" · ").toLowerCase()}</span>
+          <a href={EVENT.brochures.food} target="_blank" rel="noreferrer" className="btn-chunky self-start bg-[var(--ink)] text-[var(--cream)] sm:self-auto">
+            Food &amp; beverage brochure ↓
+          </a>
+        </Reveal>
       </div>
     </section>
   );
@@ -237,40 +239,60 @@ export function WhySponsor() {
 export function ContactDesk() {
   return (
     <section id="contact" data-world="cube" className="relative overflow-hidden rounded-t-[48px] bg-[var(--navy)] py-24 text-[var(--cream)] sm:py-32">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/brand/webnd-mascot-stand.webp" alt="" className="pointer-events-none absolute -bottom-6 right-[4%] w-[clamp(120px,16vw,240px)] bob" />
-      <div className="relative mx-auto max-w-[1300px] px-5 sm:px-10">
-        <SectionHead dark label="Contact" title={"Let's\ntalk."} />
-        <Reveal className="mt-12">
-          <a
-            href={`mailto:${EVENT.contact.email}?subject=Code%20Relay%205.0%20Partnership`}
-            className="group inline-block break-all font-display text-[clamp(26px,4.6vw,76px)] !normal-case tracking-tight"
-            data-cursor="Mail"
-          >
-            <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_4px] bg-left-bottom bg-no-repeat pb-1 transition-[background-size,color] duration-500 group-hover:bg-[length:100%_4px] group-hover:text-[var(--sun)]">
-              {EVENT.contact.email}
-            </span>
-          </a>
-          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-lg font-bold">
-            <span>{EVENT.contact.name}</span>
-            <a href={EVENT.contact.phoneHref} className="hover:text-[var(--sun)]">
-              {EVENT.contact.phone}
+      <div className="relative mx-auto grid max-w-[1300px] items-center gap-14 px-5 sm:px-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
+        <div>
+          <SectionHead
+            dark
+            label="Contact"
+            title={"Let's\ntalk."}
+            sub="Tell us what you'd like to do at Code Relay 5.0. We'll put together a package that fits, from a single bounty to the title slot."
+          />
+          <Reveal className="mt-10 flex flex-wrap gap-3">
+            <a href={EVENT.brochures.sponsorship} target="_blank" rel="noreferrer" className="btn-chunky border-[var(--cream)] bg-[var(--sun)] text-[var(--ink)]">
+              Sponsorship brochure ↓
             </a>
+            <a href={EVENT.brochures.food} target="_blank" rel="noreferrer" className="btn-chunky border-[var(--cream)] bg-[var(--teal)] text-[var(--ink)]">
+              Food &amp; beverage brochure ↓
+            </a>
+          </Reveal>
+        </div>
+
+        {/* the partnership contact card (as on the brochure's last page) */}
+        <Reveal variant="pop">
+          <div className="stk relative bg-[var(--paper)] p-6 text-[var(--ink)] sm:p-8">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <span className="label text-[var(--crimson)]">Partnership contact</span>
+                <h3 className="mt-2 font-display text-[clamp(28px,3vw,40px)] leading-none">{EVENT.contact.name}</h3>
+              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/brand/webnd-mascot-stand.webp" alt="WebnD mascot" className="-mt-2 w-20 shrink-0 bob sm:w-24" />
+            </div>
+            <ul className="mt-6 border-b-2 border-[var(--ink)]/15">
+              {[
+                { k: "Email", v: EVENT.contact.email, href: `mailto:${EVENT.contact.email}?subject=Code%20Relay%205.0%20Partnership` },
+                { k: "Phone", v: EVENT.contact.phone, href: EVENT.contact.phoneHref },
+                { k: "LinkedIn", v: EVENT.contact.linkedin, href: EVENT.contact.linkedinUrl, ext: true },
+                { k: "Instagram", v: EVENT.contact.instagram, href: EVENT.contact.instagramUrl, ext: true },
+              ].map((r) => (
+                <li key={r.k} className="border-t-2 border-[var(--ink)]/15">
+                  <a
+                    href={r.href}
+                    {...(r.ext ? { target: "_blank", rel: "noreferrer" } : {})}
+                    className="group flex items-center justify-between gap-4 py-3.5"
+                  >
+                    <span className="label text-[var(--ink)]/50">{r.k}</span>
+                    <span className="flex min-w-0 items-center gap-2 text-right font-semibold transition-colors group-hover:text-[var(--crimson)]">
+                      <span className="break-all">{r.v}</span>
+                      <span className="transition-transform duration-500 group-hover:-rotate-45" aria-hidden>
+                        →
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
-        </Reveal>
-        <Reveal className="mt-12 flex flex-wrap gap-3">
-          <a href={EVENT.brochures.sponsorship} target="_blank" rel="noreferrer" className="btn-chunky border-[var(--cream)] bg-[var(--sun)] text-[var(--ink)]">
-            Sponsorship brochure ↓
-          </a>
-          <a href={EVENT.brochures.food} target="_blank" rel="noreferrer" className="btn-chunky border-[var(--cream)] bg-[var(--teal)] text-[var(--ink)]">
-            Food &amp; beverage brochure ↓
-          </a>
-          <a href={EVENT.contact.linkedinUrl} target="_blank" rel="noreferrer" className="btn-ghost text-[var(--cream)]">
-            LinkedIn
-          </a>
-          <a href={EVENT.contact.instagramUrl} target="_blank" rel="noreferrer" className="btn-ghost text-[var(--cream)]">
-            {EVENT.contact.instagram}
-          </a>
         </Reveal>
       </div>
     </section>
