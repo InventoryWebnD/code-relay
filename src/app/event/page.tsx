@@ -3,6 +3,7 @@ import EventHero from "@/components/event/EventHero";
 import { FactsRibbon, JudgingBlock, RulesBento, ScheduleBlock } from "@/components/event/EventBlocks";
 import RelayRun from "@/components/world/blocks/RelayRun";
 import TracksShowcase from "@/components/world/blocks/TracksShowcase";
+import TrackGuidelines from "@/components/world/blocks/TrackGuidelines";
 import PrizeFlip from "@/components/world/blocks/PrizeFlip";
 import FaqBlock from "@/components/world/blocks/FaqBlock";
 import FinalCTA from "@/components/world/blocks/FinalCTA";
@@ -20,6 +21,7 @@ export default function EventPage() {
       <FactsRibbon />
       <RelayRun id="format" />
       <TracksShowcase />
+      <TrackGuidelines />
       <ScheduleBlock />
       <JudgingBlock />
       <RulesBento />

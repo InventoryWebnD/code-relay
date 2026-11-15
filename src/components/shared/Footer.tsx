@@ -36,7 +36,7 @@ export default function Footer() {
     <footer className="relative mt-auto overflow-hidden bg-[var(--ink)] text-[var(--cream)]">
       <div className="border-y-2 border-[var(--ink)] bg-[var(--sun)] py-2.5 text-[var(--ink)]">
         <Marquee speed={26}>
-          {["Sprint to innovation", "Pass the baton", `${EVENT.hackHours} hours`, "Web2 × Web3", EVENT.institute, `Edition ${EVENT.edition}`].map((t) => (
+          {["Sprint to innovation", "Pass the baton", `${EVENT.hackHours} hours`, "AI & Automation × AI for Bharat", EVENT.institute, `Edition ${EVENT.edition}`].map((t) => (
             <span key={t} className="mx-5 flex items-center gap-5 font-display text-base sm:text-lg">
               {t}
               <span className="inline-block h-2.5 w-2.5 rotate-45 bg-[var(--ink)]" />

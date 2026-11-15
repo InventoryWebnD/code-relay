@@ -14,7 +14,7 @@ import OrganisingCommittee from "@/components/world/blocks/OrganisingCommittee";
 export const metadata: Metadata = {
   title: "Code Relay 5.0 | Sprint to Innovation — WebnD IIT Bhubaneswar",
   description:
-    "Code Relay 5.0: WebnD IIT Bhubaneswar's flagship nationwide hackathon. Web2 and Web3 tracks, an online idea round and a 30-hour on-campus final.",
+    "Code Relay 5.0: WebnD IIT Bhubaneswar's flagship nationwide hackathon. AI & Automation and AI for Bharat tracks, an online idea round and a 30-hour on-campus final.",
 };
 
 export default function Home() {

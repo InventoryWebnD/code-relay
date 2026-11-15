@@ -15,7 +15,7 @@ export function FactsRibbon() {
     "Open to all of India",
     `${EVENT.hackHours}-hour final`,
     `${EVENT.shortlist} teams on campus`,
-    "Web2 × Web3",
+    "AI & Automation × AI for Bharat",
   ];
   return (
     <div className="relative z-10 -rotate-1 bg-[var(--ink)] py-4 text-[var(--cream)]">

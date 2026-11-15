@@ -65,7 +65,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
             </div>
             <div className="flex items-center gap-2 text-[#FFA3B9]">
               <span>✓</span>
-              <span>Web2 &amp; Web3 Dual Competition Tracks</span>
+              <span>AI &amp; Automation and AI for Bharat tracks</span>
             </div>
           </div>
 

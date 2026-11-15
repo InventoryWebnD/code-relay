@@ -89,41 +89,159 @@ export interface SubTrack {
   body: string;
 }
 
+export interface TrackGuide {
+  overview: string;
+  build: string;
+  /** what every submission must cover (pillars / agent design patterns) */
+  requirementsLabel: string;
+  requirementsRule: string;
+  requirements: { name: string; expect: string; compulsory?: boolean }[];
+  declare: string;
+  judging: { label: string; points: number }[];
+  bonus: string;
+  tieBreaker: string;
+  submission: { tier: string; body: string }[];
+  notAccepted: string;
+}
+
 export interface Track {
+  /** internal id: kept as web2 / web3 because registrations are stored against WEB2 / WEB3 */
   id: "web2" | "web3";
   name: string;
+  partner: string;
   tagline: string;
   color: string;
   ink: string;
   items: SubTrack[];
+  guide: TrackGuide;
 }
+
+const FREE_TO_ENTER = "Free to enter. Round 1 needs no paid tools or API keys. Use any provider with a free tier, an open-source model or a local model.";
 
 export const TRACKS: Track[] = [
   {
     id: "web2",
-    name: "WEB2",
-    tagline: "AI that actually ships",
+    name: "AI & Automation",
+    partner: "TrueFoundry",
+    tagline: "Agents that take over real work, and still ask before anything they can't undo.",
     color: "#991B3D",
     ink: "#F6F0E8",
     items: [
-      { title: "Agentic AI & Automation", body: "AI agents that complete real, multi-step tasks." },
-      { title: "GenAI for Bharat", body: "RAG, voice and Indian-language AI products." },
-      { title: "AI Chatbots", body: "Assistants that answer accurately from real documents and data." },
+      {
+        title: "Autonomous Business Operations",
+        body: "Build agents on TrueForge that run a real business workflow end to end, such as a support resolution agent that reads order and billing data, issues refunds and escalates when it should, or a multi-agent workflow where separate agents handle procurement, dispatch and payment follow-up. Anything irreversible must pass through Tool Approval.",
+      },
+      {
+        title: "Engineering & Incident Response",
+        body: "Build agents that keep systems running. Examples are an incident response agent that reads alerts, logs and metrics, finds the likely cause of an outage and suggests a fix for a human to approve, or a DevOps agent that triages failing builds overnight and drafts fixes. Handling large logs without overflowing context is central, so Context Engineering and Sub-Agents matter here.",
+      },
+      {
+        title: "Data & Decision Automation",
+        body: "Build agents that turn raw data into decisions. Try a data analyst agent that answers business questions in plain language by querying databases and producing charts, or an inventory and logistics agent that predicts stock-outs, optimizes routes and drafts orders for approval. Memory should show how the agent improves from one run to the next.",
+      },
+      {
+        title: "Internal Operations & Workforce Automation",
+        body: "Build agents that remove routine work inside organizations. Examples include an internal helpdesk agent handling IT and HR requests with the right permissions per user, or a finance back-office agent that checks invoices, flags mismatches and sends reminders. Keep permissions tight, keep every action logged and make the agent say clearly what it could not do.",
+      },
     ],
+    guide: {
+      overview:
+        "Every organization has work that nobody wants to do by hand: triaging alerts, reconciling spreadsheets, answering routine requests, chasing approvals. This track asks you to build an AI agent that takes over real work, runs through a multi-step job on its own and still asks a human before it does anything it cannot undo.",
+      build:
+        "Design or build an AI agent that completes a real job of at least 5 steps across at least 2 tools or data sources. It must plan, act, recover from at least one failure, pause for human approval before any irreversible action and end with a clear report a human can act on in under 2 minutes. The track is built around TrueForge, TrueFoundry's open-source (MIT-licensed) agent harness. You are not required to use it: teams may build on TrueForge or any other framework, and no marks are lost either way.",
+      requirementsLabel: "Agent design patterns",
+      requirementsRule:
+        "Use at least 4 of the 6 patterns; Human Approval is compulsory. For each one, state where in your workflow it is used and why the agent fails without it. A name-drop scores zero. Every pattern can be built with free tools.",
+      requirements: [
+        { name: "Human Approval", expect: "A list of the irreversible actions and the exact point where the agent pauses for a human.", compulsory: true },
+        { name: "Sub-Agents", expect: "How the job is split, with each sub-agent's role and what it hands back." },
+        { name: "Memory", expect: "What the agent remembers between runs and how that changes the next run." },
+        { name: "Context Management", expect: "How large outputs such as logs and tables are summarized or trimmed without overflowing the model's context." },
+        { name: "Tool Use through MCP or APIs", expect: "Which tools the agent calls, why each is needed and what happens when a tool fails." },
+        { name: "Long-run Execution", expect: "How a multi-step job is triggered and tracked, and how the agent resumes after an error." },
+      ],
+      declare: "Also declare the model(s) and why (cost, speed, privacy), the tools used, and the interface (chat UI, SDK, API or dashboard).",
+      judging: [
+        { label: "Agent design depth", points: 30 },
+        { label: "Problem and agent fit", points: 20 },
+        { label: "Safety and failure design", points: 20 },
+        { label: "Architecture and feasibility", points: 15 },
+        { label: "Report and user experience", points: 10 },
+        { label: "Clarity of submission", points: 5 },
+      ],
+      bonus: "Prototype bonus of up to 10",
+      tieBreaker: "Tie-breaker: the higher safety and failure design score.",
+      submission: [
+        { tier: "Blueprint", body: "Pitch deck (PDF, max 10 slides) including a Failure Drill slide, and a one-page Agent Card." },
+        { tier: "Prototype", body: "The same, plus a demo video of up to 3 minutes showing one live human approval and the final report, and a public GitHub repo with a README." },
+      ],
+      notAccepted:
+        "Generic Q&A chatbots, “chat with your PDF”, plain RAG over notes, resume screeners and study buddies, unless they clearly meet every requirement. A plain chatbot wrapper with an agent name on it will be marked down. Never commit API keys; use synthetic or anonymized data only.",
+    },
   },
   {
     id: "web3",
-    name: "WEB3",
-    tagline: "Money, agents & assets onchain",
+    name: "AI for Bharat",
+    partner: "CSM Technologies × TrueFoundry",
+    tagline: "AI that fixes a real problem for the last user in the line, in India's languages, networks and scale.",
     color: "#0B1B4D",
     ink: "#F6F0E8",
     items: [
-      { title: "Onchain Payments", body: "Stablecoin checkouts, transfers and simple wallets." },
-      { title: "AI × Web3", body: "AI agents that hold wallets and pay for services." },
-      { title: "Real-World Assets", body: "Land records, carbon credits, invoices and other real assets brought onchain to be verified, tracked and used." },
+      {
+        title: "Governance & Public Services",
+        body: "Build AI that makes digital governance work for every citizen. Examples include an agent that takes grievances in Indian languages, routes them across departments and shows live status until closure, or a scholarship and certificate assistant that verifies documents from other systems instead of asking for uploads. Protect citizen data by design, work on a basic phone, leave an audit trail officers and citizens can follow, and use human approval before any action that cannot be undone.",
+      },
+      {
+        title: "Healthcare, Education & Rural Livelihoods",
+        body: "Use AI to close access gaps in health, learning, agriculture and climate resilience. Try a health worker assistant that guides referrals and flags drug shortages, a voice-first tutor for low-connectivity regions, or a farmer alert and registry desk that sends pest and weather warnings by SMS or voice. Prioritize local languages and simple interfaces, and hand over to a human professional whenever the AI is unsure.",
+      },
+      {
+        title: "FinTech & Financial Inclusion",
+        body: "Build secure financial services for people the system still misses. Ideas include a first-time credit guide, a fraud triage agent that groups likely scams and asks a human to approve any freeze or customer message, a micro-insurance claims desk, or a UPI scam-warning companion in the user's language. Explain every decision plainly, and keep a human in control of anything that moves money.",
+      },
+      {
+        title: "Mobility, Trade & Infrastructure",
+        body: "Build agents and tools that keep India moving and its businesses running. Examples are an incident response agent that reads traffic and sensor feeds and suggests diversions for approval, an EV charging and bus-reliability planner, a small-seller order and inventory desk, or a multi-agent trade workflow covering procurement, dispatch and payment follow-up. Handle large data feeds cleanly, show real-time tracking and give users dashboards they can act on quickly.",
+      },
     ],
+    guide: {
+      overview:
+        "India has hundreds of millions of people who still lose time, money or access because a service is slow, confusing or not built for them. This track asks you to use AI to fix a real problem for a citizen, a farmer, a patient, a student or a small business, in a way that works for India's languages, networks and scale.",
+      build:
+        "Pick one real problem and design, or build, an AI-powered solution for it. It must serve the last user in the line: someone on a basic phone, a weak network or a different language, or someone who needs an assisted mode. It can be an agent, an app, a voice or SMS service or a dashboard. Any tech stack is allowed. Teams who like agents can use TrueForge, TrueFoundry's open-source agent harness, but it is optional in this track.",
+      requirementsLabel: "Pillars",
+      requirementsRule:
+        "Address at least 4 of the 6 pillars; Privacy & Consent is compulsory. For each pillar, state where in the user journey it applies and why the solution fails without it. A name-drop scores zero.",
+      requirements: [
+        { name: "Privacy & Consent", expect: "The data collected and why, how consent is taken and withdrawn, who can see what.", compulsory: true },
+        { name: "Inclusive Access", expect: "How people with low literacy, another language or a disability complete the journey, including an assisted mode." },
+        { name: "Low-bandwidth & Offline", expect: "What works on a basic phone and a weak network, and how it syncs without losing a request." },
+        { name: "Interoperability", expect: "Which other systems are connected through APIs instead of asking the user for papers." },
+        { name: "Auditability & Human Oversight", expect: "A record of decisions, a status view for the user and human approval before any irreversible action." },
+        { name: "Scale & Operations", expect: "Peak-day load, running cost and a first-district or first-city rollout plan." },
+      ],
+      declare: "Also declare the problem and users, the models and tech stack with reasons, the data source (synthetic, anonymized or open only) and the interface.",
+      judging: [
+        { label: "Pillar depth", points: 25 },
+        { label: "Problem and user fit", points: 20 },
+        { label: "Exception and failure design", points: 20 },
+        { label: "Architecture and feasibility", points: 15 },
+        { label: "User experience", points: 15 },
+        { label: "Clarity of submission", points: 5 },
+      ],
+      bonus: "Prototype bonus of up to 10",
+      tieBreaker: "Tie-breaker: the higher exception and failure design score.",
+      submission: [
+        { tier: "Blueprint", body: "Pitch deck (PDF, max 10 slides) and a one-page card." },
+        { tier: "Prototype", body: "The same, plus a demo video of up to 3 minutes showing one complete user journey and one failure path, and a public GitHub repo with a README." },
+      ],
+      notAccepted:
+        "Generic Q&A chatbots, “chat with your PDF”, plain RAG over notes, resume screeners and study buddies, and apps that only put an existing form online, unless they clearly redesign the process and meet the pillars. Never commit API keys; use synthetic, anonymized or open data only.",
+    },
   },
 ];
+
+export const TRACK_FREE_NOTE = FREE_TO_ENTER;
 
 export const EXTRA_TRACKS = [
   { title: "Open Innovation", body: "Build anything. If it's bold and it works, it belongs here." },

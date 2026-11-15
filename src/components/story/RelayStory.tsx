@@ -278,9 +278,9 @@ export default function RelayStory() {
                 <div key={t.id} className="story-glass rounded-2xl border border-[var(--cream)]/15 p-3.5 sm:p-4">
                   <div className="flex items-center gap-2">
                     <span className="h-2.5 w-2.5 rounded-full" style={{ background: t.id === "web2" ? "#C2264F" : "#5AA7A7" }} />
-                    <span className="font-display text-lg">{t.name}</span>
+                    <span className="font-display text-base leading-tight sm:text-lg">{t.name}</span>
                   </div>
-                  <div className="mt-1 text-sm text-[var(--cream)]/70">{t.tagline}</div>
+                  <div className="mt-1 text-sm text-[var(--cream)]/70">with {t.partner}</div>
                   <ul className="mt-3 hidden space-y-1 text-xs text-[var(--cream)]/55 sm:block">
                     {t.items.map((it) => (
                       <li key={it.title}>— {it.title}</li>
