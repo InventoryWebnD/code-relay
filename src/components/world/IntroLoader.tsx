@@ -16,13 +16,23 @@ const MSGS: [number, string][] = [
   [0.82, "Fetching the baton…"],
   [0.99, "Pass the baton!"],
 ];
-/** simulated progress length; real page load can hold it at 90% */
+/** simulated progress length; page load and the 3D scene can hold it at 90% */
 const RUN_MS = 3800;
-/** never wait on window "load" longer than this */
-const LOAD_CAP_MS = 9000;
+/** once Webby is on screen, keep him there at least this long before the exit */
+const SCENE_MIN_MS = 1800;
+/** never wait on page load / the 3D chunk longer than this */
+const LOAD_CAP_MS = 12000;
 const MARQUEE = Array.from({ length: 8 }, () => "#SprintToInnovation ✦ Pass the baton ✦ ").join("");
 
+/** the page shows through the O: paused page scenes can start rendering again */
+function revealIntro() {
+  if (window.__crIntroReveal) return;
+  window.__crIntroReveal = true;
+  window.dispatchEvent(new Event("cr:intro-reveal"));
+}
+
 function finishIntro() {
+  revealIntro();
   window.__crIntroDone = true;
   window.dispatchEvent(new Event("cr:intro-done"));
 }
@@ -78,10 +88,11 @@ export default function IntroLoader() {
       };
     }
 
-    const stage = one(".cr-stage");
     const bg = one(".cr-bg");
+    const holeCv = one<HTMLCanvasElement>(".cr-hole");
+    const zoom = one(".cr-zoom");
     const words = one(".cr-words");
-    const canvas = one<HTMLCanvasElement>("canvas");
+    const canvas = one<HTMLCanvasElement>(".cr-gl");
     const pct = one(".cr-pct-n");
     const status = one(".cr-status");
 
@@ -101,6 +112,8 @@ export default function IntroLoader() {
     let sy = 0;
     const ex = { k: 0 };
     let loaded = document.readyState === "complete";
+    /** when the 3D scene came up: 0 = still loading, -1 = unavailable (no WebGL) */
+    let sceneAt = 0;
     const t0 = performance.now();
     let last = t0;
     let exitTl: gsap.core.Timeline | null = null;
@@ -110,7 +123,48 @@ export default function IntroLoader() {
       mx = (e.clientX / window.innerWidth) * 2 - 1;
       my = (e.clientY / window.innerHeight) * 2 - 1;
     };
-    const onResize = () => webby?.resize();
+    /* The dark backdrop is a 2D canvas (the CSS one only covers the first paint):
+       punching the O-shaped hole and growing it is a cheap redraw, where a CSS
+       mask on a scaled full-screen layer repaints heavily and stutters. */
+    const hctx = holeCv.getContext("2d");
+    const drawBg = (hx = 0, hy = 0, rx = 0, ry = 0) => {
+      if (!hctx) return;
+      const w = holeCv.width;
+      const h = holeCv.height;
+      hctx.globalCompositeOperation = "source-over";
+      hctx.clearRect(0, 0, w, h);
+      // same ellipse as the CSS radial-gradient(70% 60% at 50% 45%, #1d0a12, #0a0709 70%)
+      hctx.save();
+      hctx.translate(w * 0.5, h * 0.45);
+      hctx.scale(w * 0.7, h * 0.6);
+      const g = hctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+      g.addColorStop(0, "#1d0a12");
+      g.addColorStop(0.7, "#0a0709");
+      g.addColorStop(1, "#0a0709");
+      hctx.fillStyle = g;
+      hctx.fillRect(-2, -2, 4, 4);
+      hctx.restore();
+      if (rx > 0.3) {
+        hctx.globalCompositeOperation = "destination-out";
+        hctx.beginPath();
+        hctx.ellipse(hx, hy, rx, ry, 0, 0, Math.PI * 2);
+        hctx.fill();
+      }
+    };
+    const sizeBg = () => {
+      holeCv.width = window.innerWidth;
+      holeCv.height = window.innerHeight;
+      drawBg();
+    };
+    if (hctx) {
+      sizeBg();
+      bg.style.visibility = "hidden";
+    }
+
+    const onResize = () => {
+      webby?.resize();
+      if (!exiting && hctx) sizeBg();
+    };
     window.addEventListener("load", onLoad);
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("resize", onResize);
@@ -120,27 +174,33 @@ export default function IntroLoader() {
         if (!alive || !render3d) return;
         webby = createWebby(canvas);
         webby.resize();
+        sceneAt = performance.now();
         gsap.to(q(".cr-boot"), { autoAlpha: 0, scale: 0.4, duration: 0.3 });
+        gsap.fromTo(canvas, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.6, ease: "power2.out" });
       })
       .catch(() => {
         // no WebGL: the counter, wordmark and the dive through the O still run
+        sceneAt = -1;
       });
 
     finishRef.current = () => {
       finishing = true;
     };
 
-    const setHole = (x: number, y: number, rx: number, ry: number) => {
-      const m = `radial-gradient(${rx.toFixed(2)}px ${ry.toFixed(2)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px, transparent 98%, #000 100%)`;
-      bg.style.maskImage = m;
-      bg.style.webkitMaskImage = m;
-    };
-
     const startExit = () => {
       exiting = true;
       mx = my = 0; // let the parallax settle while Webby dashes
-      const hole = { r: 0 };
       let box = { x: 0, y: 0, hw: 0, hh: 0 };
+      /* r: how open the O's counter is; pre: a small pull-back before the dive;
+         p: dive progress in log space, so scale = ZOOM^p feels like steady acceleration */
+      const z = { r: 0, pre: 1, p: 0 };
+      const ZOOM = 60;
+      const apply = () => {
+        const s = Math.pow(ZOOM, z.p) * z.pre;
+        zoom.style.transform = `translate3d(0,0,0) scale(${s.toFixed(4)})`;
+        if (hctx) drawBg(box.x, box.y, box.hw * 0.62 * z.r * s, box.hh * 0.78 * z.r * s);
+        else bg.style.opacity = String(1 - z.r); // no 2D canvas: just fade the backdrop
+      };
 
       exitTl = gsap
         .timeline({ onComplete: done })
@@ -156,24 +216,18 @@ export default function IntroLoader() {
           parallax = false;
           words.style.transform = "none";
           box = glyphBox(one("[data-portal]"));
-          gsap.set(stage, { transformOrigin: `${box.x}px ${box.y}px` });
+          zoom.style.transformOrigin = `${box.x}px ${box.y}px`;
+          revealIntro();
         }, 1.0)
-        // the O's counter opens onto the page underneath
-        .to(
-          hole,
-          {
-            r: 1,
-            duration: 0.45,
-            ease: "power3.out",
-            onUpdate: () => setHole(box.x, box.y, box.hw * 0.62 * hole.r + 0.01, box.hh * 0.78 * hole.r + 0.01),
-          },
-          1.0,
-        )
-        // …and we fly through it
-        .to(stage, { scale: 90, duration: 1.2, ease: "expo.in" }, 1.25)
-        .add(finishIntro, 1.95)
-        .to(q(".cr-top"), { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, 2.1)
-        .to(el, { autoAlpha: 0, duration: 0.3, ease: "power2.out" }, 2.3);
+        // the O's counter opens onto the page underneath while the camera pulls back a touch
+        .to(z, { r: 1, duration: 0.5, ease: "power3.out", onUpdate: apply }, 1.0)
+        .to(z, { pre: 0.93, duration: 0.5, ease: "power2.out" }, 1.0)
+        // …then we fly through it
+        .to(z, { p: 1, duration: 1.4, ease: "power2.in", onUpdate: apply }, 1.4)
+        .to(z, { pre: 1, duration: 1.4, ease: "power1.in" }, 1.4)
+        .add(finishIntro, 2.15)
+        .to(q(".cr-top"), { autoAlpha: 0, duration: 0.35, ease: "power2.out" }, 2.35)
+        .to(el, { autoAlpha: 0, duration: 0.2, ease: "power1.out" }, 2.6);
     };
 
     const tick = (now: number) => {
@@ -184,7 +238,8 @@ export default function IntroLoader() {
 
       if (!finishing) {
         const e = (now - t0) / RUN_MS;
-        const ready = loaded || now - t0 > LOAD_CAP_MS;
+        const sceneShown = sceneAt < 0 || (sceneAt > 0 && now - sceneAt > SCENE_MIN_MS);
+        const ready = (loaded && sceneShown) || now - t0 > LOAD_CAP_MS;
         target = Math.min(1, 1 - Math.pow(1 - Math.min(e, 1), 1.8));
         if (!ready) target = Math.min(target, 0.9);
         if (e >= 1 && ready) finishing = true;
@@ -246,10 +301,12 @@ export default function IntroLoader() {
         @media (prefers-reduced-motion: reduce) { .cr-marq-run, .cr-boot { animation: none !important } }
       `}</style>
 
-      {/* everything in the stage zooms through the O at the end */}
-      <div className="cr-stage absolute inset-0 will-change-transform">
+      <div className="absolute inset-0">
+        {/* CSS backdrop for the first paint; the canvas takes over on mount and gets the O-shaped hole */}
         <div className="cr-bg absolute inset-0 bg-[radial-gradient(70%_60%_at_50%_45%,#1d0a12_0%,#0a0709_70%)]" />
-        <div aria-hidden className="intro-content absolute inset-0 grid place-content-center select-none">
+        <canvas className="cr-hole absolute inset-0 block h-full w-full" />
+        {/* the wordmark is the only thing that scales on the dive (a GPU-composited layer) */}
+        <div aria-hidden className="cr-zoom intro-content absolute inset-0 grid place-content-center select-none will-change-transform">
           <div
             className={`cr-words ${anton.className} grid text-center text-[clamp(70px,19vw,280px)] leading-[0.88] tracking-[0.02em] [-webkit-text-stroke:1.5px_rgba(153,27,61,0.55)] will-change-transform`}
           >
@@ -263,7 +320,7 @@ export default function IntroLoader() {
         </div>
         {/* instant CSS-only pulse so there is no blank frame before three.js arrives */}
         <div className="cr-boot intro-content absolute left-1/2 top-[46%] -m-[7px] h-[14px] w-[14px] rounded-full bg-[#ff3b6b] shadow-[0_0_40px_10px_rgba(255,59,107,0.5)] [animation:cr-pl_1s_ease-in-out_infinite]" />
-        <canvas className="intro-content absolute inset-0 block h-full w-full" />
+        <canvas className="cr-gl intro-content absolute inset-0 block h-full w-full" />
       </div>
 
       {/* top bar lines up with the site navbar so the hand-off is seamless */}

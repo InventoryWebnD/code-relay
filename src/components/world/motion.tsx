@@ -27,7 +27,24 @@ export const prefersReduced = () =>
 declare global {
   interface Window {
     __crIntroDone?: boolean;
+    __crIntroReveal?: boolean;
   }
+}
+
+/** The loader has opened onto the page (the page is visible again, before the intro fully ends). */
+export function onIntroReveal(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  if (window.__crIntroReveal || window.__crIntroDone) {
+    cb();
+    return () => {};
+  }
+  const handler = () => cb();
+  window.addEventListener("cr:intro-reveal", handler, { once: true });
+  window.addEventListener("cr:intro-done", handler, { once: true });
+  return () => {
+    window.removeEventListener("cr:intro-reveal", handler);
+    window.removeEventListener("cr:intro-done", handler);
+  };
 }
 
 export function onIntroDone(cb: () => void) {
