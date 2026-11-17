@@ -5,7 +5,7 @@ import gsap from "gsap";
 
 /**
  * Mascot cursor: Webby (the WebnD mascot) trails the pointer and leans into the
- * movement, while a small crimson dot marks the exact click point. Add
+ * movement, while a small teal dot (the colour of his hood) marks the exact click point. Add
  * `data-cursor="Label"` to a surface (not a link/button) to show a word
  * beside the mascot.
  */
@@ -72,8 +72,8 @@ export default function Cursor() {
       gsap.to(m, { scale: restScale, duration: 0.4, ease: "power3.out", overwrite: "auto" });
       gsap.to(d, {
         scale: !t ? 1 : field ? 0.6 : 1.7,
-        backgroundColor: t && !field ? "rgba(153,27,61,0.16)" : "#991B3D",
-        borderColor: t && !field ? "rgba(153,27,61,0.7)" : "rgba(153,27,61,0)",
+        backgroundColor: t && !field ? "rgba(90,167,167,0.16)" : "#5AA7A7",
+        borderColor: t && !field ? "rgba(90,167,167,0.7)" : "rgba(90,167,167,0)",
         duration: 0.35,
         ease: "power3.out",
         overwrite: "auto",
@@ -127,7 +127,7 @@ export default function Cursor() {
       </div>
       <div
         ref={dot}
-        className="pointer-events-none fixed left-0 top-0 z-[301] invisible h-2 w-2 rounded-full border border-transparent bg-[var(--crimson)]"
+        className="pointer-events-none fixed left-0 top-0 z-[301] invisible h-2 w-2 rounded-full border border-transparent bg-[var(--teal)]"
       />
     </>
   );
