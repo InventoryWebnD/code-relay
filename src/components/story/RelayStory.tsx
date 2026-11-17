@@ -6,7 +6,7 @@ import { Component, useEffect, useRef, useState, type ReactNode } from "react";
 import { CHAPTERS, clamp, story } from "./store";
 import { DOMAINS, EVENT, ROUNDS, tracksIn } from "@/data/cr5";
 import { useLenis } from "@/components/world/SmoothScroll";
-import { onIntroDone, onIntroReveal } from "@/components/world/motion";
+import { onIntroDone } from "@/components/world/motion";
 import type { Score } from "./sound";
 import RegisterLink from "@/components/world/RegisterLink";
 
@@ -85,7 +85,6 @@ export default function RelayStory() {
   const [ready, setReady] = useState(false);
   const [noWorld, setNoWorld] = useState(false);
   const [introDone, setIntroDone] = useState(false);
-  const [revealed, setRevealed] = useState(false);
   const [touch, setTouch] = useState(false);
   const [hint, setHint] = useState<HintState>("waiting");
   const hintRef = useRef<HintState>("waiting");
@@ -106,12 +105,7 @@ export default function RelayStory() {
       setNoWorld(true);
       setReady(true);
     }
-    const offReveal = onIntroReveal(() => setRevealed(true));
-    const offDone = onIntroDone(() => setIntroDone(true));
-    return () => {
-      offReveal();
-      offDone();
-    };
+    return onIntroDone(() => setIntroDone(true));
   }, []);
 
   // the cue appears once the intro has cleared and the world is on screen
@@ -278,9 +272,7 @@ export default function RelayStory() {
                 setReady(true);
               }}
             >
-              {/* render the first frames (shaders compile up front), then sit still behind the
-                  intro loader so the two WebGL scenes don't fight; resume as the O opens */}
-              <StoryCanvas active={active && (revealed || !ready)} onReady={() => setReady(true)} />
+              <StoryCanvas active={active} onReady={() => setReady(true)} />
             </WorldBoundary>
           )}
         </div>
