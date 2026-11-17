@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "Code Relay 5.0: national student hackathon by WebnD, IIT Bhubaneswar. Web2 × Web3, ₹2.5 lakh+ prizes, registrations open on Unstop.";
+export const alt = "Code Relay 5.0: national student hackathon by WebnD, IIT Bhubaneswar. Web2 × Web3, ₹3 lakh+ prizes, registrations open on Unstop.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -48,7 +48,7 @@ export default async function Image() {
           </div>
 
           <div style={{ display: "flex", alignItems: "flex-start", gap: 10, marginTop: "auto" }}>
-            {["2.5 LAKH+ PRIZES", "4 TRACKS", "30-HR FINALE", "ROUND 1 FREE"].map((t, i) => (
+            {["3 LAKH+ PRIZES", "4 TRACKS", "30-HR FINALE", "ROUND 1 FREE"].map((t, i) => (
               <span
                 key={t}
                 style={{

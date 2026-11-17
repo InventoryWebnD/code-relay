@@ -11,7 +11,7 @@ export const SITE_NAME = `${EVENT.name} ${EVENT.edition}`;
 const OG_IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Code Relay 5.0: national hackathon at IIT Bhubaneswar, Web2 × Web3" };
 
 export const SITE_DESCRIPTION =
-  "Code Relay 5.0 is a national student hackathon by WebnD, IIT Bhubaneswar. Build in Web2 (AI & Automation, AI for Bharat) or Web3 (Onchain Payments, AI × Web3), ₹2.5 lakh+ in prizes, a free online idea round and a 30-hour on-campus final. Register on Unstop.";
+  "Code Relay 5.0 is a national student hackathon by WebnD, IIT Bhubaneswar. Build in Web2 (AI & Automation, AI for Bharat) or Web3 (Onchain Payments, AI × Web3), ₹3 lakh+ in prizes, a free online idea round and a 30-hour on-campus final. Register on Unstop.";
 
 export const KEYWORDS = [
   "Code Relay",

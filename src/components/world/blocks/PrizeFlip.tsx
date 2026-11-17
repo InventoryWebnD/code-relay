@@ -54,7 +54,7 @@ export default function PrizeFlip({ id = "prizes" }: { id?: string }) {
                     >
                       <span className="absolute inset-[7%] rounded-full border-2 border-dashed border-current opacity-40" />
                       <span className="label px-10 opacity-85">{p.badge}</span>
-                      {/* long figures (₹2,50,000+) step down so they stay inside the rim */}
+                      {/* long figures (₹3,00,000+) step down so they stay inside the rim */}
                       <span className={`mt-3 font-display ${p.amount.length > 8 ? "text-[clamp(26px,2.5vw,38px)]" : "text-[clamp(30px,3.2vw,48px)]"}`}>{p.amount}</span>
                       <span className="label mt-2 max-w-[70%] opacity-75">{p.amountSubtitle}</span>
                     </div>

@@ -10,7 +10,7 @@ export default function PrizesSection() {
       <div className="relative w-full px-6 sm:px-10 lg:px-16 xl:px-20 2xl:px-24">
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight text-[#F6F0E8] mb-4">
-            ₹2,50,000+ PRIZE POOL
+            ₹3,00,000+ PRIZE POOL
           </h2>
 
           <p className="text-base sm:text-lg text-[#E0D4C3] max-w-2xl font-normal leading-relaxed mb-8">

@@ -15,7 +15,7 @@ import OrganisingCommittee from "@/components/world/blocks/OrganisingCommittee";
 
 export const metadata: Metadata = pageMetadata({
   title: "Code Relay 5.0 | National Hackathon at IIT Bhubaneswar · Web2 × Web3",
-  description: "Code Relay 5.0 by WebnD, IIT Bhubaneswar: a national student hackathon with Web2 (AI & Automation, AI for Bharat) and Web3 (Onchain Payments, AI × Web3) tracks, ₹2.5 lakh+ in prizes and a 30-hour on-campus final. Round 1 is free. Register on Unstop.",
+  description: "Code Relay 5.0 by WebnD, IIT Bhubaneswar: a national student hackathon with Web2 (AI & Automation, AI for Bharat) and Web3 (Onchain Payments, AI × Web3) tracks, ₹3 lakh+ in prizes and a 30-hour on-campus final. Round 1 is free. Register on Unstop.",
   path: "/",
 });
 

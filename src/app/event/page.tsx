@@ -12,7 +12,7 @@ import FinalCTA from "@/components/world/blocks/FinalCTA";
 
 export const metadata: Metadata = pageMetadata({
   title: "Tracks, Rounds, Prizes & Rules | Code Relay 5.0 Hackathon",
-  description: "Everything about Code Relay 5.0: Web2 and Web3 tracks with sub-tracks, the free online idea round, the 30-hour final at IIT Bhubaneswar, judging criteria, ₹2.5 lakh+ prizes and FAQs.",
+  description: "Everything about Code Relay 5.0: Web2 and Web3 tracks with sub-tracks, the free online idea round, the 30-hour final at IIT Bhubaneswar, judging criteria, ₹3 lakh+ prizes and FAQs.",
   path: "/event",
 });
 

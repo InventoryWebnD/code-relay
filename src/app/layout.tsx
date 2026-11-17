@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Code Relay 5.0: National Hackathon at IIT Bhubaneswar",
-    description: "Web2 × Web3, four tracks, ₹2.5 lakh+ in prizes and a 30-hour final at IIT Bhubaneswar. Round 1 is free. Registrations open on Unstop.",
+    description: "Web2 × Web3, four tracks, ₹3 lakh+ in prizes and a 30-hour final at IIT Bhubaneswar. Round 1 is free. Registrations open on Unstop.",
     url: "/",
     siteName: SITE_NAME,
     locale: "en_IN",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Code Relay 5.0: National Hackathon at IIT Bhubaneswar",
-    description: "Web2 × Web3, four tracks, ₹2.5 lakh+ in prizes, a 30-hour final. Round 1 is free. Register on Unstop.",
+    description: "Web2 × Web3, four tracks, ₹3 lakh+ in prizes, a 30-hour final. Round 1 is free. Register on Unstop.",
   },
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } } : {}),
 };
