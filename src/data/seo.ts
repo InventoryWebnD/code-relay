@@ -41,6 +41,7 @@ export const KEYWORDS = [
   "TrueFoundry",
   "TrueForge",
   "CSM Technologies",
+  "Soulverse",
   "Unstop hackathon",
   "Odisha hackathon",
   "Bhubaneswar",

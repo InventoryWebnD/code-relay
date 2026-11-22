@@ -123,6 +123,8 @@ export interface Track {
   name: string;
   /** who brings the track (omitted when open) */
   partner?: string;
+  /** how the partner is credited: "with" (default) or "presented by" */
+  partnerVerb?: string;
   tagline: string;
   /** full problem statement, where the track has one */
   problem?: string;
@@ -289,6 +291,8 @@ export const TRACKS: Track[] = [
     order: 2,
     itemsLabel: "Ideas to get you started",
     name: "AI × Web3",
+    partner: "Soulverse",
+    partnerVerb: "presented by",
     tagline: "AI and blockchain doing together what neither could do alone.",
     problem:
       "AI agents are starting to act on their own, but they can't easily hold money, pay for what they use or prove what they did. Blockchains can give them wallets, payments and a verifiable record. Design a solution where AI and blockchain work together to do something neither could do alone.",
@@ -311,6 +315,9 @@ export const DOMAINS: { id: Domain; color: string; blurb: string }[] = [
   { id: "Web3", color: "#0B1B4D", blurb: "Onchain money for first-time users, and AI that can pay and prove what it did." },
 ];
 export const tracksIn = (d: Domain) => TRACKS.filter((t) => t.domain === d);
+/** "with TrueFoundry" / "presented by Soulverse", or "" for an open track */
+export const partnerCredit = (t?: Pick<Track, "partner" | "partnerVerb">) =>
+  t?.partner ? `${t.partnerVerb ?? "with"} ${t.partner}` : "";
 
 /** Round 1 rules shared by both Web3 tracks (open to any blockchain for now) */
 export const WEB3_GUIDE = {
@@ -561,12 +568,19 @@ export interface Partner {
   h?: number;
   /** one line about what the partner does this edition */
   note?: string;
+  /** a short overview of the company: what it builds, what it solves */
+  about?: string;
+  /** the areas it works in, shown as pills */
+  focus?: string[];
 }
 
 /** CR 5.0 title sponsor, and its open-source agent harness. */
 export const TITLE_SPONSOR = {
   name: "TrueFoundry",
-  role: "Title sponsor",
+  role: "Title partner · Web2",
+  about:
+    "TrueFoundry is an enterprise AI infrastructure platform. Companies use it to build, deploy and run LLM apps, AI agents and ML models on their own cloud, with an AI gateway, observability and governance built in.",
+  focus: ["AI infrastructure", "AI gateway", "Agents & LLMOps"],
   logo: "/sponsors/truefoundrylogo1.png",
   website: "https://www.truefoundry.com",
   /** the logo file ships on this navy */
@@ -585,12 +599,26 @@ export const TITLE_SPONSOR = {
 export const PARTNERS_CR5: Partner[] = [
   {
     name: "CSM Technologies",
-    role: "Technology partner",
+    role: "Technology partner · Web2",
     note: "Co-presents Web2 Track 02, AI for Bharat, with TrueFoundry.",
+    about:
+      "CSM Technologies builds technology that governments and enterprises run on: AI platforms, agentic GovTech for public services, digital identity systems, technology for the mining sector and cybersecurity.",
+    focus: ["AI Foundry", "Agentic GovTech", "Digital Identity", "Mining Technology", "Cybersecurity"],
     logo: "/sponsors/csmlogo.png",
     website: "https://www.csm.tech",
     bg: "#231f20",
     h: 52,
+  },
+  {
+    name: "Soulverse",
+    role: "Digital identity & payments partner · Web3",
+    note: "Presents Web3 Track 02, AI × Web3.",
+    about:
+      "Soulverse is building the operating system of trust. A trade, a government disbursement and an AI agent's action all need the same checks before they run: current identity, valid credentials, active delegation and today's policy. Soulverse runs those checks with one engine and changes only the governance rules per domain.",
+    focus: ["Financial Validation", "Sovereign Governance", "Agentic Validation"],
+    logo: "/sponsors/soulverse.webp",
+    website: "https://www.soulverse.world",
+    h: 26,
   },
 ];
 

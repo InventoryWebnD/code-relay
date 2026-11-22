@@ -5,9 +5,10 @@ import SectionHead from "@/components/world/SectionHead";
 import { EVENT, PARTNERS_CR5, PAST_PARTNERS, TITLE_SPONSOR } from "@/data/cr5";
 
 /**
- * Partners in order of billing: the title sponsor (TrueFoundry, with its
- * TrueForge harness) as a hero card, the technology partner under it, then
- * every past partner as a card and a small marquee.
+ * Partners in order of billing: the Web2 title partner (TrueFoundry, with its
+ * TrueForge harness) as a hero card, the other CR 5.0 partners under it (each
+ * with what the company does), then every past partner as a card and a small
+ * marquee.
  */
 export default function PartnerLogos({ id = "partners" }: { id?: string }) {
   const ts = TITLE_SPONSOR;
@@ -23,7 +24,7 @@ export default function PartnerLogos({ id = "partners" }: { id?: string }) {
           <div className="stk grid overflow-hidden text-[var(--cream)] lg:grid-cols-[1.35fr_1fr]" style={{ background: ts.bg }}>
             <div className="p-7 sm:p-12">
               <span className="label inline-block rounded-full bg-[var(--sun)] px-3 py-1 text-[var(--ink)]">
-                {ts.role} · {EVENT.name} {EVENT.edition}
+                {ts.role}
               </span>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={ts.logo} alt={ts.name} className="mt-8 h-9 w-auto sm:h-11" />
@@ -32,10 +33,20 @@ export default function PartnerLogos({ id = "partners" }: { id?: string }) {
                 powered by <span className="text-[var(--sun)]">{ts.name}</span>
               </h3>
               <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-[var(--cream)]/75 sm:text-base">
-                <strong className="font-semibold text-[var(--cream)]">{ts.name}</strong>, the AI infrastructure platform, is our title sponsor.{" "}
+                {ts.about}
+              </p>
+              <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-[var(--cream)]/75 sm:text-base">
+                <strong className="font-semibold text-[var(--cream)]">{ts.name}</strong> is our title partner for Web2.{" "}
                 <strong className="font-semibold text-[var(--cream)]">{h.name}</strong>, their open-source agent harness, is at the heart of the Web2 AI &amp;
                 Automation track: build on it, or bring any framework you like.
               </p>
+              <span className="mt-5 flex flex-wrap gap-2">
+                {ts.focus.map((f) => (
+                  <span key={f} className="label rounded-full border-2 border-[var(--cream)]/20 px-3 py-1 text-[10px] text-[var(--cream)]/75">
+                    {f}
+                  </span>
+                ))}
+              </span>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a href={ts.website} target="_blank" rel="noreferrer" className="btn-chunky !border-[var(--ink)] bg-[var(--sun)] text-[var(--ink)]" data-cursor="Visit">
                   Visit {ts.name} ↗
@@ -73,7 +84,7 @@ export default function PartnerLogos({ id = "partners" }: { id?: string }) {
           </div>
         </Reveal>
 
-        {/* technology partner(s) */}
+        {/* the other CR 5.0 partners */}
         {PARTNERS_CR5.map((p) => (
           <Reveal key={p.name} className="mt-5">
             <a
@@ -95,7 +106,17 @@ export default function PartnerLogos({ id = "partners" }: { id?: string }) {
               <span className="flex flex-col justify-center gap-2 border-t-2 border-[var(--ink)] p-6 sm:border-l-2 sm:border-t-0 sm:p-8">
                 <span className="label text-[var(--crimson)]">{p.role}</span>
                 <span className="font-display text-[clamp(24px,2.6vw,36px)] !normal-case leading-none tracking-tight">{p.name}</span>
-                {p.note && <span className="text-[15px] text-[var(--ink)]/70">{p.note}</span>}
+                {p.note && <span className="text-[15px] font-semibold text-[var(--ink)]">{p.note}</span>}
+                {p.about && <span className="max-w-2xl text-[15px] leading-relaxed text-[var(--ink)]/70">{p.about}</span>}
+                {p.focus && (
+                  <span className="mt-2 flex flex-wrap gap-2">
+                    {p.focus.map((f) => (
+                      <span key={f} className="label rounded-full border-2 border-[var(--ink)]/20 px-3 py-1 text-[10px] text-[var(--ink)]/75">
+                        {f}
+                      </span>
+                    ))}
+                  </span>
+                )}
               </span>
             </a>
           </Reveal>

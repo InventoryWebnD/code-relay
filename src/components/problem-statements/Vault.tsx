@@ -6,7 +6,7 @@ import type { ProblemStatement } from "@/data/problemStatements";
 import PageHero from "@/components/world/PageHero";
 import { prefersReduced } from "@/components/world/motion";
 import { useLenis } from "@/components/world/SmoothScroll";
-import { TRACKS } from "@/data/cr5";
+import { TRACKS, partnerCredit } from "@/data/cr5";
 type Edition = "5.0" | "4.0" | "3.0";
 type TrackF = "ALL" | "Web2" | "Web3";
 
@@ -207,7 +207,7 @@ export function TrackGroups({ statements, onExplore }: { statements: ProblemStat
                     <div key={name}>
                       <span className="label" style={{ color: meta?.color }}>
                         Track {String(meta?.order ?? 1).padStart(2, "0")}
-                        {meta?.partner ? ` · with ${meta.partner}` : ""}
+                        {meta?.partner ? ` · ${partnerCredit(meta)}` : ""}
                       </span>
                       <h3 className="mt-1 font-display text-[clamp(26px,3.4vw,44px)] leading-none">{name}</h3>
                       {meta && <p className="mt-3 max-w-3xl text-[15px] leading-relaxed text-[var(--ink)]/70">{meta.problem ?? meta.tagline}</p>}

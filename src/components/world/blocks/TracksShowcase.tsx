@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Reveal } from "@/components/world/motion";
 import SectionHead from "@/components/world/SectionHead";
-import { DOMAINS, EXTRA_TRACKS, tracksIn } from "@/data/cr5";
+import { DOMAINS, EXTRA_TRACKS, partnerCredit, tracksIn } from "@/data/cr5";
 
 /**
  * Two domains, two tracks each. The big names switch the domain; underneath,
@@ -61,7 +61,7 @@ export default function TracksShowcase({ id = "tracks" }: { id?: string }) {
                   </span>
                   <h3 className="mt-1 font-display text-[clamp(28px,4vw,52px)] leading-[0.95]">{t.name}</h3>
                 </div>
-                {t.partner && <span className="label text-[var(--ink)]/55">with {t.partner}</span>}
+                {t.partner && <span className="label text-[var(--ink)]/55">{partnerCredit(t)}</span>}
               </div>
               <p className="mt-4 max-w-3xl text-[15px] leading-relaxed text-[var(--ink)]/75">{t.problem ?? t.tagline}</p>
 

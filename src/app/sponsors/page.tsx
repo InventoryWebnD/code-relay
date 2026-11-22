@@ -14,7 +14,7 @@ import PartnerLogos from "@/components/world/blocks/PartnerLogos";
 
 export const metadata: Metadata = pageMetadata({
   title: "Sponsors & Partners | Code Relay 5.0, powered by TrueFoundry",
-  description: "Code Relay 5.0 is powered by TrueFoundry, with CSM Technologies as technology partner. Explore title, track, talent and bounty partnerships and reach thousands of student builders across India.",
+  description: "Code Relay 5.0 is powered by TrueFoundry, title partner for Web2, with CSM Technologies as Web2 technology partner and Soulverse as digital identity & payments partner for Web3. Explore title, track, talent and bounty partnerships and reach thousands of student builders across India.",
   path: "/sponsors",
 });
 

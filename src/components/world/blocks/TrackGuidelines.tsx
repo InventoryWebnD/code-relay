@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Reveal } from "@/components/world/motion";
 import SectionHead from "@/components/world/SectionHead";
-import { TRACKS, TRACK_FREE_NOTE, WEB3_GUIDE, tracksIn, type Track, type TrackGuide } from "@/data/cr5";
+import { TRACKS, TRACK_FREE_NOTE, WEB3_GUIDE, partnerCredit, tracksIn, type Track, type TrackGuide } from "@/data/cr5";
 
 /** switcher options: each Web2 track has its own rulebook; the Web3 tracks share one */
 const OPTIONS = [
@@ -51,7 +51,7 @@ function Web2Guide({ t, g }: { t: Track; g: TrackGuide }) {
         <span className="label rounded-full px-3 py-1 text-[var(--cream)]" style={{ background: t.color }}>
           {t.name}
         </span>
-        <span className="label text-[var(--ink)]/55">{t.domain} domain · Track {String(t.order).padStart(2, "0")}{t.partner ? ` · with ${t.partner}` : ""}</span>
+        <span className="label text-[var(--ink)]/55">{t.domain} domain · Track {String(t.order).padStart(2, "0")}{t.partner ? ` · ${partnerCredit(t)}` : ""}</span>
       </div>
 
       {/* overview + what to build | sub-tracks */}
